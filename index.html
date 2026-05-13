@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>clean.agency — Premium Cleaning in Cyprus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --mint-50: #ecfdf7; --mint-100: #d1f7e9; --mint-200: #a3eed4;
+            --mint-300: #6fdfb9; --mint-400: #3fc99c; --mint-500: #1fae82;
+            --mint-600: #14916b; --mint-700: #117559; --mint-800: #0e5a47;
+            --ink: #0b1f1a; --ink-soft: #2a3f3a;
+            --paper: #f8f9f5; --paper-warm: #f1f2e9;
+            --line: #d9dbcf; --accent: #ff7a59; --red: #d63031;
+            --shadow: 0 10px 30px -12px rgba(11,31,26,.18);
+            --radius: 22px;
+        }
+        *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0}
+        body{font-family:'Manrope',-apple-system,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+        /* NAV */
+        .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);background:rgba(248,249,245,.78);border-bottom:1px solid rgba(11,31,26,.06)}
+        .nav-inner{max-width:1280px;margin:0 auto;padding:18px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+        .logo{font-family:'Fraunces',serif;font-weight:700;font-size:24px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px;flex-shrink:0;text-decoration:none;color:inherit;cursor:pointer;}
+        .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--mint-500);box-shadow:0 0 0 4px rgba(31,174,130,.15)}
+        .nav-links{display:flex;gap:32px;align-items:center}
+        .nav-links a{text-decoration:none;color:var(--ink-soft);font-size:14px;font-weight:500;transition:color .2s}
+        .nav-links a:hover{color:var(--mint-600)}
+        .nav-actions{display:flex;gap:12px;align-items:center}
+        .lang-switch{display:flex;background:white;border:1px solid var(--line);border-radius:100px;padding:3px;font-size:12px;font-weight:600}
+        .lang-switch button{background:none;border:none;cursor:pointer;padding:6px 12px;border-radius:100px;font-family:inherit;font-weight:600;color:var(--ink-soft);transition:all .2s}
+        .lang-switch button.active{background:var(--ink);color:var(--paper)}
+        .btn-primary{background:var(--ink);color:var(--paper);border:none;padding:12px 22px;border-radius:100px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer;transition:transform .2s,background .2s}
+        .btn-primary:hover{background:var(--mint-700);transform:translateY(-1px)}
+        .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);padding:11px 20px;border-radius:100px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s}
+        .btn-ghost:hover{background:var(--ink);color:var(--paper)}
+
+        /* BURGER */
+        .burger{display:none;width:40px;height:40px;border:none;background:none;cursor:pointer;padding:8px;flex-shrink:0}
+        .burger span{display:block;width:100%;height:2px;background:var(--ink);border-radius:2px;transition:all .3s;margin:5px 0}
+        .burger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+        .burger.open span:nth-child(2){opacity:0}
+        .burger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+        .mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--paper);z-index:49;padding:100px 32px 32px;flex-direction:column;gap:0}
+        .mobile-menu.visible{display:flex}
+        .mobile-menu a{text-decoration:none;color:var(--ink);font-family:'Fraunces',serif;font-size:28px;font-weight:600;padding:16px 0;border-bottom:1px solid var(--line);display:block}
+        .mobile-menu a:last-child{border-bottom:none}
+
+        /* HERO */
+        .hero{position:relative;max-width:1280px;margin:0 auto;padding:60px 32px 80px;overflow:hidden}
+        .hero-grid{display:grid;grid-template-columns:minmax(320px,560px) minmax(320px,640px);gap:48px;align-items:center;justify-content:space-between}
+        .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:var(--mint-100);color:var(--mint-700);padding:8px 14px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:24px}
+        .hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--mint-500);animation:pulse 2s ease-in-out infinite}
+        @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+        .hero h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(36px,6vw,84px);line-height:.95;letter-spacing:-.03em;margin:0 0 24px}
+        .hero h1 .leaf{display:inline-block;background:linear-gradient(135deg,var(--mint-500),var(--mint-700));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic}
+        .hero p.lead{font-size:clamp(15px,2.5vw,19px);color:var(--ink-soft);max-width:480px;margin:0 0 36px}
+        .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+        .hero-slider{position:relative;width:100%;max-width:640px;aspect-ratio:4/3;border-radius:12px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(11,31,26,.35);background:var(--ink);justify-self:end}
+        .hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;transform:scale(1.06);opacity:0;transition:opacity 1.2s ease-in-out}
+        .hero-slide.active{opacity:1}
+        .hero-dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2}
+        .hero-dot{width:8px;height:8px;border-radius:50%;border:none;background:rgba(255,255,255,.4);cursor:pointer;padding:0;transition:all .3s}
+        .hero-dot.active{background:white;width:24px;border-radius:4px}
+
+        /* TRUST */
+        .trust{background:var(--ink);color:var(--paper);padding:24px 0;overflow:hidden}
+        .trust-track{display:flex;width:max-content;animation:scroll-trust 40s linear infinite}
+        .trust-row{display:flex;align-items:center;gap:56px;padding-right:56px;font-family:'Fraunces',serif;font-size:18px;color:rgba(248,249,245,.7);white-space:nowrap;flex-shrink:0}
+        .trust-row span{display:inline-flex;align-items:center;gap:8px}
+        .trust-row strong{color:var(--mint-300);font-weight:600}
+        @keyframes scroll-trust{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .trust-cities{max-width:1280px;margin:16px auto 0;padding:18px 32px 0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;border-top:1px solid rgba(248,249,245,.08)}
+        .trust-cities-list{font-family:'Fraunces',serif;font-size:22px;color:var(--mint-300);font-weight:600;letter-spacing:.01em}
+        .trust-cities-list strong{color:var(--mint-300);font-weight:600}
+        .trust-cities-note{font-size:13px;color:rgba(248,249,245,.5);font-style:italic}
+        /* PRICING */
+        .services{max-width:1280px;margin:0 auto;padding:100px 32px}
+        .section-head{margin-bottom:50px;max-width:700px}
+        .section-eyebrow{display:inline-block;color:var(--mint-600);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px}
+        .section-head h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(28px,4.5vw,56px);line-height:1.05;letter-spacing:-.025em;margin:0 0 16px}
+        .section-head p{font-size:clamp(14px,2vw,17px);color:var(--ink-soft);margin:0;max-width:540px}
+        .pricing-tabs{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+        .pricing-tab{padding:12px 22px;border:1.5px solid var(--line);border-radius:100px;background:white;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px;transition:all .2s;display:flex;align-items:center;gap:8px}
+        .pricing-tab:hover{border-color:var(--mint-400)}
+        .pricing-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+        .pricing-tab .emoji{font-size:18px}
+        .pricing-table{background:white;border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;margin-bottom:24px}
+        .pricing-row{display:grid;grid-template-columns:1fr auto;padding:16px 24px;border-bottom:1px solid var(--line);align-items:center;font-size:15px;transition:background .15s}
+        .pricing-row:last-child{border-bottom:none}
+        .pricing-row:hover{background:var(--mint-50)}
+        .pricing-row .desc{font-weight:500}
+        .pricing-row .price-val{font-family:'Fraunces',serif;font-weight:700;font-size:20px;text-align:right;white-space:nowrap}
+        .pricing-row.header{background:var(--paper-warm);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft)}
+        .pricing-row.header .price-val{font-family:'Manrope',sans-serif;font-size:12px;font-weight:700}
+        .pricing-extras{margin-top:16px}
+        .pricing-extras-title{font-family:'Fraunces',serif;font-weight:600;font-size:18px;margin-bottom:12px}
+        .extras-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+        .extra-chip{background:white;border:1px solid var(--line);border-radius:14px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+        .extra-chip .ep{font-family:'Fraunces',serif;font-weight:700;color:var(--mint-700)}
+
+        /* HOW */
+        .how{background:var(--paper-warm);padding:100px 32px}
+        .how-inner{max-width:1280px;margin:0 auto}
+        .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+        .step{background:white;padding:28px;border-radius:var(--radius)}
+        .step-num{font-family:'Fraunces',serif;font-style:italic;font-size:56px;font-weight:600;color:var(--mint-400);line-height:1;margin-bottom:12px}
+        .step h4{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 8px}
+        .step p{font-size:14px;color:var(--ink-soft);margin:0}
+
+        /* BOOKING */
+        .booking{max-width:1280px;margin:0 auto;padding:100px 32px}
+        .booking-grid{max-width:700px}
+        .booking-form{background:white;border-radius:var(--radius);padding:40px;border:1px solid var(--line)}
+        .field{margin-bottom:20px}
+        .field label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+        .field input,.field select,.field textarea{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:16px;background:var(--paper);transition:all .2s;-webkit-appearance:none}
+        .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--mint-500);background:white}
+        .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .svc-pick{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+        .svc-opt{padding:14px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;font-size:13px;font-weight:600;text-align:center;background:var(--paper);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px}
+        .svc-opt:hover{border-color:var(--mint-400)}
+        .svc-opt.selected{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+        .svc-opt.disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+        .extras-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+        .extra-form-item{display:flex;align-items:center;justify-content:space-between;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:500;transition:all .15s;min-height:48px}
+        .extra-form-item:hover{border-color:var(--mint-300)}
+        .extra-form-item .left{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+        .extra-form-item .left span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .qty-ctrl{display:flex;align-items:center;flex-shrink:0}
+        .qty-ctrl button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:white;cursor:pointer;font-size:18px;font-weight:700;font-family:inherit;display:grid;place-items:center;transition:all .15s;-webkit-appearance:none}
+        .qty-ctrl button:hover,.qty-ctrl button:active{background:var(--mint-100);border-color:var(--mint-400)}
+        .qty-ctrl .qty-val{width:30px;text-align:center;font-weight:700;font-size:15px}
+        .time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+        .time-slot{padding:12px;border:1.5px solid var(--line);border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;text-align:center;background:var(--paper);font-family:inherit;transition:all .15s;min-height:44px}
+        .time-slot:hover{border-color:var(--mint-400)}
+        .time-slot.selected{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+        .time-slot.disabled{opacity:.3;cursor:not-allowed;text-decoration:line-through;background:#f0f0e8}
+        .promo-row{display:flex;gap:8px;align-items:stretch}
+        .promo-row input{flex:1;text-transform:uppercase}
+        .promo-row button{padding:14px 20px;border-radius:12px;background:var(--ink);color:white;border:none;font-family:inherit;font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap;transition:background .2s;min-height:48px}
+        .promo-row button:hover{background:var(--mint-700)}
+        .promo-feedback{font-size:13px;font-weight:600;margin-top:6px}
+        .promo-feedback.ok{color:var(--mint-700)}.promo-feedback.err{color:var(--red)}
+        .price-summary{background:var(--paper-warm);border-radius:14px;padding:20px;margin:20px 0 8px}
+        .price-line{display:flex;justify-content:space-between;font-size:14px;padding:4px 0}
+        .price-line.discount{color:var(--red);font-weight:600}
+        .price-line.total{font-family:'Fraunces',serif;font-size:22px;font-weight:700;border-top:1.5px solid var(--line);padding-top:12px;margin-top:8px}
+
+        /* LINK HINT */
+        .field-hint{font-size:12px;color:var(--ink-soft);margin-top:6px;line-height:1.4}
+        .field-hint a{color:var(--mint-600);text-decoration:underline}
+
+        .btn-submit{width:100%;padding:18px;background:var(--mint-600);color:white;border:none;border-radius:14px;font-family:'Fraunces',serif;font-weight:600;font-size:18px;cursor:pointer;transition:all .2s;margin-top:8px;min-height:56px}
+        .btn-submit:hover{background:var(--mint-700);transform:translateY(-2px)}
+        .success-msg{background:var(--mint-100);color:var(--mint-800);padding:16px;border-radius:12px;margin-bottom:20px;display:none;font-weight:500}
+        .success-msg.visible{display:block}
+
+        /* FOOTER */
+        footer{background:var(--ink);color:var(--paper);padding:60px 32px 30px}
+        .foot-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+        footer h5{font-family:'Fraunces',serif;font-size:18px;font-weight:500;margin:0 0 16px}
+        footer a{color:rgba(248,249,245,.6);text-decoration:none;font-size:14px;display:block;margin-bottom:8px}
+        footer a:hover{color:var(--mint-300)}
+        .foot-bottom{max-width:1280px;margin:40px auto 0;padding-top:24px;border-top:1px solid rgba(248,249,245,.1);display:flex;justify-content:space-between;font-size:13px;color:rgba(248,249,245,.4)}
+
+        /* ADMIN */
+        .admin-fab{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:var(--ink);color:white;border:none;cursor:pointer;display:grid;place-items:center;box-shadow:var(--shadow);z-index:100;transition:all .2s}
+        .admin-fab:hover{transform:scale(1.1);background:var(--mint-700)}
+        .admin-fab svg{width:22px;height:22px;stroke:white}
+        .admin-overlay{position:fixed;inset:0;background:rgba(11,31,26,.6);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center}
+        .admin-overlay.visible{display:flex}
+        .admin-panel{background:var(--paper);width:95%;max-width:1100px;max-height:90vh;overflow-y:auto;border-radius:24px;padding:40px;position:relative}
+        .admin-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:var(--ink);color:white;border:none;cursor:pointer;font-size:18px}
+        .admin-tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+        .admin-tab{padding:12px 20px;background:none;border:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--ink-soft);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+        .admin-tab.active{color:var(--ink);border-bottom-color:var(--mint-500)}
+        .admin-content{display:none}.admin-content.active{display:block}
+        .admin-content h3{font-family:'Fraunces',serif;font-size:28px;font-weight:600;margin:0 0 8px}
+        .admin-content>p{color:var(--ink-soft);margin:0 0 24px}
+        .req-table{width:100%;border-collapse:collapse;background:white;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+        .req-table th,.req-table td{padding:12px 14px;text-align:left;font-size:13px;border-bottom:1px solid var(--line)}
+        .req-table th{background:var(--paper-warm);font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
+        .req-table tr:last-child td{border-bottom:none}
+        .status{display:inline-block;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700;text-transform:uppercase}
+        .status-new{background:#ffe9d6;color:#b04d10}.status-confirmed{background:var(--mint-100);color:var(--mint-800)}.status-done{background:#e6e6e6;color:#555}
+        .req-actions{display:flex;gap:6px}
+        .btn-mini{padding:5px 10px;font-size:11px;font-weight:700;border-radius:8px;cursor:pointer;border:none;font-family:inherit;min-height:32px}
+        .btn-mini.confirm{background:var(--mint-500);color:white}.btn-mini.done{background:var(--ink);color:white}.btn-mini.del{background:#ffd5cd;color:#a02b15}
+        .slot-controls{background:white;border-radius:14px;padding:24px;border:1px solid var(--line)}
+        .slot-date-pick{display:flex;gap:14px;align-items:end;margin-bottom:24px;flex-wrap:wrap}
+        .slot-date-pick label{font-size:12px;font-weight:700;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:6px}
+        .slot-date-pick input{padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:16px}
+        .slot-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+        .slot-cell{padding:10px 6px;border-radius:8px;text-align:center;font-size:12px;font-weight:600;cursor:pointer;user-select:none;border:1.5px solid var(--mint-300);background:var(--mint-50);color:var(--mint-800);transition:all .15s}
+        .slot-cell.blocked{background:#ffe3dc;border-color:#ffb4a0;color:#a02b15}
+        .slot-cell.booked{background:var(--ink);border-color:var(--ink);color:white;cursor:not-allowed}
+        .svc-toggles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+        .svc-toggle{display:flex;align-items:center;gap:10px;padding:14px;background:white;border-radius:12px;border:1px solid var(--line);cursor:pointer;font-size:13px;font-weight:600}
+        .svc-toggle input{width:20px;height:20px;accent-color:var(--mint-500)}
+        .promo-admin-grid{display:grid;gap:12px;margin-top:16px}
+        .promo-card{background:white;border:1px solid var(--line);border-radius:14px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+        .promo-card .code{font-family:'Fraunces',serif;font-weight:700;font-size:20px;letter-spacing:.03em}
+        .promo-card .info{font-size:13px;color:var(--ink-soft)}
+        .promo-add-row{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+        .promo-add-row>div{display:flex;flex-direction:column;gap:4px}
+        .promo-add-row label{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ink-soft)}
+        .promo-add-row input,.promo-add-row select{padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px}
+
+        /* ==== TABLET ==== */
+        @media(max-width:1200px){
+            .hero-grid{grid-template-columns:1fr}
+            .hero-slider{max-width:100%;width:100%;min-height:auto;margin:0 auto}
+            .steps{grid-template-columns:1fr 1fr}
+            .foot-inner{grid-template-columns:1fr 1fr}
+            .nav-links{display:none}
+            .burger{display:block}
+            .slot-grid{grid-template-columns:repeat(4,1fr)}
+            .extras-form-grid{grid-template-columns:1fr}
+            .svc-toggles{grid-template-columns:1fr}
+            .time-grid{grid-template-columns:repeat(3,1fr)}
+            .trust-row{gap:40px;padding-right:40px;font-size:15px}
+            .nav-inner .btn-primary{display:none}
+        }
+
+        /* ==== PHONE ==== */
+        @media(max-width:560px){
+            .nav-inner{padding:14px 16px}
+            .logo{font-size:20px}
+            .hero{padding:24px 16px 40px}
+            .hero h1{font-size:32px;margin-bottom:16px}
+            .hero p.lead{font-size:14px;margin-bottom:24px}
+            .hero-ctas{flex-direction:column;gap:10px}
+            .hero-ctas .btn-primary,.hero-ctas .btn-ghost{width:100%;text-align:center}
+            .hero-slider{aspect-ratio:3/2;max-width:100%;border-radius:18px}
+            .trust{padding:18px 0}
+            .trust-row{font-size:14px;gap:36px;padding-right:36px}
+            .services,.how,.booking{padding:50px 16px}
+            .section-head{margin-bottom:30px}
+            .section-head h2{font-size:26px}
+            .pricing-tabs{gap:6px}
+            .pricing-tab{padding:10px 16px;font-size:12px}
+            .pricing-row{padding:12px 16px;font-size:13px}
+            .pricing-row .price-val{font-size:17px}
+            .steps{grid-template-columns:1fr;gap:14px}
+            .step{padding:20px}
+            .step-num{font-size:40px}
+            .booking-form{padding:20px;border-radius:18px}
+            .field-row{grid-template-columns:1fr}
+            .svc-pick{grid-template-columns:1fr}
+            .time-grid{grid-template-columns:repeat(3,1fr)}
+            .foot-inner{grid-template-columns:1fr;gap:24px}
+            .foot-bottom{flex-direction:column;gap:6px;text-align:center}
+            .admin-panel{padding:20px;border-radius:18px}
+            .admin-content h3{font-size:22px}
+            .slot-grid{grid-template-columns:repeat(3,1fr)}
+            .promo-card{flex-direction:column;align-items:flex-start}
+            .promo-add-row{flex-direction:column;gap:10px}
+            .promo-add-row>div{width:100%}
+            .promo-add-row input,.promo-add-row select{width:100%}
+            .extras-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav"><div class="nav-inner">
+    <a href="" class="logo">
+        <span class="dot"></span>
+        <span>clean<span style="color:var(--mint-500)">.</span>agency</span>
+    </a>
+    <div class="nav-links">
+        <a href="#services" data-i18n="nav.services">Services</a>
+        <a href="#how" data-i18n="nav.how">How it works</a>
+        <a href="#book" data-i18n="nav.book">Book</a>
+    </div>
+    <div class="nav-actions">
+        <div class="lang-switch" id="langSwitch">
+            <button data-lang="en" class="active">EN</button>
+            <button data-lang="el">EL</button>
+            <button data-lang="ru">RU</button>
+        </div>
+        <button class="btn-primary" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})" data-i18n="nav.bookNow">Book now</button>
+        <button class="burger" id="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+</div></nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#services" onclick="closeMenu()" data-i18n="nav.services">Services</a>
+    <a href="#how" onclick="closeMenu()" data-i18n="nav.how">How it works</a>
+    <a href="#book" onclick="closeMenu()" data-i18n="nav.book">Book</a>
+</div>
+
+<!-- HERO -->
+<section class="hero"><div class="hero-grid">
+    <div>
+        <div class="hero-eyebrow" data-i18n="hero.eyebrow">Operating across Cyprus</div>
+        <h1><span data-i18n="hero.title1">A spotless home,</span><br/><span class="leaf" data-i18n="hero.title2">delivered today.</span></h1>
+        <p class="lead" data-i18n="hero.lead">Vetted local cleaners, transparent pricing, and a no-fuss booking flow. Pick a time, pin your address on the map, and we'll handle the rest.</p>
+        <div class="hero-ctas">
+            <button class="btn-primary" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})" data-i18n="hero.cta1">Book a cleaning</button>
+            <button class="btn-ghost" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" data-i18n="hero.cta2">See pricing</button>
+        </div>
+    </div>
+    <div class="hero-slider" id="heroSlider">
+        <img class="hero-slide active" data-idx="0" alt="cleaning"/>
+        <img class="hero-slide" data-idx="1" alt="cleaning"/>
+        <img class="hero-slide" data-idx="2" alt="cleaning"/>
+        <img class="hero-slide" data-idx="3" alt="cleaning"/>
+        <div class="hero-dots">
+            <button class="hero-dot active" data-d="0"></button>
+            <button class="hero-dot" data-d="1"></button>
+            <button class="hero-dot" data-d="2"></button>
+            <button class="hero-dot" data-d="3"></button>
+        </div>
+    </div>
+</div></section>
+
+<!-- TRUST -->
+<section class="trust">
+    <div class="trust-track">
+        <div class="trust-row">
+            <span><strong>150+</strong> <span data-i18n="trust.homes">homes cleaned</span></span>
+            <span><strong>40+</strong> <span data-i18n="trust.cleaners">happy clients</span></span>
+
+            <span><strong>100%</strong> <span data-i18n="trust.guarantee">satisfaction guarantee</span></span>
+            <span><strong>✨</strong> <span data-i18n="trust.premium">premium products</span></span>
+            <span><strong>🛡️</strong> <span data-i18n="trust.responsibility">full responsibility</span></span>
+            <span><strong>⏱️</strong> <span data-i18n="trust.ontime">always on time</span></span>
+        </div>
+        <div class="trust-row" aria-hidden="true">
+            <span><strong>150+</strong> <span data-i18n="trust.homes">homes cleaned</span></span>
+            <span><strong>40+</strong> <span data-i18n="trust.cleaners">happy clients</span></span>
+            <span><strong>100%</strong> <span data-i18n="trust.guarantee">satisfaction guarantee</span></span>
+            <span><strong>✨</strong> <span data-i18n="trust.premium">premium products</span></span>
+            <span><strong>🛡️</strong> <span data-i18n="trust.responsibility">full responsibility</span></span>
+            <span><strong>⏱️</strong> <span data-i18n="trust.ontime">always on time</span></span>
+        </div>
+    </div>
+    <div class="trust-cities">
+        <div class="trust-cities-list"><strong>Larnaca</strong> · <strong>Limassol</strong> · <strong>Nicosia</strong></div>
+        <div class="trust-cities-note" data-i18n="cities.note">Other areas of Cyprus — by arrangement</div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="services" id="services">
+    <div class="section-head">
+        <span class="section-eyebrow" data-i18n="services.eyebrow">Pricing</span>
+        <h2 data-i18n="services.title">Transparent pricing, no surprises.</h2>
+        <p data-i18n="services.subtitle">Choose your service type below to see exact prices. All extras clearly listed.</p>
+    </div>
+    <div class="pricing-tabs" id="pricingTabs"></div>
+    <div id="pricingContent"></div>
+</section>
+
+<!-- HOW -->
+<section class="how" id="how"><div class="how-inner">
+    <div class="section-head">
+        <span class="section-eyebrow" data-i18n="how.eyebrow">How it works</span>
+        <h2 data-i18n="how.title">Booked in 60 seconds.</h2>
+    </div>
+    <div class="steps">
+        <div class="step"><div class="step-num">01</div><h4 data-i18n="how.s1Title">Pick a service</h4><p data-i18n="how.s1Text">Tell us what you need — we'll match the right team.</p></div>
+        <div class="step"><div class="step-num">02</div><h4 data-i18n="how.s2Title">Pin your place</h4><p data-i18n="how.s2Text">Drop a pin or type your address. Cyprus-wide.</p></div>
+        <div class="step"><div class="step-num">03</div><h4 data-i18n="how.s3Title">Choose a slot</h4><p data-i18n="how.s3Text">Live availability — pick the time that works.</p></div>
+        <div class="step"><div class="step-num">04</div><h4 data-i18n="how.s4Title">We clean. You relax.</h4><p data-i18n="how.s4Text">Pay only after the job is done right.</p></div>
+    </div>
+</div></section>
+
+<!-- BOOKING -->
+<section class="booking" id="book">
+    <div class="section-head">
+        <span class="section-eyebrow" data-i18n="book.eyebrow">Book a clean</span>
+        <h2 data-i18n="book.title">Tell us where & when.</h2>
+        <p data-i18n="book.subtitle">We'll confirm by phone within 30 minutes.</p>
+    </div>
+    <div class="booking-grid">
+        <form class="booking-form" id="bookForm">
+            <div class="success-msg" id="successMsg" data-i18n="book.success">✓ Thank you! We'll call you shortly.</div>
+            <div class="field"><label data-i18n="book.svcLabel">Service type</label><div class="svc-pick" id="svcPick"></div></div>
+            <div class="field" id="sizeSectionField"><label data-i18n="book.sizeLabel">Property size</label><div class="svc-pick" id="sizePick"></div></div>
+            <div class="field" id="uphField" style="display:none"><label data-i18n="book.uphLabel">Items to clean</label><div class="extras-form-grid" id="uphGrid"></div></div>
+            <div class="field" id="extrasField"><label data-i18n="book.extrasLabel">Add-ons</label><div class="extras-form-grid" id="extrasGrid"></div></div>
+            <div class="field-row">
+                <div class="field"><label data-i18n="book.nameLabel">Full name</label><input type="text" id="fName" required placeholder="Maria Constantinou"/></div>
+                <div class="field"><label data-i18n="book.phoneLabel">Phone number</label><input type="tel" id="fPhone" required placeholder="+357 99 123 456"/></div>
+            </div>
+            <div class="field"><label data-i18n="book.addrLabel">Address</label><input type="text" id="fAddr" required data-i18n-placeholder="book.addrPlaceholder"/><div class="field-hint" data-i18n="book.addrHint">Street, building, apartment, city</div></div>
+            <div class="field"><label data-i18n="book.mapLinkLabel">Google Maps link (optional)</label><input type="url" id="fMapLink" data-i18n-placeholder="book.mapLinkPlaceholder"/><div class="field-hint" data-i18n="book.mapLinkHint">Open Google Maps → find your place → Share → Copy link</div></div>
+            <div class="field-row">
+                <div class="field"><label data-i18n="book.dateLabel">Date</label><input type="date" id="fDate" required/></div>
+                <div class="field"><label data-i18n="book.timeLabel">Time slot</label><div class="time-grid" id="timeGrid"></div></div>
+            </div>
+            <div class="field"><label data-i18n="book.notesLabel">Notes (optional)</label><textarea id="fNotes" rows="2" placeholder="Pets, parking, special requests..."></textarea></div>
+            <div class="field"><label data-i18n="book.promoLabel">Promo code</label><div class="promo-row"><input type="text" id="fPromo" placeholder=""/><button type="button" onclick="applyPromo()" data-i18n="book.promoBtn">Apply</button></div><div class="promo-feedback" id="promoFeedback"></div></div>
+            <div class="price-summary" id="priceSummary"></div>
+            <button type="submit" class="btn-submit" data-i18n="book.submit">Send booking request →</button>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="foot-inner">
+        <div><div class="logo" style="color:var(--paper)"><span class="dot"></span><span>clean<span style="color:var(--mint-400)">.</span>agency</span></div><p style="color:rgba(248,249,245,.6);font-size:14px;margin-top:14px;max-width:280px" data-i18n="footer.tagline">Premium cleaning across Cyprus.</p></div>
+        <div><h5 data-i18n="footer.servicesTitle">Services</h5><a href="#services" data-i18n="svc.standard.n">Standard</a><a href="#services" data-i18n="svc.deep.n">Deep</a><a href="#services" data-i18n="svc.reno.n">Renovation</a><a href="#services" data-i18n="svc.upholstery.n">Upholstery</a></div>
+        <div><h5 data-i18n="footer.companyTitle">Company</h5><a href="#" data-i18n="footer.about">About</a><a href="#" data-i18n="footer.careers">Careers</a><a href="#" data-i18n="footer.contact">Contact</a></div>
+        <div><h5 data-i18n="footer.contactTitle">Get in touch</h5><a href="tel:+35799000000">+357 99 000 000</a><a href="mailto:hello@clean.agency">hello@clean.agency</a><a href="#" data-i18n="footer.address">Nicosia, Limassol, Paphos</a></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 clean.agency</span><span data-i18n="footer.rights">All rights reserved.</span></div>
+</footer>
+
+<!-- ADMIN -->
+<button class="admin-fab" onclick="openAdmin()" title="Admin"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+
+<div class="admin-overlay" id="adminOverlay"><div class="admin-panel">
+    <button class="admin-close" onclick="closeAdmin()">×</button>
+    <h2 style="font-family:'Fraunces',serif;margin-top:0;font-size:32px" data-i18n="admin.title">Admin Dashboard</h2>
+    <p style="color:var(--ink-soft);margin-bottom:24px" data-i18n="admin.subtitle">Manage bookings, time slots, services and promo codes.</p>
+    <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="bookings" data-i18n="admin.tab1">Bookings</button>
+        <button class="admin-tab" data-tab="slots" data-i18n="admin.tab2">Time Slots</button>
+        <button class="admin-tab" data-tab="services" data-i18n="admin.tab3">Services</button>
+        <button class="admin-tab" data-tab="promos" data-i18n="admin.tab4">Promo Codes</button>
+    </div>
+    <div class="admin-content active" id="tab-bookings"><h3 data-i18n="admin.bookingsTitle">All bookings</h3><p data-i18n="admin.bookingsSub">Review incoming requests.</p><div id="bookingsList"></div></div>
+    <div class="admin-content" id="tab-slots"><h3 data-i18n="admin.slotsTitle">Manage time slots</h3><p data-i18n="admin.slotsSub">Click to toggle Available / Blocked.</p><div class="slot-controls"><div class="slot-date-pick"><div><label data-i18n="admin.dateLabel">Date</label><input type="date" id="adminSlotDate"/></div><button class="btn-primary" onclick="renderAdminSlots()" data-i18n="admin.loadBtn">Load</button></div><div class="slot-grid" id="adminSlotGrid"></div></div></div>
+    <div class="admin-content" id="tab-services"><h3 data-i18n="admin.svcTitle">Available services</h3><p data-i18n="admin.svcSub">Toggle off to hide from customers.</p><div class="svc-toggles" id="svcToggles"></div></div>
+    <div class="admin-content" id="tab-promos"><h3 data-i18n="admin.promosTitle">Promo Codes</h3><p data-i18n="admin.promosSub">Create and manage discount codes.</p>
+        <div class="promo-add-row" style="margin-bottom:20px">
+            <div><label data-i18n="admin.promoCode">Code</label><input type="text" id="newPromoCode" placeholder="CLEAN20" style="text-transform:uppercase"/></div>
+            <div><label data-i18n="admin.promoType">Type</label><select id="newPromoType"><option value="percent">%</option><option value="fixed">€</option></select></div>
+            <div><label data-i18n="admin.promoValue">Value</label><input type="number" id="newPromoValue" placeholder="20" min="1" style="width:80px"/></div>
+            <div><label data-i18n="admin.promoUses">Max uses (0=∞)</label><input type="number" id="newPromoMax" value="0" min="0" style="width:80px"/></div>
+            <button class="btn-primary" onclick="addPromo()" style="align-self:end" data-i18n="admin.promoAdd">+ Add</button>
+        </div>
+        <div class="promo-admin-grid" id="promoList"></div>
+    </div>
+</div></div>
+
+<script>
+    /* ===== MOBILE MENU ===== */
+    function toggleMenu(){const m=document.getElementById('mobileMenu'),b=document.getElementById('burger');m.classList.toggle('visible');b.classList.toggle('open')}
+    function closeMenu(){document.getElementById('mobileMenu').classList.remove('visible');document.getElementById('burger').classList.remove('open')}
+
+    /* ===== I18N ===== */
+    const I18N={en:{
+            'nav.services':'Services','nav.how':'How it works','nav.book':'Book','nav.bookNow':'Book now',
+            'hero.eyebrow':'Operating across Cyprus','hero.title1':'A spotless home,','hero.title2':'delivered today.',
+            'hero.lead':"Vetted local cleaners, transparent pricing, and a no-fuss booking flow. Pick a time, pin your address on the map, and we'll handle the rest.",
+            'hero.cta1':'Book a cleaning','hero.cta2':'See pricing','hero.badge1Label':'Rated','hero.badge2Label':'Avg arrival','hero.badge2Val':'Next day',
+            'trust.homes':'homes cleaned','trust.cleaners':'happy clients','trust.cities':'all of Cyprus','trust.guarantee':'satisfaction guarantee','trust.premium':'premium products','trust.responsibility':'full responsibility','trust.ontime':'always on time','cities.label':'We work in:','cities.note':'Other areas of Cyprus — by arrangement',
+            'services.eyebrow':'Pricing','services.title':'Transparent pricing, no surprises.','services.subtitle':'Choose your service type below to see exact prices. All extras clearly listed.',
+            'how.eyebrow':'How it works','how.title':'Booked in 60 seconds.',
+            'how.s1Title':'Pick a service','how.s1Text':'Tell us what you need.','how.s2Title':'Enter your address','how.s2Text':'Type your address and paste a Google Maps link.',
+            'how.s3Title':'Choose a slot','how.s3Text':'Live availability.','how.s4Title':'We clean. You relax.','how.s4Text':'Pay only after the job is done.',
+            'book.eyebrow':'Book a clean','book.title':'Tell us where & when.','book.subtitle':"We'll confirm by phone within 30 minutes.",
+            'book.svcLabel':'Service type','book.sizeLabel':'Property size','book.extrasLabel':'Add-ons','book.uphLabel':'Items to clean',
+            'book.nameLabel':'Full name','book.phoneLabel':'Phone number',
+            'book.addrLabel':'Address','book.addrPlaceholder':'Street, building, apt, city','book.addrHint':'Street, building, apartment, city',
+            'book.mapLinkLabel':'Google Maps link (optional)','book.mapLinkPlaceholder':'https://maps.google.com/...','book.mapLinkHint':'Open Google Maps → find your place → Share → Copy link',
+            'book.dateLabel':'Date','book.timeLabel':'Time slot','book.notesLabel':'Notes (optional)',
+            'book.promoLabel':'Promo code','book.promoBtn':'Apply','book.submit':'Send booking request →',
+            'book.success':"✓ Thank you! We'll call you shortly to confirm.",
+
+            'footer.tagline':'Premium cleaning across Cyprus.','footer.servicesTitle':'Services','footer.companyTitle':'Company',
+            'footer.about':'About','footer.careers':'Careers','footer.contact':'Contact',
+            'footer.contactTitle':'Get in touch','footer.address':'Nicosia, Limassol, Paphos','footer.rights':'All rights reserved.',
+            'admin.title':'Admin Dashboard','admin.subtitle':'Manage bookings, slots, services and promo codes.',
+            'admin.tab1':'Bookings','admin.tab2':'Time Slots','admin.tab3':'Services','admin.tab4':'Promo Codes',
+            'admin.bookingsTitle':'All bookings','admin.bookingsSub':'Review incoming requests.',
+            'admin.slotsTitle':'Manage time slots','admin.slotsSub':'Click to toggle Available / Blocked.',
+            'admin.dateLabel':'Date','admin.loadBtn':'Load','admin.svcTitle':'Available services','admin.svcSub':'Toggle off to hide temporarily.',
+            'admin.promosTitle':'Promo Codes','admin.promosSub':'Create and manage discount codes.',
+            'admin.promoCode':'Code','admin.promoType':'Type','admin.promoValue':'Value','admin.promoUses':'Max uses (0=∞)','admin.promoAdd':'+ Add',
+            'admin.noBookings':'No bookings yet.','admin.col.when':'When','admin.col.client':'Client','admin.col.svc':'Service',
+            'admin.col.addr':'Address','admin.col.status':'Status','admin.col.actions':'Actions','admin.col.total':'Total',
+            'status.new':'New','status.confirmed':'Confirmed','status.done':'Done','errors.fill':'Please fill name, phone, address and pick a time.',
+            'promo.applied':'Promo code applied!','promo.invalid':'Invalid or expired code.',
+            'svc.standard.n':'Standard cleaning','svc.deep.n':'Deep cleaning','svc.reno.n':'After renovation','svc.upholstery.n':'Upholstery cleaning',
+            'size.studio':'Studio + 1 bath','size.1br':'1 bed + living + 1 bath','size.2br':'2 bed + living + 1 bath','size.3br':'3 bed + living + 1 bath','size.4br':'4 bed + living + 1 bath',
+            'extra.balcony':'Balcony','extra.extrabath':'Extra bathroom','extra.window':'Window','extra.balcondoor':'Balcony door',
+            'extra.tray':'Baking tray','extra.oven':'Oven','extra.fridge':'Fridge','extra.microwave':'Microwave','extra.bedlinen':'Bed linen change',
+            'uph.sofa':'Sofa','uph.mattress':'Mattress','uph.armchair':'Armchair','uph.chair':'Chair',
+            'pricing.base':'Base prices','pricing.extras':'Add-ons & extras','pricing.windows':'Windows (not included)',
+            'pricing.household':'Household extras','pricing.uphItems':'Upholstery items',
+            'price.from':'from','price.each':'each',
+            'summary.base':'Base price','summary.extras':'Add-ons','summary.discount':'Discount','summary.total':'Total',
+        },el:{
+            'nav.services':'Υπηρεσίες','nav.how':'Πώς λειτουργεί','nav.book':'Κράτηση','nav.bookNow':'Κράτηση',
+            'hero.eyebrow':'Σε όλη την Κύπρο','hero.title1':'Ένα αψεγάδιαστο σπίτι,','hero.title2':'σήμερα κιόλας.',
+            'hero.lead':'Ελεγμένοι καθαριστές, διαφανείς τιμές, απλή κράτηση.','hero.cta1':'Κάντε κράτηση','hero.cta2':'Δείτε τιμές',
+            'hero.badge1Label':'Αξιολόγηση','hero.badge2Label':'Μέση άφιξη','hero.badge2Val':'Επόμενη μέρα',
+            'trust.homes':'σπίτια','trust.cleaners':'χαρούμενοι πελάτες','trust.cities':'όλη η Κύπρος','trust.guarantee':'εγγύηση','trust.premium':'premium προϊόντα','trust.responsibility':'πλήρης ευθύνη','trust.ontime':'πάντα στην ώρα','cities.label':'Εργαζόμαστε σε:','cities.note':'Άλλες περιοχές της Κύπρου — κατόπιν συνεννόησης',
+            'services.eyebrow':'Τιμοκατάλογος','services.title':'Διαφανείς τιμές.','services.subtitle':'Επιλέξτε υπηρεσία για ακριβείς τιμές.',
+            'how.eyebrow':'Πώς λειτουργεί','how.title':'Κράτηση σε 60".',
+            'how.s1Title':'Επιλέξτε υπηρεσία','how.s1Text':'Πείτε μας τι χρειάζεστε.','how.s2Title':'Εισάγετε διεύθυνση','how.s2Text':'Πληκτρολογήστε διεύθυνση και σύνδεσμο Google Maps.',
+            'how.s3Title':'Επιλέξτε ώρα','how.s3Text':'Πραγματική διαθεσιμότητα.','how.s4Title':'Καθαρίζουμε.','how.s4Text':'Πληρώνετε μετά.',
+            'book.eyebrow':'Κράτηση','book.title':'Πού και πότε;','book.subtitle':'Επιβεβαίωση εντός 30\'.',
+            'book.svcLabel':'Τύπος','book.sizeLabel':'Μέγεθος','book.extrasLabel':'Πρόσθετα','book.uphLabel':'Αντικείμενα',
+            'book.nameLabel':'Ονοματεπώνυμο','book.phoneLabel':'Τηλέφωνο',
+            'book.addrLabel':'Διεύθυνση','book.addrPlaceholder':'Οδός, αριθμός, διαμ., πόλη','book.addrHint':'Οδός, κτίριο, διαμέρισμα, πόλη',
+            'book.mapLinkLabel':'Σύνδεσμος Google Maps (προαιρ.)','book.mapLinkPlaceholder':'https://maps.google.com/...','book.mapLinkHint':'Google Maps → βρείτε τοποθεσία → Κοινοποίηση → Αντιγραφή',
+            'book.dateLabel':'Ημερομηνία','book.timeLabel':'Ώρα','book.notesLabel':'Σημειώσεις',
+            'book.promoLabel':'Κωδ. προσφοράς','book.promoBtn':'Εφαρμογή','book.submit':'Αποστολή →',
+            'book.success':'✓ Ευχαριστούμε! Θα σας καλέσουμε.',
+
+            'footer.tagline':'Premium καθαρισμός, Κύπρος.','footer.servicesTitle':'Υπηρεσίες','footer.companyTitle':'Εταιρεία',
+            'footer.about':'Σχετικά','footer.careers':'Καριέρα','footer.contact':'Επικοινωνία',
+            'footer.contactTitle':'Επικοινωνία','footer.address':'Λευκωσία, Λεμεσός, Πάφος','footer.rights':'Με επιφύλαξη.',
+            'admin.title':'Πίνακας Διαχ.','admin.subtitle':'Κρατήσεις, θυρίδες, υπηρεσίες, προσφορές.',
+            'admin.tab1':'Κρατήσεις','admin.tab2':'Θυρίδες','admin.tab3':'Υπηρεσίες','admin.tab4':'Προσφορές',
+            'admin.bookingsTitle':'Κρατήσεις','admin.bookingsSub':'Εισερχόμενα αιτήματα.','admin.slotsTitle':'Θυρίδες','admin.slotsSub':'Κλικ για εναλλαγή.',
+            'admin.dateLabel':'Ημερομηνία','admin.loadBtn':'Φόρτωση','admin.svcTitle':'Υπηρεσίες','admin.svcSub':'Κλείστε προσωρινά.',
+            'admin.promosTitle':'Προσφορές','admin.promosSub':'Δημιουργία κωδικών.',
+            'admin.promoCode':'Κωδικός','admin.promoType':'Τύπος','admin.promoValue':'Τιμή','admin.promoUses':'Μέγ. χρήσεις','admin.promoAdd':'+ Προσθ.',
+            'admin.noBookings':'Χωρίς κρατήσεις.','admin.col.when':'Πότε','admin.col.client':'Πελάτης','admin.col.svc':'Υπηρεσία',
+            'admin.col.addr':'Διεύθυνση','admin.col.status':'Κατάσταση','admin.col.actions':'Ενέργειες','admin.col.total':'Σύνολο',
+            'status.new':'Νέα','status.confirmed':'Επιβεβ.','status.done':'Έτοιμη','errors.fill':'Συμπληρώστε όνομα, τηλ., διεύθυνση, ώρα.',
+            'promo.applied':'Εφαρμόστηκε!','promo.invalid':'Μη έγκυρος κωδικός.',
+            'svc.standard.n':'Τυπικός καθαρισμός','svc.deep.n':'Γενικός καθαρισμός','svc.reno.n':'Μετά ανακαίνιση','svc.upholstery.n':'Ταπετσαρίες',
+            'size.studio':'Στούντιο + 1 μπ.','size.1br':'1 υπν. + σαλόνι + 1 μπ.','size.2br':'2 υπν. + σαλόνι + 1 μπ.','size.3br':'3 υπν. + σαλόνι + 1 μπ.','size.4br':'4 υπν. + σαλόνι + 1 μπ.',
+            'extra.balcony':'Μπαλκόνι','extra.extrabath':'Επιπλ. μπάνιο','extra.window':'Παράθυρο','extra.balcondoor':'Μπαλκονόπορτα',
+            'extra.tray':'Ταψί','extra.oven':'Φούρνος','extra.fridge':'Ψυγείο','extra.microwave':'Φ. μικροκυμ.','extra.bedlinen':'Αλλ. σεντονιών',
+            'uph.sofa':'Καναπές','uph.mattress':'Στρώμα','uph.armchair':'Πολυθρόνα','uph.chair':'Καρέκλα',
+            'pricing.base':'Βασικές τιμές','pricing.extras':'Πρόσθετα','pricing.windows':'Παράθυρα (εκτός)',
+            'pricing.household':'Οικιακά','pricing.uphItems':'Αντικείμενα',
+            'price.from':'από','price.each':'τεμ.','summary.base':'Βάση','summary.extras':'Πρόσθετα','summary.discount':'Έκπτωση','summary.total':'Σύνολο',
+        },ru:{
+            'nav.services':'Услуги','nav.how':'Как работает','nav.book':'Заказать','nav.bookNow':'Заказать',
+            'hero.eyebrow':'По всему Кипру','hero.title1':'Идеально чистый дом —','hero.title2':'уже сегодня.',
+            'hero.lead':'Проверенные клинеры, прозрачные цены, простая заявка.','hero.cta1':'Заказать уборку','hero.cta2':'Посмотреть цены',
+            'trust.homes':'домов убрано','trust.cleaners':'довольных клиентов','trust.cities':'весь Кипр','trust.guarantee':'гарантия','trust.premium':'премиум средства','trust.responsibility':'ответственность','trust.ontime':'всегда в срок','cities.label':'Работаем в:','cities.note':'Другие районы Кипра — по договорённости',
+            'services.eyebrow':'Цены','services.title':'Прозрачные цены без сюрпризов.','services.subtitle':'Выберите тип уборки для точных цен.',
+            'how.eyebrow':'Как работает','how.title':'Заявка за 60 секунд.',
+            'how.s1Title':'Выбираете услугу','how.s1Text':'Скажите, что нужно.','how.s2Title':'Укажите адрес','how.s2Text':'Введите адрес и ссылку из Google Maps.',
+            'how.s3Title':'Выбираете время','how.s3Text':'Реальная доступность.','how.s4Title':'Мы убираем — вы отдыхаете','how.s4Text':'Оплата после проверки.',
+            'book.eyebrow':'Заявка','book.title':'Где и когда?','book.subtitle':'Перезвоним в течение 30 мин.',
+            'book.svcLabel':'Тип уборки','book.sizeLabel':'Размер жилья','book.extrasLabel':'Допы','book.uphLabel':'Что чистим',
+            'book.nameLabel':'Имя','book.phoneLabel':'Телефон',
+            'book.addrLabel':'Адрес','book.addrPlaceholder':'Улица, дом, кв., город','book.addrHint':'Улица, дом, квартира, город',
+            'book.mapLinkLabel':'Ссылка Google Maps (необязательно)','book.mapLinkPlaceholder':'https://maps.google.com/...','book.mapLinkHint':'Google Maps → найдите адрес → Поделиться → Копировать ссылку',
+            'book.dateLabel':'Дата','book.timeLabel':'Время','book.notesLabel':'Комментарий',
+            'book.promoLabel':'Промокод','book.promoBtn':'Применить','book.submit':'Отправить заявку →',
+            'book.success':'✓ Спасибо! Скоро перезвоним.',
+
+            'footer.tagline':'Премиум-клининг, Кипр.','footer.servicesTitle':'Услуги','footer.companyTitle':'Компания',
+            'footer.about':'О нас','footer.careers':'Карьера','footer.contact':'Контакты',
+            'footer.contactTitle':'Связаться','footer.address':'Никосия, Лимассол, Пафос','footer.rights':'Все права защищены.',
+            'admin.title':'Админ-панель','admin.subtitle':'Заявки, слоты, услуги и промокоды.',
+            'admin.tab1':'Заявки','admin.tab2':'Слоты','admin.tab3':'Услуги','admin.tab4':'Промокоды',
+            'admin.bookingsTitle':'Все заявки','admin.bookingsSub':'Просмотр и управление.','admin.slotsTitle':'Слоты','admin.slotsSub':'Кликните для блокировки.',
+            'admin.dateLabel':'Дата','admin.loadBtn':'Загрузить','admin.svcTitle':'Услуги','admin.svcSub':'Временно скрыть.',
+            'admin.promosTitle':'Промокоды','admin.promosSub':'Создание и управление.',
+            'admin.promoCode':'Код','admin.promoType':'Тип','admin.promoValue':'Значение','admin.promoUses':'Макс. исп. (0=∞)','admin.promoAdd':'+ Добавить',
+            'admin.noBookings':'Заявок нет.','admin.col.when':'Когда','admin.col.client':'Клиент','admin.col.svc':'Услуга',
+            'admin.col.addr':'Адрес','admin.col.status':'Статус','admin.col.actions':'Действия','admin.col.total':'Итого',
+            'status.new':'Новая','status.confirmed':'Подтв.','status.done':'Готово','errors.fill':'Заполните имя, телефон, адрес и время.',
+            'promo.applied':'Промокод применён!','promo.invalid':'Неверный или истёкший код.',
+            'svc.standard.n':'Стандартная уборка','svc.deep.n':'Генеральная уборка','svc.reno.n':'После ремонта','svc.upholstery.n':'Химчистка мебели',
+            'size.studio':'Студия + 1 санузел','size.1br':'1 комн. + зал + 1 сан.','size.2br':'2 комн. + зал + 1 сан.','size.3br':'3 комн. + зал + 1 сан.','size.4br':'4 комн. + зал + 1 сан.',
+            'extra.balcony':'Балкон','extra.extrabath':'Доп. санузел','extra.window':'Окно','extra.balcondoor':'Балконная дверь',
+            'extra.tray':'Противень','extra.oven':'Духовка','extra.fridge':'Холодильник','extra.microwave':'Микроволновка','extra.bedlinen':'Смена белья',
+            'uph.sofa':'Диван','uph.mattress':'Матрас','uph.armchair':'Кресло','uph.chair':'Стул',
+            'pricing.base':'Базовые цены','pricing.extras':'Допы','pricing.windows':'Окна (не вкл. в стоимость)',
+            'pricing.household':'Бытовые допы','pricing.uphItems':'Предметы',
+            'price.from':'от','price.each':'шт.','summary.base':'Базовая цена','summary.extras':'Допы','summary.discount':'Скидка','summary.total':'Итого',
+        }};
+    let currentLang=localStorage.getItem('cleanLang')||'en';
+    function t(k){return(I18N[currentLang]||{})[k]||I18N.en[k]||k}
+    function applyLang(){
+        document.documentElement.lang=currentLang;
+        document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n)});
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{el.placeholder=t(el.dataset['i18nPlaceholder'])});
+        document.querySelectorAll('#langSwitch button').forEach(b=>b.classList.toggle('active',b.dataset.lang===currentLang));
+        // update mobile menu too
+        document.querySelectorAll('.mobile-menu [data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n)});
+        renderPricingPage();renderFormSvc();renderSizePick();renderExtras();renderTimeSlots();
+        renderBookings();renderServiceToggles();renderPromoAdmin();updatePrice();
+        if(typeof loadHeroImages==='function')loadHeroImages();
+    }
+    document.querySelectorAll('#langSwitch button').forEach(b=>b.addEventListener('click',()=>{
+        currentLang=b.dataset.lang;localStorage.setItem('cleanLang',currentLang);applyLang();
+    }));
+
+    /* ===== DATA ===== */
+    const SVCS=[{id:'standard',emoji:'🧽'},{id:'deep',emoji:'✨'},{id:'reno',emoji:'🛠️'},{id:'upholstery',emoji:'🛋️'}];
+    const SIZES=['studio','1br','2br','3br','4br'];
+    const BASE={standard:{studio:40,'1br':60,'2br':80,'3br':100,'4br':120},deep:{studio:100,'1br':120,'2br':150,'3br':170,'4br':210},reno:{studio:160,'1br':185,'2br':215,'3br':245,'4br':275}};
+    const SZ_EX={standard:{balcony:5,extrabath:10},deep:{balcony:10,extrabath:20},reno:{balcony:30,extrabath:30}};
+    const WIN={standard:{window:5,balcondoor:7},deep:{window:5,balcondoor:7},reno:{window:10,balcondoor:11}};
+    const HOUSE=[{id:'tray',p:10},{id:'oven',p:20},{id:'fridge',p:15},{id:'microwave',p:10},{id:'bedlinen',p:5}];
+    const UPH=[{id:'sofa',p:50},{id:'mattress',p:35},{id:'armchair',p:20},{id:'chair',p:10}];
+    const TIMES=['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+
+    /* ===== STATE ===== */
+    function loadS(){return{bk:JSON.parse(localStorage.getItem('cleanBookings')||'[]'),bl:JSON.parse(localStorage.getItem('cleanBlocked')||'{}'),ds:JSON.parse(localStorage.getItem('cleanDisabledSvc')||'[]'),pr:JSON.parse(localStorage.getItem('cleanPromos')||'[{"code":"WELCOME10","type":"percent","value":10,"maxUses":0,"used":0}]')}}
+    function saveS(s){localStorage.setItem('cleanBookings',JSON.stringify(s.bk));localStorage.setItem('cleanBlocked',JSON.stringify(s.bl));localStorage.setItem('cleanDisabledSvc',JSON.stringify(s.ds));localStorage.setItem('cleanPromos',JSON.stringify(s.pr))}
+    let S=loadS(),selSvc='standard',selSize='studio',selTime=null,promoApplied=null;
+    let exQ={},uphQ={};
+    function resetQ(){exQ={};uphQ={}}
+
+    /* ===== PRICING PAGE ===== */
+    let pTab='standard';
+    function renderPricingPage(){
+        const tabs=document.getElementById('pricingTabs'),cnt=document.getElementById('pricingContent');
+        tabs.innerHTML=SVCS.filter(s=>!S.ds.includes(s.id)).map(s=>`<button class="pricing-tab ${pTab===s.id?'active':''}" data-s="${s.id}"><span class="emoji">${s.emoji}</span> ${t('svc.'+s.id+'.n')}</button>`).join('');
+        tabs.querySelectorAll('.pricing-tab').forEach(b=>b.addEventListener('click',()=>{pTab=b.dataset.s;renderPricingPage()}));
+        let h='';
+        if(pTab==='upholstery'){
+            h+=`<div class="pricing-table"><div class="pricing-row header"><div class="desc">${t('pricing.uphItems')}</div><div class="price-val">${t('price.from')}</div></div>${UPH.map(u=>`<div class="pricing-row"><div class="desc">${t('uph.'+u.id)}</div><div class="price-val">€${u.p}</div></div>`).join('')}</div>`;
+        } else {
+            const bp=BASE[pTab],ex=SZ_EX[pTab],w=WIN[pTab];
+            h+=`<div class="pricing-table"><div class="pricing-row header"><div class="desc">${t('pricing.base')}</div><div class="price-val">€</div></div>${SIZES.map(s=>`<div class="pricing-row"><div class="desc">${t('size.'+s)}</div><div class="price-val">€${bp[s]}</div></div>`).join('')}</div>`;
+            h+=`<div class="pricing-extras"><div class="pricing-extras-title">${t('pricing.extras')}</div><div class="extras-grid">
+      <div class="extra-chip"><span>${t('extra.balcony')}</span><span class="ep">${pTab==='standard'?t('price.from')+' ':''}€${ex.balcony}</span></div>
+      <div class="extra-chip"><span>${t('extra.extrabath')}</span><span class="ep">${pTab==='standard'?t('price.from')+' ':''}€${ex.extrabath}</span></div>
+    </div></div>`;
+            h+=`<div class="pricing-extras" style="margin-top:20px"><div class="pricing-extras-title">${t('pricing.windows')}</div><div class="extras-grid">
+      <div class="extra-chip"><span>${t('extra.window')}</span><span class="ep">€${w.window} / ${t('price.each')}</span></div>
+      <div class="extra-chip"><span>${t('extra.balcondoor')}</span><span class="ep">€${w.balcondoor} / ${t('price.each')}</span></div>
+    </div></div>`;
+            h+=`<div class="pricing-extras" style="margin-top:20px"><div class="pricing-extras-title">${t('pricing.household')}</div><div class="extras-grid">${HOUSE.map(e=>`<div class="extra-chip"><span>${t('extra.'+e.id)}</span><span class="ep">€${e.p}</span></div>`).join('')}</div></div>`;
+        }
+        cnt.innerHTML=h;
+    }
+
+    /* ===== FORM: SERVICE ===== */
+    function renderFormSvc(){
+        const p=document.getElementById('svcPick');
+        p.innerHTML=SVCS.map(s=>{const d=S.ds.includes(s.id);return`<div class="svc-opt ${selSvc===s.id?'selected':''} ${d?'disabled':''}" data-s="${s.id}">${s.emoji} ${t('svc.'+s.id+'.n')}</div>`}).join('');
+        p.querySelectorAll('.svc-opt').forEach(el=>el.addEventListener('click',()=>{
+            if(el.classList.contains('disabled'))return;selSvc=el.dataset.s;resetQ();promoApplied=null;
+            document.getElementById('promoFeedback').textContent='';
+            renderFormSvc();renderSizePick();renderExtras();updatePrice();
+        }));
+        document.getElementById('sizeSectionField').style.display=selSvc==='upholstery'?'none':'';
+        document.getElementById('extrasField').style.display=selSvc==='upholstery'?'none':'';
+        document.getElementById('uphField').style.display=selSvc==='upholstery'?'':'none';
+    }
+
+    /* ===== FORM: SIZE ===== */
+    function renderSizePick(){
+        if(selSvc==='upholstery')return;
+        const p=document.getElementById('sizePick');
+        p.innerHTML=SIZES.map(s=>`<div class="svc-opt ${selSize===s?'selected':''}" data-sz="${s}">${t('size.'+s)}</div>`).join('');
+        p.querySelectorAll('.svc-opt').forEach(el=>el.addEventListener('click',()=>{selSize=el.dataset.sz;renderSizePick();updatePrice()}));
+    }
+
+    /* ===== FORM: EXTRAS ===== */
+    window.cq=function(id,d){
+        if(id.startsWith('u_')){const k=id.slice(2);uphQ[k]=Math.max(0,(uphQ[k]||0)+d)}
+        else{exQ[id]=Math.max(0,(exQ[id]||0)+d)}
+        renderExtras();updatePrice();
+    };
+    function qw(id,v){return`<div class="qty-ctrl"><button type="button" onclick="cq('${id}',-1)">−</button><span class="qty-val">${v}</span><button type="button" onclick="cq('${id}',1)">+</button></div>`}
+    function renderExtras(){
+        if(selSvc==='upholstery'){
+            document.getElementById('uphGrid').innerHTML=UPH.map(u=>`<div class="extra-form-item"><div class="left"><span>${t('uph.'+u.id)}</span><span style="color:var(--ink-soft);font-size:11px;margin-left:4px">${t('price.from')} €${u.p}</span></div>${qw('u_'+u.id,uphQ[u.id]||0)}</div>`).join('');return;
+        }
+        const ex=SZ_EX[selSvc],w=WIN[selSvc];
+        let items=[{id:'balcony',l:t('extra.balcony'),p:ex.balcony},{id:'extrabath',l:t('extra.extrabath'),p:ex.extrabath},{id:'window',l:t('extra.window'),p:w.window},{id:'balcondoor',l:t('extra.balcondoor'),p:w.balcondoor},...HOUSE.map(e=>({id:e.id,l:t('extra.'+e.id),p:e.p}))];
+        document.getElementById('extrasGrid').innerHTML=items.map(it=>`<div class="extra-form-item"><div class="left"><span>${it.l}</span><span style="color:var(--ink-soft);font-size:11px;margin-left:4px">€${it.p}</span></div>${qw(it.id,exQ[it.id]||0)}</div>`).join('');
+    }
+
+    /* ===== PRICE CALC ===== */
+    function calc(){
+        let base=0,ext=0;
+        if(selSvc==='upholstery'){UPH.forEach(u=>{base+=(uphQ[u.id]||0)*u.p})}
+        else{base=BASE[selSvc][selSize];const ex=SZ_EX[selSvc],w=WIN[selSvc];ext+=(exQ.balcony||0)*ex.balcony+(exQ.extrabath||0)*ex.extrabath+(exQ.window||0)*w.window+(exQ.balcondoor||0)*w.balcondoor;HOUSE.forEach(e=>{ext+=(exQ[e.id]||0)*e.p})}
+        let sub=base+ext,disc=0;
+        if(promoApplied){disc=promoApplied.type==='percent'?Math.round(sub*promoApplied.value/100):Math.min(promoApplied.value,sub)}
+        return{base,ext,disc,total:sub-disc};
+    }
+    function updatePrice(){
+        const c=calc(),w=document.getElementById('priceSummary');
+        let h=`<div class="price-line"><span>${t('summary.base')}</span><span>€${c.base}</span></div>`;
+        if(c.ext)h+=`<div class="price-line"><span>${t('summary.extras')}</span><span>+€${c.ext}</span></div>`;
+        if(c.disc)h+=`<div class="price-line discount"><span>${t('summary.discount')} ${promoApplied?'('+promoApplied.code+')':''}</span><span>−€${c.disc}</span></div>`;
+        h+=`<div class="price-line total"><span>${t('summary.total')}</span><span>€${c.total}</span></div>`;
+        w.innerHTML=h;
+    }
+
+    /* ===== PROMO ===== */
+    window.applyPromo=function(){
+        const code=document.getElementById('fPromo').value.trim().toUpperCase(),fb=document.getElementById('promoFeedback');
+        if(!code){fb.textContent='';promoApplied=null;updatePrice();return}
+        const p=S.pr.find(p=>p.code===code&&(p.maxUses===0||p.used<p.maxUses));
+        if(p){promoApplied=p;fb.textContent='✓ '+t('promo.applied')+' ('+(p.type==='percent'?p.value+'%':'€'+p.value)+')';fb.className='promo-feedback ok'}
+        else{promoApplied=null;fb.textContent='✗ '+t('promo.invalid');fb.className='promo-feedback err'}
+        updatePrice();
+    };
+
+    /* ===== TIME SLOTS ===== */
+    function gdb(d){return S.bk.filter(b=>b.date===d&&b.status!=='cancelled')}
+    function renderTimeSlots(){
+        const g=document.getElementById('timeGrid'),d=document.getElementById('fDate').value;if(!g)return;
+        const bl=S.bl[d]||[],bk=gdb(d).map(b=>b.time);
+        g.innerHTML=TIMES.map(t=>{const dis=bl.includes(t)||bk.includes(t);return`<button type="button" class="time-slot ${selTime===t&&!dis?'selected':''} ${dis?'disabled':''}" data-t="${t}">${t}</button>`}).join('');
+        g.querySelectorAll('.time-slot').forEach(el=>el.addEventListener('click',()=>{if(el.classList.contains('disabled'))return;selTime=el.dataset.t;renderTimeSlots()}));
+    }
+    document.getElementById('fDate').addEventListener('change',()=>{selTime=null;renderTimeSlots()});
+    const tmrw=new Date();tmrw.setDate(tmrw.getDate()+1);
+    document.getElementById('fDate').value=tmrw.toISOString().split('T')[0];
+    document.getElementById('fDate').min=new Date().toISOString().split('T')[0];
+
+    /* ===== FORM SUBMIT ===== */
+    document.getElementById('bookForm').addEventListener('submit',e=>{
+        e.preventDefault();
+        const nm=document.getElementById('fName').value.trim(),ph=document.getElementById('fPhone').value.trim(),
+            ad=document.getElementById('fAddr').value.trim(),ml=document.getElementById('fMapLink').value.trim(),
+            dt=document.getElementById('fDate').value,nt=document.getElementById('fNotes').value.trim();
+        if(!nm||!ph||!ad||!selTime){alert(t('errors.fill'));return}
+        const c=calc();
+        if(promoApplied){const p=S.pr.find(x=>x.code===promoApplied.code);if(p)p.used++}
+        S.bk.unshift({id:'b_'+Date.now(),name:nm,phone:ph,addr:ad,mapLink:ml,date:dt,notes:nt,service:selSvc,
+            size:selSvc==='upholstery'?'—':selSize,time:selTime,
+            extras:{...exQ},uphItems:{...uphQ},promo:promoApplied?promoApplied.code:null,
+            basePrice:c.base,extrasPrice:c.ext,discount:c.disc,total:c.total,
+            status:'new',createdAt:new Date().toISOString()});
+        saveS(S);
+        document.getElementById('successMsg').classList.add('visible');
+        e.target.reset();document.getElementById('fDate').value=tmrw.toISOString().split('T')[0];
+        selTime=null;resetQ();promoApplied=null;document.getElementById('promoFeedback').textContent='';
+        renderTimeSlots();renderExtras();updatePrice();
+        setTimeout(()=>document.getElementById('successMsg').classList.remove('visible'),5000);
+    });
+
+    /* ===== ADMIN ===== */
+    function openAdmin(){document.getElementById('adminOverlay').classList.add('visible');if(!document.getElementById('adminSlotDate').value)document.getElementById('adminSlotDate').value=tmrw.toISOString().split('T')[0];renderBookings();renderAdminSlots();renderServiceToggles();renderPromoAdmin()}
+    function closeAdmin(){document.getElementById('adminOverlay').classList.remove('visible')}
+    if(new URLSearchParams(location.search).get('admin')==='1')setTimeout(openAdmin,200);
+    document.querySelectorAll('.admin-tab').forEach(tb=>tb.addEventListener('click',()=>{
+        document.querySelectorAll('.admin-tab').forEach(x=>x.classList.remove('active'));
+        document.querySelectorAll('.admin-content').forEach(x=>x.classList.remove('active'));
+        tb.classList.add('active');document.getElementById('tab-'+tb.dataset.tab).classList.add('active');
+    }));
+    function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+    function renderBookings(){
+        const w=document.getElementById('bookingsList');if(!w)return;
+        if(!S.bk.length){w.innerHTML=`<p style="padding:30px;text-align:center;color:var(--ink-soft);background:white;border-radius:14px;border:1px dashed var(--line)">${t('admin.noBookings')}</p>`;return}
+        w.innerHTML=`<div style="overflow-x:auto"><table class="req-table"><thead><tr>
+    <th>${t('admin.col.when')}</th><th>${t('admin.col.client')}</th><th>${t('admin.col.svc')}</th>
+    <th>${t('admin.col.addr')}</th><th>${t('admin.col.total')}</th><th>${t('admin.col.status')}</th><th>${t('admin.col.actions')}</th>
+  </tr></thead><tbody>${S.bk.map(b=>`<tr>
+    <td><strong>${b.date}</strong><br/><span style="color:var(--ink-soft)">${b.time}</span></td>
+    <td><strong>${esc(b.name)}</strong><br/><a href="tel:${b.phone}" style="color:var(--mint-700)">${esc(b.phone)}</a></td>
+    <td>${t('svc.'+b.service+'.n')}<br/><span style="color:var(--ink-soft);font-size:11px">${b.size}${b.promo?' · 🏷️'+b.promo:''}</span></td>
+    <td style="max-width:200px;font-size:12px">${esc(b.addr||'—')}${b.mapLink?`<br/><a href="${esc(b.mapLink)}" target="_blank" style="color:var(--mint-700);font-size:11px">📍 Google Maps</a>`:''}</td>
+    <td style="font-family:'Fraunces',serif;font-weight:700">€${b.total!=null?b.total:'—'}</td>
+    <td><span class="status status-${b.status}">${t('status.'+b.status)}</span></td>
+    <td><div class="req-actions">${b.status==='new'?`<button class="btn-mini confirm" onclick="uSt('${b.id}','confirmed')">✓</button>`:''}${b.status!=='done'?`<button class="btn-mini done" onclick="uSt('${b.id}','done')">✓✓</button>`:''}<button class="btn-mini del" onclick="dBk('${b.id}')">×</button></div></td>
+  </tr>`).join('')}</tbody></table></div>`;
+    }
+    window.uSt=function(id,st){const b=S.bk.find(x=>x.id===id);if(b){b.status=st;saveS(S);renderBookings()}}
+    window.dBk=function(id){S.bk=S.bk.filter(x=>x.id!==id);saveS(S);renderBookings();renderTimeSlots();renderAdminSlots()}
+
+    function renderAdminSlots(){
+        const d=document.getElementById('adminSlotDate').value,g=document.getElementById('adminSlotGrid');if(!g||!d)return;
+        const bl=S.bl[d]||[],bk=gdb(d).map(b=>b.time);
+        g.innerHTML=TIMES.map(t=>{let c='';if(bk.includes(t))c='booked';else if(bl.includes(t))c='blocked';return`<div class="slot-cell ${c}" data-t="${t}">${t}</div>`}).join('');
+        g.querySelectorAll('.slot-cell').forEach(el=>el.addEventListener('click',()=>{
+            if(el.classList.contains('booked'))return;const t=el.dataset.t,a=S.bl[d]||[];
+            const i=a.indexOf(t);if(i>=0)a.splice(i,1);else a.push(t);S.bl[d]=a;saveS(S);renderAdminSlots();renderTimeSlots();
+        }));
+    }
+
+    function renderServiceToggles(){
+        const w=document.getElementById('svcToggles');if(!w)return;
+        w.innerHTML=SVCS.map(s=>`<label class="svc-toggle"><input type="checkbox" data-s="${s.id}" ${!S.ds.includes(s.id)?'checked':''}/><span>${s.emoji} ${t('svc.'+s.id+'.n')}</span></label>`).join('');
+        w.querySelectorAll('input').forEach(inp=>inp.addEventListener('change',()=>{
+            const id=inp.dataset.s;if(inp.checked)S.ds=S.ds.filter(x=>x!==id);else if(!S.ds.includes(id))S.ds.push(id);
+            saveS(S);renderFormSvc();renderPricingPage();
+        }));
+    }
+
+    function renderPromoAdmin(){
+        const w=document.getElementById('promoList');if(!w)return;
+        if(!S.pr.length){w.innerHTML='<p style="color:var(--ink-soft)">No promo codes yet.</p>';return}
+        w.innerHTML=S.pr.map((p,i)=>`<div class="promo-card"><div><div class="code">${esc(p.code)}</div><div class="info">${p.type==='percent'?p.value+'%':'€'+p.value} · max: ${p.maxUses===0?'∞':p.maxUses} · used: ${p.used||0}</div></div><button class="btn-mini del" onclick="dPr(${i})">×</button></div>`).join('');
+    }
+    window.addPromo=function(){
+        const c=document.getElementById('newPromoCode').value.trim().toUpperCase(),tp=document.getElementById('newPromoType').value,
+            v=parseInt(document.getElementById('newPromoValue').value)||0,mx=parseInt(document.getElementById('newPromoMax').value)||0;
+        if(!c||!v)return;if(S.pr.find(p=>p.code===c)){alert('Code exists');return}
+        S.pr.push({code:c,type:tp,value:v,maxUses:mx,used:0});saveS(S);renderPromoAdmin();
+        document.getElementById('newPromoCode').value='';document.getElementById('newPromoValue').value='';
+    };
+    window.dPr=function(i){S.pr.splice(i,1);saveS(S);renderPromoAdmin()};
+
+    /* ===== HERO SLIDER ===== */
+    const HERO_IMAGES={
+        en:['images/en/hero-1.PNG','images/en/hero-2.PNG','images/en/hero-3.PNG','images/en/hero-4.PNG'],
+        el:['images/el/hero-1.PNG','images/el/hero-2.PNG','images/el/hero-3.PNG','images/el/hero-4.PNG'],
+        ru:['images/ru/hero-1.PNG','images/ru/hero-2.PNG','images/ru/hero-3.PNG','images/ru/hero-4.PNG']
+    };
+    let heroIdx=0,heroTimer=null;
+    function loadHeroImages(){
+        const imgs=HERO_IMAGES[currentLang]||HERO_IMAGES.en;
+        document.querySelectorAll('.hero-slide').forEach((el,i)=>{el.src=imgs[i]});
+    }
+    function showHero(i){
+        heroIdx=i;
+        document.querySelectorAll('.hero-slide').forEach((el,k)=>el.classList.toggle('active',k===i));
+        document.querySelectorAll('.hero-dot').forEach((el,k)=>el.classList.toggle('active',k===i));
+    }
+    function nextHero(){showHero((heroIdx+1)%4)}
+    function startHeroAuto(){clearInterval(heroTimer);heroTimer=setInterval(nextHero,3000)}
+    document.querySelectorAll('.hero-dot').forEach(d=>d.addEventListener('click',()=>{showHero(parseInt(d.dataset.d));startHeroAuto()}));
+
+    /* ===== INIT ===== */
+    applyLang();renderTimeSlots();loadHeroImages();startHeroAuto();
+</script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin · clean.agency</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mint-50:#ecfdf7;--mint-100:#d1f7e9;--mint-300:#6fdfb9;--mint-400:#3fc99c;
+            --mint-500:#1fae82;--mint-600:#14916b;--mint-700:#117559;--mint-800:#0e5a47;
+            --ink:#0b1f1a;--ink-soft:#2a3f3a;
+            --paper:#f8f9f5;--paper-warm:#f1f2e9;
+            --line:#d9dbcf;--red:#d63031;
+            --shadow:0 10px 30px -12px rgba(11,31,26,.18);
+        }
+        *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+        html,body{margin:0;padding:0;font-family:'Manrope',-apple-system,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+
+        .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}
+        .login-card{background:white;border-radius:24px;padding:48px;max-width:420px;width:100%;box-shadow:var(--shadow);border:1px solid var(--line)}
+        .login-card .logo{font-family:'Fraunces',serif;font-weight:700;font-size:28px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:8px}
+        .login-card .logo .dot{width:12px;height:12px;border-radius:50%;background:var(--mint-500);box-shadow:0 0 0 4px rgba(31,174,130,.15)}
+        .login-card h1{font-family:'Fraunces',serif;font-weight:600;font-size:24px;text-align:center;margin:0 0 4px}
+        .login-card .sub{text-align:center;color:var(--ink-soft);font-size:14px;margin-bottom:32px}
+        .login-card label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+        .login-card input{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:16px;background:var(--paper);margin-bottom:16px;transition:all .2s;-webkit-appearance:none}
+        .login-card input:focus{outline:none;border-color:var(--mint-500);background:white}
+        .login-card button{width:100%;padding:16px;background:var(--ink);color:white;border:none;border-radius:12px;font-family:'Fraunces',serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s;min-height:52px}
+        .login-card button:hover{background:var(--mint-700)}
+        .login-card button:disabled{opacity:.5;cursor:not-allowed}
+        .login-error{background:#ffe3dc;color:#a02b15;padding:12px;border-radius:10px;margin-bottom:16px;font-size:13px;display:none}
+        .login-error.visible{display:block}
+
+        .admin-wrap{display:none;min-height:100vh}
+        .admin-wrap.visible{display:block}
+        .admin-header{background:white;border-bottom:1px solid var(--line);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+        .admin-header .logo{font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
+        .admin-header .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--mint-500);box-shadow:0 0 0 4px rgba(31,174,130,.15)}
+        .admin-header .user{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--ink-soft)}
+        .admin-header .user-email{font-weight:600;color:var(--ink)}
+        .btn-logout{background:transparent;color:var(--ink);border:1px solid var(--line);padding:8px 16px;border-radius:100px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s}
+        .btn-logout:hover{background:var(--ink);color:white;border-color:var(--ink)}
+
+        .admin-main{max-width:1280px;margin:0 auto;padding:32px}
+        .admin-tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+        .admin-tab{padding:12px 20px;background:none;border:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--ink-soft);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s}
+        .admin-tab:hover{color:var(--ink)}
+        .admin-tab.active{color:var(--ink);border-bottom-color:var(--mint-500)}
+        .admin-content{display:none}.admin-content.active{display:block}
+        .admin-content h2{font-family:'Fraunces',serif;font-size:32px;font-weight:600;margin:0 0 8px;letter-spacing:-.02em}
+        .admin-content>p{color:var(--ink-soft);margin:0 0 24px}
+
+        .req-table{width:100%;border-collapse:collapse;background:white;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+        .req-table th,.req-table td{padding:14px;text-align:left;font-size:13px;border-bottom:1px solid var(--line);vertical-align:top}
+        .req-table th{background:var(--paper-warm);font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
+        .req-table tr:last-child td{border-bottom:none}
+        .status{display:inline-block;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700;text-transform:uppercase}
+        .status-new{background:#ffe9d6;color:#b04d10}
+        .status-confirmed{background:var(--mint-100);color:var(--mint-800)}
+        .status-done{background:#e6e6e6;color:#555}
+        .status-cancelled{background:#ffd5cd;color:#a02b15}
+        .req-actions{display:flex;gap:6px;flex-wrap:wrap}
+        .btn-mini{padding:6px 10px;font-size:11px;font-weight:700;border-radius:8px;cursor:pointer;border:none;font-family:inherit;min-height:32px;transition:opacity .2s}
+        .btn-mini:hover{opacity:.85}
+        .btn-mini.confirm{background:var(--mint-500);color:white}
+        .btn-mini.done{background:var(--ink);color:white}
+        .btn-mini.del{background:#ffd5cd;color:#a02b15}
+
+        .empty{padding:50px;text-align:center;color:var(--ink-soft);background:white;border-radius:14px;border:1px dashed var(--line);font-size:15px}
+
+        .slot-controls{background:white;border-radius:14px;padding:24px;border:1px solid var(--line)}
+        .slot-date-pick{display:flex;gap:14px;align-items:end;margin-bottom:24px;flex-wrap:wrap}
+        .slot-date-pick label{font-size:12px;font-weight:700;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:6px}
+        .slot-date-pick input{padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:16px}
+        .slot-date-pick button{padding:11px 22px;background:var(--ink);color:white;border:none;border-radius:10px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+        .slot-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+        .slot-cell{padding:12px 6px;border-radius:8px;text-align:center;font-size:13px;font-weight:600;cursor:pointer;user-select:none;border:1.5px solid var(--mint-300);background:var(--mint-50);color:var(--mint-800);transition:all .15s}
+        .slot-cell:hover{transform:scale(.97)}
+        .slot-cell.blocked{background:#ffe3dc;border-color:#ffb4a0;color:#a02b15}
+        .slot-cell.booked{background:var(--ink);border-color:var(--ink);color:white;cursor:not-allowed}
+        .slot-cell.booked:hover{transform:none}
+        .slot-legend{margin-top:16px;display:flex;gap:18px;font-size:12px;color:var(--ink-soft);flex-wrap:wrap}
+        .slot-legend span{display:inline-flex;align-items:center;gap:6px}
+        .slot-legend .swatch{width:14px;height:14px;border-radius:4px;border:1.5px solid}
+        .slot-legend .sw-free{background:var(--mint-50);border-color:var(--mint-300)}
+        .slot-legend .sw-blocked{background:#ffe3dc;border-color:#ffb4a0}
+        .slot-legend .sw-booked{background:var(--ink);border-color:var(--ink)}
+
+        .promo-add-row{display:flex;gap:10px;flex-wrap:wrap;align-items:end;background:white;border-radius:14px;padding:20px;border:1px solid var(--line);margin-bottom:20px}
+        .promo-add-row>div{display:flex;flex-direction:column;gap:6px}
+        .promo-add-row label{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ink-soft)}
+        .promo-add-row input,.promo-add-row select{padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;background:var(--paper)}
+        .promo-add-row button{padding:11px 22px;background:var(--mint-600);color:white;border:none;border-radius:10px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer;align-self:end;min-height:42px}
+        .promo-add-row button:hover{background:var(--mint-700)}
+        .promo-card{background:white;border:1px solid var(--line);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+        .promo-card .code{font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:.03em}
+        .promo-card .info{font-size:13px;color:var(--ink-soft);margin-top:2px}
+
+        @media(max-width:760px){
+            .admin-main{padding:20px 16px}
+            .admin-header{padding:14px 16px}
+            .admin-content h2{font-size:24px}
+            .req-table{font-size:12px}
+            .req-table th,.req-table td{padding:10px 8px}
+            .slot-grid{grid-template-columns:repeat(4,1fr)}
+            .promo-add-row{flex-direction:column}
+            .promo-add-row>div{width:100%}
+            .promo-add-row input,.promo-add-row select{width:100%}
+            .promo-card{flex-direction:column;align-items:flex-start}
+            .login-card{padding:32px 24px}
+        }
+        @media(max-width:480px){
+            .slot-grid{grid-template-columns:repeat(3,1fr)}
+            .admin-header .user-email{display:none}
+            .req-table{display:block;overflow-x:auto}
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-wrap" id="loginWrap">
+    <div class="login-card">
+        <div class="logo"><span class="dot"></span><span>clean<span style="color:var(--mint-500)">.</span>agency</span></div>
+        <h1>Admin login</h1>
+        <p class="sub">Restricted area · staff only</p>
+        <form id="loginForm">
+            <div class="login-error" id="loginError"></div>
+            <label>Email</label>
+            <input type="email" id="loginEmail" required autocomplete="email"/>
+            <label>Password</label>
+            <input type="password" id="loginPassword" required autocomplete="current-password"/>
+            <button type="submit" id="loginBtn">Sign in</button>
+        </form>
+    </div>
+</div>
+
+<div class="admin-wrap" id="adminWrap">
+    <header class="admin-header">
+        <div class="logo"><span class="dot"></span><span>clean<span style="color:var(--mint-500)">.</span>agency · admin</span></div>
+        <div class="user">
+            <span class="user-email" id="userEmail">—</span>
+            <button class="btn-logout" onclick="doLogout()">Sign out</button>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <div class="admin-tabs">
+            <button class="admin-tab active" data-tab="bookings">Bookings</button>
+            <button class="admin-tab" data-tab="slots">Time slots</button>
+            <button class="admin-tab" data-tab="promos">Promo codes</button>
+        </div>
+
+        <div class="admin-content active" id="tab-bookings">
+            <h2>All bookings</h2>
+            <p>Newest first. Click status buttons to update.</p>
+            <div id="bookingsList"></div>
+        </div>
+
+        <div class="admin-content" id="tab-slots">
+            <h2>Manage time slots</h2>
+            <p>Click an available cell to block it. Click a blocked cell to unblock.</p>
+            <div class="slot-controls">
+                <div class="slot-date-pick">
+                    <div><label>Date</label><input type="date" id="slotDate"/></div>
+                    <button onclick="loadSlots()">Load</button>
+                </div>
+                <div class="slot-grid" id="slotGrid"></div>
+                <div class="slot-legend">
+                    <span><span class="swatch sw-free"></span> Available</span>
+                    <span><span class="swatch sw-blocked"></span> Blocked</span>
+                    <span><span class="swatch sw-booked"></span> Booked</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-content" id="tab-promos">
+            <h2>Promo codes</h2>
+            <p>Create discount codes for marketing campaigns.</p>
+            <div class="promo-add-row">
+                <div><label>Code</label><input type="text" id="newCode" placeholder="SPRING25" style="text-transform:uppercase;width:140px"/></div>
+                <div><label>Type</label><select id="newType"><option value="percent">% off</option><option value="fixed">€ off</option></select></div>
+                <div><label>Value</label><input type="number" id="newValue" placeholder="25" min="1" style="width:90px"/></div>
+                <div><label>Max uses (0 = ∞)</label><input type="number" id="newMax" value="0" min="0" style="width:90px"/></div>
+                <button onclick="addPromo()">+ Add</button>
+            </div>
+            <div id="promoList"></div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const TIMES = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00'];
+    const SVC_NAMES = {standard:'Standard cleaning',deep:'Deep cleaning',reno:'After renovation',upholstery:'Upholstery'};
+
+    function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
+    async function api(url, opts = {}) {
+        const res = await fetch(url, {
+            ...opts,
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) }
+        });
+        if (res.status === 401) {
+            showLogin();
+            throw new Error('Unauthorized');
+        }
+        return res;
+    }
+
+    async function checkAuth() {
+        try {
+            const res = await fetch('/api/auth/me', { credentials: 'include' });
+            if (res.ok) {
+                const data = await res.json();
+                showAdmin(data.admin);
+                return true;
+            }
+        } catch (_) {}
+        showLogin();
+        return false;
+    }
+
+    function showLogin() {
+        document.getElementById('loginWrap').style.display = 'grid';
+        document.getElementById('adminWrap').classList.remove('visible');
+    }
+
+    function showAdmin(admin) {
+        document.getElementById('loginWrap').style.display = 'none';
+        document.getElementById('adminWrap').classList.add('visible');
+        document.getElementById('userEmail').textContent = admin.email;
+        const tmrw = new Date(); tmrw.setDate(tmrw.getDate() + 1);
+        document.getElementById('slotDate').value = tmrw.toISOString().split('T')[0];
+        loadBookings();
+        loadSlots();
+        loadPromos();
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('loginBtn');
+        const err = document.getElementById('loginError');
+        err.classList.remove('visible');
+        btn.disabled = true; btn.textContent = 'Signing in…';
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: document.getElementById('loginEmail').value,
+                    password: document.getElementById('loginPassword').value
+                })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                err.textContent = data.error || 'Login failed';
+                err.classList.add('visible');
+            } else {
+                showAdmin(data.admin);
+                document.getElementById('loginForm').reset();
+            }
+        } catch (e) {
+            err.textContent = 'Network error';
+            err.classList.add('visible');
+        } finally {
+            btn.disabled = false; btn.textContent = 'Sign in';
+        }
+    });
+
+    async function doLogout() {
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+        showLogin();
+    }
+
+    document.querySelectorAll('.admin-tab').forEach(tb => tb.addEventListener('click', () => {
+        document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.admin-content').forEach(x => x.classList.remove('active'));
+        tb.classList.add('active');
+        document.getElementById('tab-' + tb.dataset.tab).classList.add('active');
+    }));
+
+    async function loadBookings() {
+        const w = document.getElementById('bookingsList');
+        w.innerHTML = '<div class="empty">Loading…</div>';
+        try {
+            const res = await api('/api/bookings');
+            const { bookings } = await res.json();
+            if (!bookings.length) {
+                w.innerHTML = '<div class="empty">No bookings yet.</div>';
+                return;
+            }
+            w.innerHTML = `<div style="overflow-x:auto"><table class="req-table"><thead><tr>
+      <th>When</th><th>Client</th><th>Service</th><th>Address</th><th>Total</th><th>Status</th><th>Actions</th>
+    </tr></thead><tbody>${bookings.map(b => `<tr>
+      <td><strong>${b.booking_date}</strong><br/><span style="color:var(--ink-soft)">${b.booking_time}</span></td>
+      <td><strong>${esc(b.name)}</strong><br/><a href="tel:${b.phone}" style="color:var(--mint-700)">${esc(b.phone)}</a></td>
+      <td>${SVC_NAMES[b.service] || b.service}<br/><span style="color:var(--ink-soft);font-size:11px">${b.size || '—'}${b.promo_code ? ' · 🏷 ' + b.promo_code : ''}</span></td>
+      <td style="max-width:240px;font-size:12px">${esc(b.addr)}${b.map_link ? `<br/><a href="${esc(b.map_link)}" target="_blank" style="color:var(--mint-700);font-size:11px">📍 Maps</a>` : ''}${b.notes ? `<br/><span style="color:var(--ink-soft);font-size:11px;font-style:italic">${esc(b.notes)}</span>` : ''}</td>
+      <td style="font-family:'Fraunces',serif;font-weight:700;font-size:16px">€${b.total}</td>
+      <td><span class="status status-${b.status}">${b.status}</span></td>
+      <td><div class="req-actions">
+        ${b.status === 'new' ? `<button class="btn-mini confirm" onclick="updateStatus(${b.id},'confirmed')">✓ Confirm</button>` : ''}
+        ${b.status !== 'done' && b.status !== 'cancelled' ? `<button class="btn-mini done" onclick="updateStatus(${b.id},'done')">✓✓ Done</button>` : ''}
+        <button class="btn-mini del" onclick="deleteBooking(${b.id})">✕</button>
+      </div></td>
+    </tr>`).join('')}</tbody></table></div>`;
+        } catch (e) {
+            w.innerHTML = '<div class="empty" style="color:var(--red)">Failed to load bookings</div>';
+        }
+    }
+
+    async function updateStatus(id, status) {
+        await api('/api/bookings', { method: 'PATCH', body: JSON.stringify({ id, status }) });
+        loadBookings();
+    }
+
+    async function deleteBooking(id) {
+        if (!confirm('Delete this booking?')) return;
+        await api('/api/bookings', { method: 'DELETE', body: JSON.stringify({ id }) });
+        loadBookings();
+        loadSlots();
+    }
+
+    async function loadSlots() {
+        const date = document.getElementById('slotDate').value;
+        if (!date) return;
+        const g = document.getElementById('slotGrid');
+        try {
+            const res = await fetch(`/api/slots?date=${date}`, { credentials: 'include' });
+            const { booked, blocked } = await res.json();
+            g.innerHTML = TIMES.map(t => {
+                let cls = '';
+                if (booked.includes(t)) cls = 'booked';
+                else if (blocked.includes(t)) cls = 'blocked';
+                return `<div class="slot-cell ${cls}" data-t="${t}">${t}</div>`;
+            }).join('');
+            g.querySelectorAll('.slot-cell').forEach(el => el.addEventListener('click', async () => {
+                if (el.classList.contains('booked')) return;
+                const time = el.dataset.t;
+                const action = el.classList.contains('blocked') ? 'unblock' : 'block';
+                await api('/api/slots', { method: 'POST', body: JSON.stringify({ date, time, action }) });
+                loadSlots();
+            }));
+        } catch (e) {
+            g.innerHTML = '<div class="empty">Failed to load slots</div>';
+        }
+    }
+
+    document.getElementById('slotDate').addEventListener('change', loadSlots);
+
+    async function loadPromos() {
+        const w = document.getElementById('promoList');
+        try {
+            const res = await api('/api/promos');
+            const { promos } = await res.json();
+            if (!promos.length) {
+                w.innerHTML = '<div class="empty">No promo codes yet.</div>';
+                return;
+            }
+            w.innerHTML = promos.map(p => `<div class="promo-card">
+      <div>
+        <div class="code">${esc(p.code)}</div>
+        <div class="info">${p.discount_type === 'percent' ? p.discount_value + '%' : '€' + p.discount_value} off · max: ${p.max_uses === 0 ? '∞' : p.max_uses} · used: ${p.used}</div>
+      </div>
+      <button class="btn-mini del" onclick="deletePromo(${p.id})">Delete</button>
+    </div>`).join('');
+        } catch (e) {
+            w.innerHTML = '<div class="empty" style="color:var(--red)">Failed to load promos</div>';
+        }
+    }
+
+    async function addPromo() {
+        const code = document.getElementById('newCode').value.trim().toUpperCase();
+        const type = document.getElementById('newType').value;
+        const value = parseInt(document.getElementById('newValue').value) || 0;
+        const maxUses = parseInt(document.getElementById('newMax').value) || 0;
+        if (!code || !value) { alert('Code and value required'); return; }
+        const res = await api('/api/promos', { method: 'POST', body: JSON.stringify({ code, type, value, maxUses }) });
+        if (res.ok) {
+            document.getElementById('newCode').value = '';
+            document.getElementById('newValue').value = '';
+            loadPromos();
+        } else {
+            const e = await res.json();
+            alert(e.error || 'Failed');
+        }
+    }
+
+    async function deletePromo(id) {
+        if (!confirm('Delete this promo code?')) return;
+        await api('/api/promos', { method: 'DELETE', body: JSON.stringify({ id }) });
+        loadPromos();
+    }
+
+    checkAuth();
+</script>
+</body>
+</html>

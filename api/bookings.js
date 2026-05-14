@@ -1,6 +1,7 @@
 import { sql } from '../lib/db.js';
 import { requireAdmin } from '../lib/auth.js';
 import { notifyNewBooking } from '../lib/notify.js';
+import { waitUntil } from '@vercel/functions';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
@@ -62,7 +63,7 @@ export default async function handler(req, res) {
 
         const booking = result[0];
 
-        notifyNewBooking(booking).catch(e => console.error('Notify failed:', e));
+        waitUntil(notifyNewBooking(booking).catch(e => console.error('Notify failed:', e)));
 
         return res.status(201).json({ ok: true, booking });
     }

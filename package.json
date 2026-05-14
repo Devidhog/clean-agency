@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Devidhog/clean-agency#readme",
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
+    "@vercel/functions": "^3.5.1",
     "bcryptjs": "^3.0.3",
     "cookie": "^1.1.1",
     "dotenv": "^17.4.2",

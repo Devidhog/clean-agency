@@ -87,22 +87,16 @@
         .pricing-table{background:white;border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;margin-bottom:24px}
         .pricing-row{display:grid;grid-template-columns:1fr auto;padding:16px 24px;border-bottom:1px solid var(--line);align-items:center;font-size:15px;transition:background .15s}
         .pricing-row:last-child{border-bottom:none}
+        .pricing-row:hover{background:var(--mint-50)}
         .pricing-row .desc{font-weight:500}
         .pricing-row .price-val{font-family:'Fraunces',serif;font-weight:700;font-size:20px;text-align:right;white-space:nowrap}
         .pricing-row.header{background:var(--paper-warm);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-soft)}
         .pricing-row.header .price-val{font-family:'Manrope',sans-serif;font-size:12px;font-weight:700}
-        .pricing-row.clickable{cursor:pointer}
-        .pricing-row.clickable:hover{background:var(--mint-50)}
-        .pricing-row.selected{background:var(--mint-100);box-shadow:inset 4px 0 0 var(--mint-500)}
-        .pricing-row.selected .price-val{color:var(--mint-700)}
-        .pricing-row.uph-row{display:flex;justify-content:space-between;align-items:center;gap:16px}
         .pricing-extras{margin-top:16px}
         .pricing-extras-title{font-family:'Fraunces',serif;font-weight:600;font-size:18px;margin-bottom:12px}
-        .extras-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
-        .extra-chip{background:white;border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;font-size:14px}
-        .extra-chip .chip-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-        .extra-chip .ep{font-family:'Fraunces',serif;font-weight:700;color:var(--mint-700);white-space:nowrap}
-        .extra-chip .qty-ctrl{align-self:center}
+        .extras-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+        .extra-chip{background:white;border:1px solid var(--line);border-radius:14px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:14px}
+        .extra-chip .ep{font-family:'Fraunces',serif;font-weight:700;color:var(--mint-700)}
 
         .how{background:var(--paper-warm);padding:100px 32px}
         .how-inner{max-width:1280px;margin:0 auto}
@@ -112,15 +106,24 @@
         .step h4{font-family:'Fraunces',serif;font-size:20px;font-weight:600;margin:0 0 8px}
         .step p{font-size:14px;color:var(--ink-soft);margin:0}
 
-        .booking-form-wrap{max-width:760px;margin:40px auto 0}
+        .booking{max-width:1280px;margin:0 auto;padding:100px 32px}
+        .booking-grid{max-width:700px}
         .booking-form{background:white;border-radius:var(--radius);padding:40px;border:1px solid var(--line)}
-        .booking-form h3{font-family:'Fraunces',serif;font-weight:600;font-size:24px;margin:0 0 6px}
-        .booking-form .sub{color:var(--ink-soft);font-size:14px;margin:0 0 24px}
         .field{margin-bottom:20px}
         .field label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
         .field input,.field select,.field textarea{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:16px;background:var(--paper);transition:all .2s;-webkit-appearance:none}
         .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--mint-500);background:white}
         .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .svc-pick{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+        .svc-opt{padding:14px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;font-size:13px;font-weight:600;text-align:center;background:var(--paper);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px}
+        .svc-opt:hover{border-color:var(--mint-400)}
+        .svc-opt.selected{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+        .svc-opt.disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+        .extras-form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+        .extra-form-item{display:flex;align-items:center;justify-content:space-between;background:var(--paper);border:1.5px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13px;font-weight:500;transition:all .15s;min-height:48px}
+        .extra-form-item:hover{border-color:var(--mint-300)}
+        .extra-form-item .left{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+        .extra-form-item .left span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
         .qty-ctrl{display:flex;align-items:center;flex-shrink:0}
         .qty-ctrl button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:white;cursor:pointer;font-size:18px;font-weight:700;font-family:inherit;display:grid;place-items:center;transition:all .15s;-webkit-appearance:none}
         .qty-ctrl button:hover,.qty-ctrl button:active{background:var(--mint-100);border-color:var(--mint-400)}
@@ -136,12 +139,7 @@
         .promo-row button:hover{background:var(--mint-700)}
         .promo-feedback{font-size:13px;font-weight:600;margin-top:6px}
         .promo-feedback.ok{color:var(--mint-700)}.promo-feedback.err{color:var(--red)}
-        .selection-summary{background:white;border:1.5px solid var(--mint-300);border-radius:14px;padding:16px 20px;margin:8px 0 20px;font-size:14px;line-height:1.7}
-        .selection-summary .ss-row{display:flex;justify-content:space-between;gap:12px;padding:4px 0}
-        .selection-summary .ss-label{color:var(--ink-soft);font-weight:600}
-        .selection-summary .ss-value{color:var(--ink);font-weight:600;text-align:right;max-width:60%}
-        .selection-summary .ss-empty{color:var(--ink-soft);font-style:italic;text-align:center}
-        .price-summary{background:var(--paper-warm);border-radius:14px;padding:20px;margin:8px 0}
+        .price-summary{background:var(--paper-warm);border-radius:14px;padding:20px;margin:20px 0 8px}
         .price-line{display:flex;justify-content:space-between;font-size:14px;padding:4px 0}
         .price-line.discount{color:var(--red);font-weight:600}
         .price-line.total{font-family:'Fraunces',serif;font-size:22px;font-weight:700;border-top:1.5px solid var(--line);padding-top:12px;margin-top:8px}
@@ -169,6 +167,7 @@
             .foot-inner{grid-template-columns:1fr 1fr}
             .nav-links{display:none}
             .burger{display:block}
+            .extras-form-grid{grid-template-columns:1fr}
             .time-grid{grid-template-columns:repeat(3,1fr)}
             .trust-row{gap:40px;padding-right:40px;font-size:15px}
             .nav-inner .btn-primary{display:none}
@@ -184,7 +183,7 @@
             .hero-slider{aspect-ratio:3/2;max-width:100%;border-radius:18px}
             .trust{padding:18px 0}
             .trust-row{font-size:14px;gap:36px;padding-right:36px}
-            .services,.how{padding:50px 16px}
+            .services,.how,.booking{padding:50px 16px}
             .section-head{margin-bottom:30px}
             .section-head h2{font-size:26px}
             .pricing-tabs{gap:6px}
@@ -194,8 +193,9 @@
             .steps{grid-template-columns:1fr;gap:14px}
             .step{padding:20px}
             .step-num{font-size:40px}
-            .booking-form{padding:24px 20px;border-radius:18px}
+            .booking-form{padding:20px;border-radius:18px}
             .field-row{grid-template-columns:1fr}
+            .svc-pick{grid-template-columns:1fr}
             .time-grid{grid-template-columns:repeat(3,1fr)}
             .foot-inner{grid-template-columns:1fr;gap:24px}
             .foot-bottom{flex-direction:column;gap:6px;text-align:center}
@@ -208,7 +208,7 @@
 <nav class="nav"><div class="nav-inner">
     <a href="" class="logo"><span class="dot"></span><span>clean<span style="color:var(--mint-500)">.</span>agency</span></a>
     <div class="nav-links">
-        <a href="#book" data-i18n="nav.services">Services</a>
+        <a href="#services" data-i18n="nav.services">Services</a>
         <a href="#how" data-i18n="nav.how">How it works</a>
         <a href="#book" data-i18n="nav.book">Book</a>
     </div>
@@ -224,7 +224,7 @@
 </div></nav>
 
 <div class="mobile-menu" id="mobileMenu">
-    <a href="#book" onclick="closeMenu()" data-i18n="nav.services">Services</a>
+    <a href="#services" onclick="closeMenu()" data-i18n="nav.services">Services</a>
     <a href="#how" onclick="closeMenu()" data-i18n="nav.how">How it works</a>
     <a href="#book" onclick="closeMenu()" data-i18n="nav.book">Book</a>
 </div>
@@ -236,7 +236,7 @@
         <p class="lead" data-i18n="hero.lead">Vetted local cleaners, transparent pricing, and a no-fuss booking flow.</p>
         <div class="hero-ctas">
             <button class="btn-primary" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})" data-i18n="hero.cta1">Book a cleaning</button>
-            <button class="btn-ghost" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})" data-i18n="hero.cta2">See pricing</button>
+            <button class="btn-ghost" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" data-i18n="hero.cta2">See pricing</button>
         </div>
     </div>
     <div class="hero-slider" id="heroSlider">
@@ -278,6 +278,16 @@
     </div>
 </section>
 
+<section class="services" id="services">
+    <div class="section-head">
+        <span class="section-eyebrow" data-i18n="services.eyebrow">Pricing</span>
+        <h2 data-i18n="services.title">Transparent pricing, no surprises.</h2>
+        <p data-i18n="services.subtitle">Choose your service type below to see exact prices.</p>
+    </div>
+    <div class="pricing-tabs" id="pricingTabs"></div>
+    <div id="pricingContent"></div>
+</section>
+
 <section class="how" id="how"><div class="how-inner">
     <div class="section-head">
         <span class="section-eyebrow" data-i18n="how.eyebrow">How it works</span>
@@ -291,23 +301,20 @@
     </div>
 </div></section>
 
-<section class="services" id="book">
+<section class="booking" id="book">
     <div class="section-head">
-        <span class="section-eyebrow" data-i18n="services.eyebrow">Pricing &amp; booking</span>
-        <h2 data-i18n="services.title">Transparent pricing, no surprises.</h2>
-        <p data-i18n="services.subtitle">Choose your service, see the price, book in 60 seconds.</p>
+        <span class="section-eyebrow" data-i18n="book.eyebrow">Book a clean</span>
+        <h2 data-i18n="book.title">Tell us where & when.</h2>
+        <p data-i18n="book.subtitle">We'll confirm by phone within 30 minutes.</p>
     </div>
-    <div class="pricing-tabs" id="pricingTabs"></div>
-    <div id="pricingContent"></div>
-
-    <div class="booking-form-wrap">
+    <div class="booking-grid">
         <form class="booking-form" id="bookForm">
-            <h3 data-i18n="book.detailsTitle">Your details</h3>
-            <p class="sub" data-i18n="book.subtitle">We'll confirm by phone within 30 minutes.</p>
-
             <div class="success-msg" id="successMsg" data-i18n="book.success">✓ Thank you! We'll call you shortly.</div>
             <div class="error-msg" id="errorMsg"></div>
-
+            <div class="field"><label data-i18n="book.svcLabel">Service type</label><div class="svc-pick" id="svcPick"></div></div>
+            <div class="field" id="sizeSectionField"><label data-i18n="book.sizeLabel">Property size</label><div class="svc-pick" id="sizePick"></div></div>
+            <div class="field" id="uphField" style="display:none"><label data-i18n="book.uphLabel">Items to clean</label><div class="extras-form-grid" id="uphGrid"></div></div>
+            <div class="field" id="extrasField"><label data-i18n="book.extrasLabel">Add-ons</label><div class="extras-form-grid" id="extrasGrid"></div></div>
             <div class="field-row">
                 <div class="field"><label data-i18n="book.nameLabel">Full name</label><input type="text" id="fName" required placeholder="Maria Constantinou"/></div>
                 <div class="field"><label data-i18n="book.phoneLabel">Phone number</label><input type="tel" id="fPhone" required placeholder="+357 99 123 456"/></div>
@@ -320,8 +327,6 @@
             </div>
             <div class="field"><label data-i18n="book.notesLabel">Notes (optional)</label><textarea id="fNotes" rows="2" placeholder="Pets, parking, special requests..."></textarea></div>
             <div class="field"><label data-i18n="book.promoLabel">Promo code</label><div class="promo-row"><input type="text" id="fPromo" placeholder=""/><button type="button" onclick="applyPromo()" data-i18n="book.promoBtn">Apply</button></div><div class="promo-feedback" id="promoFeedback"></div></div>
-
-            <div class="selection-summary" id="selectionSummary"></div>
             <div class="price-summary" id="priceSummary"></div>
             <button type="submit" class="btn-submit" id="submitBtn" data-i18n="book.submit">Send booking request →</button>
         </form>
@@ -331,7 +336,7 @@
 <footer>
     <div class="foot-inner">
         <div><div class="logo" style="color:var(--paper)"><span class="dot"></span><span>clean<span style="color:var(--mint-400)">.</span>agency</span></div><p style="color:rgba(248,249,245,.6);font-size:14px;margin-top:14px;max-width:280px" data-i18n="footer.tagline">Premium cleaning across Cyprus.</p></div>
-        <div><h5 data-i18n="footer.servicesTitle">Services</h5><a href="#book" data-i18n="svc.standard.n">Standard</a><a href="#book" data-i18n="svc.deep.n">Deep</a><a href="#book" data-i18n="svc.reno.n">Renovation</a><a href="#book" data-i18n="svc.upholstery.n">Upholstery</a></div>
+        <div><h5 data-i18n="footer.servicesTitle">Services</h5><a href="#services" data-i18n="svc.standard.n">Standard</a><a href="#services" data-i18n="svc.deep.n">Deep</a><a href="#services" data-i18n="svc.reno.n">Renovation</a><a href="#services" data-i18n="svc.upholstery.n">Upholstery</a></div>
         <div><h5 data-i18n="footer.companyTitle">Company</h5><a href="#" data-i18n="footer.about">About</a><a href="#" data-i18n="footer.careers">Careers</a><a href="#" data-i18n="footer.contact">Contact</a></div>
         <div><h5 data-i18n="footer.contactTitle">Get in touch</h5><a href="tel:+35799000000">+357 99 000 000</a><a href="mailto:hello@clean.agency">hello@clean.agency</a><a href="#" data-i18n="footer.address">Larnaca, Limassol, Nicosia</a></div>
     </div>
@@ -348,12 +353,12 @@
             'hero.lead':"Vetted local cleaners, transparent pricing, and a no-fuss booking flow.",
             'hero.cta1':'Book a cleaning','hero.cta2':'See pricing',
             'trust.homes':'homes cleaned','trust.cleaners':'happy clients','trust.guarantee':'satisfaction guarantee','trust.premium':'premium products','trust.responsibility':'full responsibility','trust.ontime':'always on time','cities.note':'Other areas of Cyprus — by arrangement',
-            'services.eyebrow':'Pricing & booking','services.title':'Transparent pricing, no surprises.','services.subtitle':'Choose your service, see the price, book in 60 seconds.',
+            'services.eyebrow':'Pricing','services.title':'Transparent pricing, no surprises.','services.subtitle':'Choose your service type below to see exact prices.',
             'how.eyebrow':'How it works','how.title':'Booked in 60 seconds.',
             'how.s1Title':'Pick a service','how.s1Text':'Tell us what you need.','how.s2Title':'Enter your address','how.s2Text':'Type your address and paste a Google Maps link.',
             'how.s3Title':'Choose a slot','how.s3Text':'Live availability.','how.s4Title':'We clean. You relax.','how.s4Text':'Pay only after the job is done.',
-            'book.detailsTitle':'Your details','book.subtitle':"We'll confirm by phone within 30 minutes.",
-            'book.svcLabel':'Service','book.sizeLabel':'Size','book.extrasLabel':'Extras','book.uphLabel':'Items',
+            'book.eyebrow':'Book a clean','book.title':'Tell us where & when.','book.subtitle':"We'll confirm by phone within 30 minutes.",
+            'book.svcLabel':'Service type','book.sizeLabel':'Property size','book.extrasLabel':'Add-ons','book.uphLabel':'Items to clean',
             'book.nameLabel':'Full name','book.phoneLabel':'Phone number',
             'book.addrLabel':'Address','book.addrPlaceholder':'Street, building, apt, city','book.addrHint':'Street, building, apartment, city',
             'book.mapLinkLabel':'Google Maps link (optional)','book.mapLinkPlaceholder':'https://maps.google.com/...','book.mapLinkHint':'Open Google Maps → find your place → Share → Copy link',
@@ -367,29 +372,27 @@
             'errors.maplink':'Map link must be from Google Maps (maps.google.com or maps.app.goo.gl).',
             'errors.taken':'This time slot was just taken. Please pick another.',
             'errors.network':'Network error. Please try again.',
-            'errors.nouph':'Please select at least one upholstery item.',
             'promo.applied':'Promo code applied!','promo.invalid':'Invalid or expired code.',
             'svc.standard.n':'Standard cleaning','svc.deep.n':'Deep cleaning','svc.reno.n':'After renovation','svc.upholstery.n':'Upholstery cleaning',
             'size.studio':'Studio + 1 bath','size.1br':'1 bed + living + 1 bath','size.2br':'2 bed + living + 1 bath','size.3br':'3 bed + living + 1 bath','size.4br':'4 bed + living + 1 bath',
             'extra.balcony':'Balcony','extra.extrabath':'Extra bathroom','extra.window':'Window','extra.balcondoor':'Balcony door',
             'extra.tray':'Baking tray','extra.oven':'Oven','extra.fridge':'Fridge','extra.microwave':'Microwave','extra.bedlinen':'Bed linen change',
             'uph.sofa':'Sofa','uph.mattress':'Mattress','uph.armchair':'Armchair','uph.chair':'Chair',
-            'pricing.base':'Base prices — click to select','pricing.extras':'Add-ons & extras','pricing.windows':'Windows (not included)',
+            'pricing.base':'Base prices','pricing.extras':'Add-ons & extras','pricing.windows':'Windows (not included)',
             'pricing.household':'Household extras','pricing.uphItems':'Upholstery items',
             'price.from':'from','price.each':'each',
             'summary.base':'Base price','summary.extras':'Add-ons','summary.discount':'Discount','summary.total':'Total',
-            'selection.empty.uph':'Select items above to see your order',
         },el:{
             'nav.services':'Υπηρεσίες','nav.how':'Πώς λειτουργεί','nav.book':'Κράτηση','nav.bookNow':'Κράτηση',
             'hero.eyebrow':'Σε όλη την Κύπρο','hero.title1':'Ένα αψεγάδιαστο σπίτι,','hero.title2':'σήμερα κιόλας.',
             'hero.lead':'Ελεγμένοι καθαριστές, διαφανείς τιμές, απλή κράτηση.','hero.cta1':'Κάντε κράτηση','hero.cta2':'Δείτε τιμές',
             'trust.homes':'σπίτια','trust.cleaners':'χαρούμενοι πελάτες','trust.guarantee':'εγγύηση','trust.premium':'premium προϊόντα','trust.responsibility':'πλήρης ευθύνη','trust.ontime':'πάντα στην ώρα','cities.note':'Άλλες περιοχές της Κύπρου — κατόπιν συνεννόησης',
-            'services.eyebrow':'Τιμοκατάλογος & κράτηση','services.title':'Διαφανείς τιμές.','services.subtitle':'Επιλέξτε υπηρεσία, δείτε τιμή, κάντε κράτηση σε 60".',
+            'services.eyebrow':'Τιμοκατάλογος','services.title':'Διαφανείς τιμές.','services.subtitle':'Επιλέξτε υπηρεσία για ακριβείς τιμές.',
             'how.eyebrow':'Πώς λειτουργεί','how.title':'Κράτηση σε 60".',
             'how.s1Title':'Επιλέξτε υπηρεσία','how.s1Text':'Πείτε μας τι χρειάζεστε.','how.s2Title':'Εισάγετε διεύθυνση','how.s2Text':'Πληκτρολογήστε διεύθυνση και σύνδεσμο Google Maps.',
             'how.s3Title':'Επιλέξτε ώρα','how.s3Text':'Πραγματική διαθεσιμότητα.','how.s4Title':'Καθαρίζουμε.','how.s4Text':'Πληρώνετε μετά.',
-            'book.detailsTitle':'Τα στοιχεία σας','book.subtitle':'Επιβεβαίωση εντός 30\'.',
-            'book.svcLabel':'Υπηρεσία','book.sizeLabel':'Μέγεθος','book.extrasLabel':'Πρόσθετα','book.uphLabel':'Αντικείμενα',
+            'book.eyebrow':'Κράτηση','book.title':'Πού και πότε;','book.subtitle':'Επιβεβαίωση εντός 30\'.',
+            'book.svcLabel':'Τύπος','book.sizeLabel':'Μέγεθος','book.extrasLabel':'Πρόσθετα','book.uphLabel':'Αντικείμενα',
             'book.nameLabel':'Ονοματεπώνυμο','book.phoneLabel':'Τηλέφωνο',
             'book.addrLabel':'Διεύθυνση','book.addrPlaceholder':'Οδός, αριθμός, διαμ., πόλη','book.addrHint':'Οδός, κτίριο, διαμέρισμα, πόλη',
             'book.mapLinkLabel':'Σύνδεσμος Google Maps (προαιρ.)','book.mapLinkPlaceholder':'https://maps.google.com/...','book.mapLinkHint':'Google Maps → βρείτε τοποθεσία → Κοινοποίηση → Αντιγραφή',
@@ -403,28 +406,26 @@
             'errors.maplink':'Ο σύνδεσμος πρέπει να είναι από Google Maps.',
             'errors.taken':'Αυτή η ώρα μόλις κρατήθηκε. Επιλέξτε άλλη.',
             'errors.network':'Σφάλμα δικτύου. Δοκιμάστε ξανά.',
-            'errors.nouph':'Επιλέξτε τουλάχιστον ένα αντικείμενο.',
             'promo.applied':'Εφαρμόστηκε!','promo.invalid':'Μη έγκυρος κωδικός.',
             'svc.standard.n':'Τυπικός καθαρισμός','svc.deep.n':'Γενικός καθαρισμός','svc.reno.n':'Μετά ανακαίνιση','svc.upholstery.n':'Ταπετσαρίες',
             'size.studio':'Στούντιο + 1 μπ.','size.1br':'1 υπν. + σαλόνι + 1 μπ.','size.2br':'2 υπν. + σαλόνι + 1 μπ.','size.3br':'3 υπν. + σαλόνι + 1 μπ.','size.4br':'4 υπν. + σαλόνι + 1 μπ.',
             'extra.balcony':'Μπαλκόνι','extra.extrabath':'Επιπλ. μπάνιο','extra.window':'Παράθυρο','extra.balcondoor':'Μπαλκονόπορτα',
             'extra.tray':'Ταψί','extra.oven':'Φούρνος','extra.fridge':'Ψυγείο','extra.microwave':'Φ. μικροκυμ.','extra.bedlinen':'Αλλ. σεντονιών',
             'uph.sofa':'Καναπές','uph.mattress':'Στρώμα','uph.armchair':'Πολυθρόνα','uph.chair':'Καρέκλα',
-            'pricing.base':'Βασικές τιμές — κλικ για επιλογή','pricing.extras':'Πρόσθετα','pricing.windows':'Παράθυρα (εκτός)',
+            'pricing.base':'Βασικές τιμές','pricing.extras':'Πρόσθετα','pricing.windows':'Παράθυρα (εκτός)',
             'pricing.household':'Οικιακά','pricing.uphItems':'Αντικείμενα',
             'price.from':'από','price.each':'τεμ.','summary.base':'Βάση','summary.extras':'Πρόσθετα','summary.discount':'Έκπτωση','summary.total':'Σύνολο',
-            'selection.empty.uph':'Επιλέξτε αντικείμενα παραπάνω',
         },ru:{
             'nav.services':'Услуги','nav.how':'Как работает','nav.book':'Заказать','nav.bookNow':'Заказать',
             'hero.eyebrow':'По всему Кипру','hero.title1':'Идеально чистый дом —','hero.title2':'уже сегодня.',
             'hero.lead':'Проверенные клинеры, прозрачные цены, простая заявка.','hero.cta1':'Заказать уборку','hero.cta2':'Посмотреть цены',
             'trust.homes':'домов убрано','trust.cleaners':'довольных клиентов','trust.guarantee':'гарантия','trust.premium':'премиум средства','trust.responsibility':'ответственность','trust.ontime':'всегда в срок','cities.note':'Другие районы Кипра — по договорённости',
-            'services.eyebrow':'Цены и заявка','services.title':'Прозрачные цены без сюрпризов.','services.subtitle':'Выберите услугу, увидите цену, оставите заявку за 60 секунд.',
+            'services.eyebrow':'Цены','services.title':'Прозрачные цены без сюрпризов.','services.subtitle':'Выберите тип уборки для точных цен.',
             'how.eyebrow':'Как работает','how.title':'Заявка за 60 секунд.',
             'how.s1Title':'Выбираете услугу','how.s1Text':'Скажите, что нужно.','how.s2Title':'Укажите адрес','how.s2Text':'Введите адрес и ссылку из Google Maps.',
             'how.s3Title':'Выбираете время','how.s3Text':'Реальная доступность.','how.s4Title':'Мы убираем — вы отдыхаете','how.s4Text':'Оплата после проверки.',
-            'book.detailsTitle':'Ваши данные','book.subtitle':'Перезвоним в течение 30 мин.',
-            'book.svcLabel':'Услуга','book.sizeLabel':'Размер','book.extrasLabel':'Допы','book.uphLabel':'Предметы',
+            'book.eyebrow':'Заявка','book.title':'Где и когда?','book.subtitle':'Перезвоним в течение 30 мин.',
+            'book.svcLabel':'Тип уборки','book.sizeLabel':'Размер жилья','book.extrasLabel':'Допы','book.uphLabel':'Что чистим',
             'book.nameLabel':'Имя','book.phoneLabel':'Телефон',
             'book.addrLabel':'Адрес','book.addrPlaceholder':'Улица, дом, кв., город','book.addrHint':'Улица, дом, квартира, город',
             'book.mapLinkLabel':'Ссылка Google Maps (необязательно)','book.mapLinkPlaceholder':'https://maps.google.com/...','book.mapLinkHint':'Google Maps → найдите адрес → Поделиться → Копировать ссылку',
@@ -438,17 +439,15 @@
             'errors.maplink':'Ссылка должна быть из Google Maps (maps.google.com или maps.app.goo.gl).',
             'errors.taken':'Это время уже заняли. Выберите другое.',
             'errors.network':'Ошибка сети. Попробуйте ещё раз.',
-            'errors.nouph':'Выберите хотя бы один предмет.',
             'promo.applied':'Промокод применён!','promo.invalid':'Неверный или истёкший код.',
             'svc.standard.n':'Стандартная уборка','svc.deep.n':'Генеральная уборка','svc.reno.n':'После ремонта','svc.upholstery.n':'Химчистка мебели',
             'size.studio':'Студия + 1 санузел','size.1br':'1 комн. + зал + 1 сан.','size.2br':'2 комн. + зал + 1 сан.','size.3br':'3 комн. + зал + 1 сан.','size.4br':'4 комн. + зал + 1 сан.',
             'extra.balcony':'Балкон','extra.extrabath':'Доп. санузел','extra.window':'Окно','extra.balcondoor':'Балконная дверь',
             'extra.tray':'Противень','extra.oven':'Духовка','extra.fridge':'Холодильник','extra.microwave':'Микроволновка','extra.bedlinen':'Смена белья',
             'uph.sofa':'Диван','uph.mattress':'Матрас','uph.armchair':'Кресло','uph.chair':'Стул',
-            'pricing.base':'Базовые цены — кликните для выбора','pricing.extras':'Допы','pricing.windows':'Окна (не вкл. в стоимость)',
+            'pricing.base':'Базовые цены','pricing.extras':'Допы','pricing.windows':'Окна (не вкл. в стоимость)',
             'pricing.household':'Бытовые допы','pricing.uphItems':'Предметы',
             'price.from':'от','price.each':'шт.','summary.base':'Базовая цена','summary.extras':'Допы','summary.discount':'Скидка','summary.total':'Итого',
-            'selection.empty.uph':'Выберите предметы выше',
         }};
 
     let currentLang=localStorage.getItem('cleanLang')||'en';
@@ -459,7 +458,7 @@
         document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{el.placeholder=t(el.dataset['i18nPlaceholder'])});
         document.querySelectorAll('#langSwitch button').forEach(b=>b.classList.toggle('active',b.dataset.lang===currentLang));
         document.querySelectorAll('.mobile-menu [data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n)});
-        renderPricingPage();renderTimeSlots();updatePrice();renderSelectionSummary();
+        renderPricingPage();renderFormSvc();renderSizePick();renderExtras();renderTimeSlots();updatePrice();
         if(typeof loadHeroImages==='function')loadHeroImages();
     }
     document.querySelectorAll('#langSwitch button').forEach(b=>b.addEventListener('click',()=>{
@@ -480,78 +479,63 @@
     let unavailableSlots=[];
     function resetQ(){exQ={};uphQ={}}
 
-    function qw(id,v){return`<div class="qty-ctrl"><button type="button" onclick="cq('${id}',-1)">−</button><span class="qty-val">${v}</span><button type="button" onclick="cq('${id}',1)">+</button></div>`}
+    let pTab='standard';
+    function renderPricingPage(){
+        const tabs=document.getElementById('pricingTabs'),cnt=document.getElementById('pricingContent');
+        tabs.innerHTML=SVCS.map(s=>`<button class="pricing-tab ${pTab===s.id?'active':''}" data-s="${s.id}"><span class="emoji">${s.emoji}</span> ${t('svc.'+s.id+'.n')}</button>`).join('');
+        tabs.querySelectorAll('.pricing-tab').forEach(b=>b.addEventListener('click',()=>{pTab=b.dataset.s;renderPricingPage()}));
+        let h='';
+        if(pTab==='upholstery'){
+            h+=`<div class="pricing-table"><div class="pricing-row header"><div class="desc">${t('pricing.uphItems')}</div><div class="price-val">${t('price.from')}</div></div>${UPH.map(u=>`<div class="pricing-row"><div class="desc">${t('uph.'+u.id)}</div><div class="price-val">€${u.p}</div></div>`).join('')}</div>`;
+        } else {
+            const bp=BASE[pTab],ex=SZ_EX[pTab],w=WIN[pTab];
+            h+=`<div class="pricing-table"><div class="pricing-row header"><div class="desc">${t('pricing.base')}</div><div class="price-val">€</div></div>${SIZES.map(s=>`<div class="pricing-row"><div class="desc">${t('size.'+s)}</div><div class="price-val">€${bp[s]}</div></div>`).join('')}</div>`;
+            h+=`<div class="pricing-extras"><div class="pricing-extras-title">${t('pricing.extras')}</div><div class="extras-grid">
+      <div class="extra-chip"><span>${t('extra.balcony')}</span><span class="ep">${pTab==='standard'?t('price.from')+' ':''}€${ex.balcony}</span></div>
+      <div class="extra-chip"><span>${t('extra.extrabath')}</span><span class="ep">${pTab==='standard'?t('price.from')+' ':''}€${ex.extrabath}</span></div>
+    </div></div>`;
+            h+=`<div class="pricing-extras" style="margin-top:20px"><div class="pricing-extras-title">${t('pricing.windows')}</div><div class="extras-grid">
+      <div class="extra-chip"><span>${t('extra.window')}</span><span class="ep">€${w.window} / ${t('price.each')}</span></div>
+      <div class="extra-chip"><span>${t('extra.balcondoor')}</span><span class="ep">€${w.balcondoor} / ${t('price.each')}</span></div>
+    </div></div>`;
+            h+=`<div class="pricing-extras" style="margin-top:20px"><div class="pricing-extras-title">${t('pricing.household')}</div><div class="extras-grid">${HOUSE.map(e=>`<div class="extra-chip"><span>${t('extra.'+e.id)}</span><span class="ep">€${e.p}</span></div>`).join('')}</div></div>`;
+        }
+        cnt.innerHTML=h;
+    }
+
+    function renderFormSvc(){
+        const p=document.getElementById('svcPick');
+        p.innerHTML=SVCS.map(s=>`<div class="svc-opt ${selSvc===s.id?'selected':''}" data-s="${s.id}">${s.emoji} ${t('svc.'+s.id+'.n')}</div>`).join('');
+        p.querySelectorAll('.svc-opt').forEach(el=>el.addEventListener('click',()=>{
+            selSvc=el.dataset.s;resetQ();promoApplied=null;
+            document.getElementById('promoFeedback').textContent='';
+            renderFormSvc();renderSizePick();renderExtras();updatePrice();
+        }));
+        document.getElementById('sizeSectionField').style.display=selSvc==='upholstery'?'none':'';
+        document.getElementById('extrasField').style.display=selSvc==='upholstery'?'none':'';
+        document.getElementById('uphField').style.display=selSvc==='upholstery'?'':'none';
+    }
+
+    function renderSizePick(){
+        if(selSvc==='upholstery')return;
+        const p=document.getElementById('sizePick');
+        p.innerHTML=SIZES.map(s=>`<div class="svc-opt ${selSize===s?'selected':''}" data-sz="${s}">${t('size.'+s)}</div>`).join('');
+        p.querySelectorAll('.svc-opt').forEach(el=>el.addEventListener('click',()=>{selSize=el.dataset.sz;renderSizePick();updatePrice()}));
+    }
 
     window.cq=function(id,d){
         if(id.startsWith('u_')){const k=id.slice(2);uphQ[k]=Math.max(0,(uphQ[k]||0)+d)}
         else{exQ[id]=Math.max(0,(exQ[id]||0)+d)}
-        renderPricingPage();updatePrice();renderSelectionSummary();
+        renderExtras();updatePrice();
     };
-
-    function renderPricingPage(){
-        const tabs=document.getElementById('pricingTabs'),cnt=document.getElementById('pricingContent');
-        tabs.innerHTML=SVCS.map(s=>`<button class="pricing-tab ${selSvc===s.id?'active':''}" data-s="${s.id}"><span class="emoji">${s.emoji}</span> ${t('svc.'+s.id+'.n')}</button>`).join('');
-        tabs.querySelectorAll('.pricing-tab').forEach(b=>b.addEventListener('click',()=>{
-            selSvc=b.dataset.s;resetQ();promoApplied=null;
-            const pf=document.getElementById('promoFeedback');if(pf)pf.textContent='';
-            renderPricingPage();updatePrice();renderSelectionSummary();
-        }));
-
-        let h='';
+    function qw(id,v){return`<div class="qty-ctrl"><button type="button" onclick="cq('${id}',-1)">−</button><span class="qty-val">${v}</span><button type="button" onclick="cq('${id}',1)">+</button></div>`}
+    function renderExtras(){
         if(selSvc==='upholstery'){
-            h+=`<div class="pricing-table"><div class="pricing-row header"><div class="desc">${t('pricing.uphItems')}</div><div class="price-val">${t('price.from')}</div></div>`;
-            h+=UPH.map(u=>`<div class="pricing-row uph-row"><div class="desc">${t('uph.'+u.id)}</div><div style="display:flex;align-items:center;gap:16px"><div class="price-val">€${u.p}</div>${qw('u_'+u.id,uphQ[u.id]||0)}</div></div>`).join('');
-            h+=`</div>`;
-        } else {
-            const bp=BASE[selSvc],ex=SZ_EX[selSvc],w=WIN[selSvc];
-            h+=`<div class="pricing-table"><div class="pricing-row header"><div class="desc">${t('pricing.base')}</div><div class="price-val">€</div></div>`;
-            h+=SIZES.map(s=>`<div class="pricing-row clickable ${selSize===s?'selected':''}" data-sz="${s}"><div class="desc">${t('size.'+s)}</div><div class="price-val">€${bp[s]}</div></div>`).join('');
-            h+=`</div>`;
-            h+=`<div class="pricing-extras"><div class="pricing-extras-title">${t('pricing.extras')}</div><div class="extras-grid">
-                <div class="extra-chip"><div class="chip-top"><span>${t('extra.balcony')}</span><span class="ep">€${ex.balcony}</span></div>${qw('balcony',exQ.balcony||0)}</div>
-                <div class="extra-chip"><div class="chip-top"><span>${t('extra.extrabath')}</span><span class="ep">€${ex.extrabath}</span></div>${qw('extrabath',exQ.extrabath||0)}</div>
-            </div></div>`;
-            h+=`<div class="pricing-extras" style="margin-top:20px"><div class="pricing-extras-title">${t('pricing.windows')}</div><div class="extras-grid">
-                <div class="extra-chip"><div class="chip-top"><span>${t('extra.window')}</span><span class="ep">€${w.window} / ${t('price.each')}</span></div>${qw('window',exQ.window||0)}</div>
-                <div class="extra-chip"><div class="chip-top"><span>${t('extra.balcondoor')}</span><span class="ep">€${w.balcondoor} / ${t('price.each')}</span></div>${qw('balcondoor',exQ.balcondoor||0)}</div>
-            </div></div>`;
-            h+=`<div class="pricing-extras" style="margin-top:20px"><div class="pricing-extras-title">${t('pricing.household')}</div><div class="extras-grid">`;
-            h+=HOUSE.map(e=>`<div class="extra-chip"><div class="chip-top"><span>${t('extra.'+e.id)}</span><span class="ep">€${e.p}</span></div>${qw(e.id,exQ[e.id]||0)}</div>`).join('');
-            h+=`</div></div>`;
+            document.getElementById('uphGrid').innerHTML=UPH.map(u=>`<div class="extra-form-item"><div class="left"><span>${t('uph.'+u.id)}</span><span style="color:var(--ink-soft);font-size:11px;margin-left:4px">${t('price.from')} €${u.p}</span></div>${qw('u_'+u.id,uphQ[u.id]||0)}</div>`).join('');return;
         }
-        cnt.innerHTML=h;
-
-        cnt.querySelectorAll('.pricing-row.clickable').forEach(el=>el.addEventListener('click',()=>{
-            selSize=el.dataset.sz;
-            renderPricingPage();updatePrice();renderSelectionSummary();
-        }));
-    }
-
-    function renderSelectionSummary(){
-        const w=document.getElementById('selectionSummary');if(!w)return;
-        const svcName=t('svc.'+selSvc+'.n');
-        let h='';
-        if(selSvc==='upholstery'){
-            const items=UPH.filter(u=>(uphQ[u.id]||0)>0).map(u=>`${t('uph.'+u.id)} ×${uphQ[u.id]}`);
-            if(!items.length){
-                w.innerHTML=`<div class="ss-empty">${t('selection.empty.uph')}</div>`;return;
-            }
-            h+=`<div class="ss-row"><span class="ss-label">${t('book.svcLabel')}</span><span class="ss-value">${svcName}</span></div>`;
-            h+=`<div class="ss-row"><span class="ss-label">${t('book.uphLabel')}</span><span class="ss-value">${items.join(', ')}</span></div>`;
-        } else {
-            h+=`<div class="ss-row"><span class="ss-label">${t('book.svcLabel')}</span><span class="ss-value">${svcName}</span></div>`;
-            h+=`<div class="ss-row"><span class="ss-label">${t('book.sizeLabel')}</span><span class="ss-value">${t('size.'+selSize)}</span></div>`;
-            const extras=[];
-            if(exQ.balcony)extras.push(`${t('extra.balcony')} ×${exQ.balcony}`);
-            if(exQ.extrabath)extras.push(`${t('extra.extrabath')} ×${exQ.extrabath}`);
-            if(exQ.window)extras.push(`${t('extra.window')} ×${exQ.window}`);
-            if(exQ.balcondoor)extras.push(`${t('extra.balcondoor')} ×${exQ.balcondoor}`);
-            HOUSE.forEach(e=>{if(exQ[e.id])extras.push(`${t('extra.'+e.id)} ×${exQ[e.id]}`)});
-            if(extras.length){
-                h+=`<div class="ss-row"><span class="ss-label">${t('book.extrasLabel')}</span><span class="ss-value">${extras.join(', ')}</span></div>`;
-            }
-        }
-        w.innerHTML=h;
+        const ex=SZ_EX[selSvc],w=WIN[selSvc];
+        let items=[{id:'balcony',l:t('extra.balcony'),p:ex.balcony},{id:'extrabath',l:t('extra.extrabath'),p:ex.extrabath},{id:'window',l:t('extra.window'),p:w.window},{id:'balcondoor',l:t('extra.balcondoor'),p:w.balcondoor},...HOUSE.map(e=>({id:e.id,l:t('extra.'+e.id),p:e.p}))];
+        document.getElementById('extrasGrid').innerHTML=items.map(it=>`<div class="extra-form-item"><div class="left"><span>${it.l}</span><span style="color:var(--ink-soft);font-size:11px;margin-left:4px">€${it.p}</span></div>${qw(it.id,exQ[it.id]||0)}</div>`).join('');
     }
 
     function calc(){
@@ -643,14 +627,6 @@
             return;
         }
 
-        if(selSvc==='upholstery'){
-            const totalUph=UPH.reduce((sum,u)=>sum+(uphQ[u.id]||0),0);
-            if(totalUph===0){
-                errEl.textContent=t('errors.nouph');errEl.classList.add('visible');
-                return;
-            }
-        }
-
         if(ml){
             const allowed=/^https?:\/\/(www\.)?(maps\.google\.[a-z.]+|google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/maps)/i;
             if(!allowed.test(ml)){
@@ -681,7 +657,7 @@
                 document.getElementById('fDate').value=tmrw.toISOString().split('T')[0];
                 selTime=null;resetQ();promoApplied=null;
                 document.getElementById('promoFeedback').textContent='';
-                await loadAvailableSlots();renderPricingPage();updatePrice();renderSelectionSummary();
+                await loadAvailableSlots();renderExtras();updatePrice();
                 setTimeout(()=>okEl.classList.remove('visible'),6000);
             } else if(r.status===409){
                 errEl.textContent=t('errors.taken');errEl.classList.add('visible');

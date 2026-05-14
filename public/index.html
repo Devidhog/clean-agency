@@ -369,6 +369,7 @@
             'footer.about':'About','footer.careers':'Careers','footer.contact':'Contact',
             'footer.contactTitle':'Get in touch','footer.address':'Larnaca, Limassol, Nicosia','footer.rights':'All rights reserved.',
             'errors.fill':'Please fill name, phone, address and pick a time.',
+            'errors.maplink':'Map link must be from Google Maps (maps.google.com or maps.app.goo.gl).',
             'errors.taken':'This time slot was just taken. Please pick another.',
             'errors.network':'Network error. Please try again.',
             'promo.applied':'Promo code applied!','promo.invalid':'Invalid or expired code.',
@@ -402,6 +403,7 @@
             'footer.about':'Σχετικά','footer.careers':'Καριέρα','footer.contact':'Επικοινωνία',
             'footer.contactTitle':'Επικοινωνία','footer.address':'Λάρνακα, Λεμεσός, Λευκωσία','footer.rights':'Με επιφύλαξη.',
             'errors.fill':'Συμπληρώστε όνομα, τηλ., διεύθυνση, ώρα.',
+            'errors.maplink':'Ο σύνδεσμος πρέπει να είναι από Google Maps.',
             'errors.taken':'Αυτή η ώρα μόλις κρατήθηκε. Επιλέξτε άλλη.',
             'errors.network':'Σφάλμα δικτύου. Δοκιμάστε ξανά.',
             'promo.applied':'Εφαρμόστηκε!','promo.invalid':'Μη έγκυρος κωδικός.',
@@ -434,6 +436,7 @@
             'footer.about':'О нас','footer.careers':'Карьера','footer.contact':'Контакты',
             'footer.contactTitle':'Связаться','footer.address':'Ларнака, Лимассол, Никосия','footer.rights':'Все права защищены.',
             'errors.fill':'Заполните имя, телефон, адрес и время.',
+            'errors.maplink':'Ссылка должна быть из Google Maps (maps.google.com или maps.app.goo.gl).',
             'errors.taken':'Это время уже заняли. Выберите другое.',
             'errors.network':'Ошибка сети. Попробуйте ещё раз.',
             'promo.applied':'Промокод применён!','promo.invalid':'Неверный или истёкший код.',
@@ -622,6 +625,14 @@
         if(!nm||!ph||!ad||!selTime){
             errEl.textContent=t('errors.fill');errEl.classList.add('visible');
             return;
+        }
+
+        if(ml){
+            const allowed=/^https?:\/\/(www\.)?(maps\.google\.[a-z.]+|google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/maps)/i;
+            if(!allowed.test(ml)){
+                errEl.textContent=t('errors.maplink');errEl.classList.add('visible');
+                return;
+            }
         }
 
         const c=calc();

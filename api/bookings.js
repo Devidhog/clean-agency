@@ -10,6 +10,17 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
+        if (b.mapLink && b.mapLink.trim()) {
+            const link = b.mapLink.trim();
+            const allowed = /^https?:\/\/(www\.)?(maps\.google\.[a-z.]+|google\.[a-z.]+\/maps|maps\.app\.goo\.gl|goo\.gl\/maps)/i;
+            if (!allowed.test(link)) {
+                return res.status(400).json({ error: 'Map link must be from Google Maps' });
+            }
+            if (link.length > 500) {
+                return res.status(400).json({ error: 'Map link too long' });
+            }
+        }
+
         const existing = await sql`
       SELECT id FROM bookings 
       WHERE booking_date = ${b.date} AND booking_time = ${b.time} AND status != 'cancelled'

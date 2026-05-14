@@ -278,15 +278,7 @@
     </div>
 </section>
 
-<section class="services" id="services">
-    <div class="section-head">
-        <span class="section-eyebrow" data-i18n="services.eyebrow">Pricing</span>
-        <h2 data-i18n="services.title">Transparent pricing, no surprises.</h2>
-        <p data-i18n="services.subtitle">Choose your service type below to see exact prices.</p>
-    </div>
-    <div class="pricing-tabs" id="pricingTabs"></div>
-    <div id="pricingContent"></div>
-</section>
+
 
 <section class="how" id="how"><div class="how-inner">
     <div class="section-head">
@@ -303,9 +295,9 @@
 
 <section class="booking" id="book">
     <div class="section-head">
-        <span class="section-eyebrow" data-i18n="book.eyebrow">Book a clean</span>
-        <h2 data-i18n="book.title">Tell us where & when.</h2>
-        <p data-i18n="book.subtitle">We'll confirm by phone within 30 minutes.</p>
+        <span class="section-eyebrow" data-i18n="services.eyebrow">Pricing & booking</span>
+        <h2 data-i18n="services.title">Transparent pricing, no surprises.</h2>
+        <p data-i18n="book.subtitle">Choose your service below — see the price, then book in 60 seconds. We'll confirm by phone within 30 minutes.</p>
     </div>
     <div class="booking-grid">
         <form class="booking-form" id="bookForm">
@@ -503,9 +495,13 @@
         cnt.innerHTML=h;
     }
 
+    function svcStartPrice(id){
+        if(id==='upholstery') return Math.min(...UPH.map(u=>u.p));
+        return BASE[id].studio;
+    }
     function renderFormSvc(){
         const p=document.getElementById('svcPick');
-        p.innerHTML=SVCS.map(s=>`<div class="svc-opt ${selSvc===s.id?'selected':''}" data-s="${s.id}">${s.emoji} ${t('svc.'+s.id+'.n')}</div>`).join('');
+        p.innerHTML=SVCS.map(s=>`<div class="svc-opt ${selSvc===s.id?'selected':''}" data-s="${s.id}"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2"><span>${s.emoji} ${t('svc.'+s.id+'.n')}</span><span style="font-size:11px;font-weight:600;opacity:.7">${t('price.from')} €${svcStartPrice(s.id)}</span></div></div>`).join('');
         p.querySelectorAll('.svc-opt').forEach(el=>el.addEventListener('click',()=>{
             selSvc=el.dataset.s;resetQ();promoApplied=null;
             document.getElementById('promoFeedback').textContent='';
@@ -519,7 +515,8 @@
     function renderSizePick(){
         if(selSvc==='upholstery')return;
         const p=document.getElementById('sizePick');
-        p.innerHTML=SIZES.map(s=>`<div class="svc-opt ${selSize===s?'selected':''}" data-sz="${s}">${t('size.'+s)}</div>`).join('');
+        const bp=BASE[selSvc];
+        p.innerHTML=SIZES.map(s=>`<div class="svc-opt ${selSize===s?'selected':''}" data-sz="${s}"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.2"><span>${t('size.'+s)}</span><span style="font-size:12px;font-weight:700;opacity:.85">€${bp[s]}</span></div></div>`).join('');
         p.querySelectorAll('.svc-opt').forEach(el=>el.addEventListener('click',()=>{selSize=el.dataset.sz;renderSizePick();updatePrice()}));
     }
 

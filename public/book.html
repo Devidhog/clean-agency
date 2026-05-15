@@ -421,17 +421,38 @@
         updatePrice();
     };
 
-    async function loadAvailableSlots(){
+    let lastSlotsHash='';
+    async function loadAvailableSlots(force=false){
         const d=document.getElementById('fDate').value;if(!d)return;
         try{
             const r=await fetch(`/api/slots?date=${d}`);
             if(r.ok){
                 const data=await r.json();
-                unavailableSlots=[...(data.booked||[]),...(data.blocked||[])];
+                const booked=data.booked||[];
+                const blocked=data.blocked||[];
+                const newHash=[...booked].sort().join(',')+'|'+[...blocked].sort().join(',');
+                if(newHash===lastSlotsHash && !force)return;
+                lastSlotsHash=newHash;
+                const wasUnavailable=unavailableSlots.slice();
+                unavailableSlots=[...booked,...blocked];
+                if(selTime && unavailableSlots.includes(selTime) && !wasUnavailable.includes(selTime)){
+                    selTime=null;
+                    showSlotTakenWarning();
+                }
             }
-        }catch(_){unavailableSlots=[]}
+        }catch(_){}
         renderTimeSlots();
     }
+
+    function showSlotTakenWarning(){
+        showModal('err.taken.t','err.taken.d','warn');
+    }
+
+    setInterval(()=>{
+        if(document.visibilityState==='visible' && document.getElementById('bookForm').style.display!=='none'){
+            loadAvailableSlots();
+        }
+    },3000);
 
     function renderTimeSlots(){
         const g=document.getElementById('timeGrid');if(!g)return;

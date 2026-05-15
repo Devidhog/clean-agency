@@ -182,12 +182,12 @@
         </div>
 
         <div class="admin-content" id="tab-slots">
-            <h2>Manage time slots</h2>
-            <p>Click an available cell to block it. Click a blocked cell to unblock.</p>
+            <h2>Manage time slots <span class="live-indicator"><span class="live-dot"></span>Live</span></h2>
+            <p>Click an available cell to block it. Click a blocked cell to unblock. Updates automatically.</p>
             <div class="slot-controls">
                 <div class="slot-date-pick">
                     <div><label>Date</label><input type="date" id="slotDate"/></div>
-                    <button onclick="loadSlots()">Load</button>
+                    <button onclick="currentSlotsHash='';loadSlotsQuiet()">Load</button>
                 </div>
                 <div class="slot-grid" id="slotGrid"></div>
                 <div class="slot-legend">
@@ -199,8 +199,8 @@
         </div>
 
         <div class="admin-content" id="tab-promos">
-            <h2>Promo codes</h2>
-            <p>Create discount codes for marketing campaigns.</p>
+            <h2>Promo codes <span class="live-indicator"><span class="live-dot"></span>Live</span></h2>
+            <p>Create discount codes for marketing campaigns. Updates automatically.</p>
             <div class="promo-add-row">
                 <div><label>Code</label><input type="text" id="newCode" placeholder="SPRING25" style="text-transform:uppercase;width:140px"/></div>
                 <div><label>Type</label><select id="newType"><option value="percent">% off</option><option value="fixed">€ off</option></select></div>
@@ -412,13 +412,84 @@
         }
     }
 
+    let currentSlotsHash = '';
+    let currentPromosHash = '';
+
+    function hashSlots(booked, blocked) {
+        return [...booked].sort().join(',') + '|' + [...blocked].sort().join(',');
+    }
+
+    function hashPromos(promos) {
+        return promos.map(p => p.id + ':' + p.used + ':' + p.max_uses).sort().join(',');
+    }
+
+    async function loadSlotsQuiet() {
+        const date = document.getElementById('slotDate').value;
+        if (!date) return;
+        try {
+            const res = await fetch('/api/slots?date=' + date, { credentials: 'include' });
+            const data = await res.json();
+            const booked = data.booked || [];
+            const blocked = data.blocked || [];
+            const newHash = hashSlots(booked, blocked);
+            if (newHash === currentSlotsHash) return;
+            currentSlotsHash = newHash;
+            const g = document.getElementById('slotGrid');
+            g.innerHTML = TIMES.map(t => {
+                let cls = '';
+                if (booked.includes(t)) cls = 'booked';
+                else if (blocked.includes(t)) cls = 'blocked';
+                return '<div class="slot-cell ' + cls + '" data-t="' + t + '">' + t + '</div>';
+            }).join('');
+            g.querySelectorAll('.slot-cell').forEach(el => el.addEventListener('click', async () => {
+                if (el.classList.contains('booked')) return;
+                const time = el.dataset.t;
+                const action = el.classList.contains('blocked') ? 'unblock' : 'block';
+                await api('/api/slots', { method: 'POST', body: JSON.stringify({ date: date, time: time, action: action }) });
+                currentSlotsHash = '';
+                loadSlotsQuiet();
+            }));
+        } catch (e) {}
+    }
+
+    async function loadPromosQuiet() {
+        try {
+            const res = await api('/api/promos');
+            const data = await res.json();
+            const promos = data.promos || [];
+            const newHash = hashPromos(promos);
+            if (newHash === currentPromosHash) return;
+            currentPromosHash = newHash;
+            const w = document.getElementById('promoList');
+            if (!promos.length) {
+                w.innerHTML = '<div class="empty">No promo codes yet.</div>';
+                return;
+            }
+            let html = '';
+            for (const p of promos) {
+                const isExpired = p.max_uses > 0 && p.used >= p.max_uses;
+                html += '<div class="promo-card"' + (isExpired ? ' style="opacity:.5"' : '') + '><div>';
+                html += '<div class="code">' + esc(p.code) + (isExpired ? ' <span style="font-size:11px;color:var(--red);font-family:Manrope;font-weight:600">EXPIRED</span>' : '') + '</div>';
+                html += '<div class="info">' + (p.discount_type === 'percent' ? p.discount_value + '%' : '€' + p.discount_value) + ' off · max: ' + (p.max_uses === 0 ? '∞' : p.max_uses) + ' · used: ' + p.used + '</div>';
+                html += '</div>';
+                html += '<button class="btn-mini del" onclick="deletePromo(' + p.id + ')">Delete</button>';
+                html += '</div>';
+            }
+            w.innerHTML = html;
+        } catch (e) {}
+    }
+
     function startPolling() {
         setInterval(() => {
             if (!isPolling && document.visibilityState === 'visible') {
                 isPolling = true;
-                loadBookings(false).finally(() => { isPolling = false; });
+                Promise.all([
+                    loadBookings(false),
+                    loadSlotsQuiet(),
+                    loadPromosQuiet()
+                ]).finally(() => { isPolling = false; });
             }
-        }, 3000);
+        }, 2000);
     }
 
     async function updateStatus(id, status, expectedStatus) {
@@ -466,7 +537,8 @@
             }
             currentBookingsHash = '';
             await loadBookings(false);
-            loadSlots();
+            currentSlotsHash = '';
+            loadSlotsQuiet();
         } catch (e) {
             showToast('error', 'Network error', 'Could not reach the server.');
             if (row) row.style.opacity = '';
@@ -500,7 +572,10 @@
         }
     }
 
-    document.getElementById('slotDate').addEventListener('change', loadSlots);
+    document.getElementById('slotDate').addEventListener('change', () => {
+        currentSlotsHash = '';
+        loadSlotsQuiet();
+    });
 
     async function loadPromos() {
         const w = document.getElementById('promoList');
@@ -538,7 +613,8 @@
             document.getElementById('newCode').value = '';
             document.getElementById('newValue').value = '';
             showToast('info', 'Promo created', code + ' is ready to use.');
-            loadPromos();
+            currentPromosHash = '';
+            loadPromosQuiet();
         } else {
             const e = await res.json().catch(() => ({}));
             showToast('error', 'Failed', e.error || 'Could not create code.');
@@ -548,7 +624,8 @@
     async function deletePromo(id) {
         if (!confirm('Delete this promo code?')) return;
         await api('/api/promos', { method: 'DELETE', body: JSON.stringify({ id: id }) });
-        loadPromos();
+        currentPromosHash = '';
+        loadPromosQuiet();
     }
 
     checkAuth();

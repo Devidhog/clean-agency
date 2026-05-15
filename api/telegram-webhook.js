@@ -91,7 +91,7 @@ const MAIN_MENU = {
     keyboard: [
         [{ text: '🆕 Pending' }, { text: '📅 Today' }],
         [{ text: '📅 Tomorrow' }, { text: '📅 Week' }],
-        [{ text: '🔍 Find' }, { text: '🏷 New promo' }],
+        [{ text: '🔍 Find' }, { text: '🏷 Promos' }],
         [{ text: '🚫 Block slot' }, { text: '📊 Stats' }],
         [{ text: '❓ Help' }]
     ],
@@ -148,9 +148,11 @@ async function handleMessage(msg) {
 <code>/find Maria</code> — by name
 <code>/find 357991</code> — by phone
 
-🏷 <b>Create a promo code:</b>
-<code>/promo SUMMER25 25%</code> — 25% off, unlimited
+🏷 <b>Manage promo codes:</b>
+<code>/promos</code> — list all codes with usage
+<code>/promo SUMMER25 25%</code> — create new, unlimited
 <code>/promo VIP10 10 50</code> — €10 off, max 50 uses
+<code>/delpromo SUMMER25</code> — delete by code
 
 🚫 <b>Block a time slot:</b>
 <code>/block 2026-05-20 14:00</code> — block slot
@@ -172,7 +174,7 @@ Tip: press buttons under any booking notification to manage it directly.`,
         '🆕 Pending': '/pending',
         '📊 Stats': '/stats',
         '🔍 Find': '/find',
-        '🏷 New promo': '/promo',
+        '🏷 Promos': '/promos',
         '🚫 Block slot': '/block'
     };
     const normalized = buttonMap[text] || text;
@@ -190,6 +192,17 @@ Tip: press buttons under any booking notification to manage it directly.`,
     if (normalized.startsWith('/find')) {
         const query = normalized.slice(5).trim();
         await findBookings(chatId, query);
+        return;
+    }
+
+    if (normalized === '/promos') {
+        await listPromos(chatId);
+        return;
+    }
+
+    if (normalized.startsWith('/delpromo')) {
+        const code = normalized.slice(9).trim();
+        await deletePromoByCode(chatId, code);
         return;
     }
 
@@ -437,7 +450,74 @@ Share it with customers — they enter it in the booking form on the website.`,
         }
     }
 }
+async function listPromos(chatId) {
+    const rows = await sql`SELECT * FROM promo_codes ORDER BY created_at DESC`;
 
+    if (!rows.length) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '🏷 <b>No promo codes yet.</b>\n\nUse <code>/promo CODE VALUE [MAX]</code> to create one.',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    await tg('sendMessage', {
+        chat_id: chatId,
+        text: `🏷 <b>Promo codes (${rows.length})</b>`,
+        parse_mode: 'HTML'
+    });
+
+    for (const p of rows) {
+        const discountStr = p.discount_type === 'percent' ? p.discount_value + '%' : '€' + p.discount_value;
+        const usesStr = p.max_uses === 0 ? '∞ unlimited' : `${p.used} / ${p.max_uses}`;
+        const isExpired = p.max_uses > 0 && p.used >= p.max_uses;
+        const status = isExpired ? ' · ⛔ EXPIRED' : '';
+
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `<code>${p.code}</code>${status}
+
+<b>Discount:</b> ${discountStr} off
+<b>Used:</b> ${usesStr}`,
+            parse_mode: 'HTML',
+            reply_markup: {
+                inline_keyboard: [[
+                    { text: '🗑 Delete', callback_data: `delpromo:${p.id}` }
+                ]]
+            }
+        });
+    }
+}
+
+async function deletePromoByCode(chatId, code) {
+    if (!code) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '🗑 <b>Delete a promo code</b>\n\nUsage:\n<code>/delpromo CODE</code>\n\nExample:\n<code>/delpromo SUMMER25</code>\n\nOr use <code>/promos</code> to see all codes with Delete buttons.',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    const upperCode = code.toUpperCase();
+    const result = await sql`DELETE FROM promo_codes WHERE code = ${upperCode} RETURNING id`;
+
+    if (!result.length) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `❌ Promo code <code>${upperCode}</code> not found.`,
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    await tg('sendMessage', {
+        chat_id: chatId,
+        text: `✅ Promo code <code>${upperCode}</code> deleted.`,
+        parse_mode: 'HTML'
+    });
+}
 async function blockSlot(chatId, args, isBlock) {
     if (!args) {
         await tg('sendMessage', {
@@ -538,7 +618,23 @@ async function handleCallback(cb) {
     const [action, idStr, sub] = data.split(':');
     const id = parseInt(idStr);
     if (!id) return;
-
+    if (action === 'delpromo') {
+        const promos = await sql`SELECT code FROM promo_codes WHERE id = ${id} LIMIT 1`;
+        if (!promos.length) {
+            await tg('answerCallbackQuery', { callback_query_id: cb.id, text: 'Promo not found' });
+            return;
+        }
+        const code = promos[0].code;
+        await sql`DELETE FROM promo_codes WHERE id = ${id}`;
+        await tg('editMessageText', {
+            chat_id: chatId,
+            message_id: messageId,
+            text: `🗑 <b>Promo code ${code} deleted</b>`,
+            parse_mode: 'HTML'
+        });
+        await tg('answerCallbackQuery', { callback_query_id: cb.id, text: '🗑 Deleted' });
+        return;
+    }
     if (action === 'delconfirm') {
         await tg('editMessageReplyMarkup', {
             chat_id: chatId,

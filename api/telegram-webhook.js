@@ -91,7 +91,9 @@ const MAIN_MENU = {
     keyboard: [
         [{ text: '🆕 Pending' }, { text: '📅 Today' }],
         [{ text: '📅 Tomorrow' }, { text: '📅 Week' }],
-        [{ text: '📊 Stats' }, { text: '❓ Help' }]
+        [{ text: '🔍 Find' }, { text: '🏷 New promo' }],
+        [{ text: '🚫 Block slot' }, { text: '📊 Stats' }],
+        [{ text: '❓ Help' }]
     ],
     resize_keyboard: true,
     is_persistent: true
@@ -138,15 +140,25 @@ async function handleMessage(msg) {
             chat_id: chatId,
             text: `👋 <b>clean.agency admin bot</b>
 
-Use the buttons below or type commands:
-
 📅 <b>View bookings:</b>
 - <b>Today</b> / <b>Tomorrow</b> / <b>Week</b>
 - <b>Pending</b> — awaiting confirmation
 
+🔍 <b>Find a booking:</b>
+<code>/find Maria</code> — by name
+<code>/find 357991</code> — by phone
+
+🏷 <b>Create a promo code:</b>
+<code>/promo SUMMER25 25%</code> — 25% off, unlimited
+<code>/promo VIP10 10 50</code> — €10 off, max 50 uses
+
+🚫 <b>Block a time slot:</b>
+<code>/block 2026-05-20 14:00</code> — block slot
+<code>/unblock 2026-05-20 14:00</code> — unblock
+
 📊 <b>Stats</b> — month overview
 
-You can also press buttons under any booking notification to manage it directly.`,
+Tip: press buttons under any booking notification to manage it directly.`,
             parse_mode: 'HTML',
             reply_markup: MAIN_MENU
         });
@@ -158,7 +170,10 @@ You can also press buttons under any booking notification to manage it directly.
         '📅 Tomorrow': '/tomorrow',
         '📅 Week': '/week',
         '🆕 Pending': '/pending',
-        '📊 Stats': '/stats'
+        '📊 Stats': '/stats',
+        '🔍 Find': '/find',
+        '🏷 New promo': '/promo',
+        '🚫 Block slot': '/block'
     };
     const normalized = buttonMap[text] || text;
 
@@ -169,6 +184,25 @@ You can also press buttons under any booking notification to manage it directly.
 
     if (normalized === '/stats') {
         await sendStats(chatId);
+        return;
+    }
+
+    if (text.startsWith('/find')) {
+        const query = text.slice(5).trim();
+        await findBookings(chatId, query);
+        return;
+    }
+
+    if (text.startsWith('/promo')) {
+        const args = text.slice(6).trim();
+        await createPromo(chatId, args);
+        return;
+    }
+
+    if (text.startsWith('/block') || text.startsWith('/unblock')) {
+        const isBlock = text.startsWith('/block');
+        const args = text.slice(isBlock ? 6 : 8).trim();
+        await blockSlot(chatId, args, isBlock);
         return;
     }
 
@@ -252,6 +286,242 @@ async function sendStats(chatId) {
 💰 <b>Revenue (excl. cancelled):</b> €${s.revenue}`,
         parse_mode: 'HTML'
     });
+}
+async function findBookings(chatId, query) {
+    if (!query) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '🔍 <b>Find a booking</b>\n\nUsage:\n<code>/find Maria</code> — search by name\n<code>/find 357991</code> — search by phone',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    const q = '%' + query.toLowerCase() + '%';
+    const rows = await sql`
+        SELECT * FROM bookings
+        WHERE LOWER(name) LIKE ${q} OR LOWER(phone) LIKE ${q}
+        ORDER BY booking_date DESC, booking_time DESC
+        LIMIT 20
+    `;
+
+    if (!rows.length) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `🔍 No bookings found for: <i>${query}</i>`,
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    await tg('sendMessage', {
+        chat_id: chatId,
+        text: `🔍 <b>Found ${rows.length} booking(s)</b> for: <i>${query}</i>`,
+        parse_mode: 'HTML'
+    });
+
+    for (const b of rows) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: bookingText(b),
+            parse_mode: 'HTML',
+            reply_markup: bookingKeyboard(b),
+            disable_web_page_preview: true
+        });
+    }
+}
+
+async function createPromo(chatId, args) {
+    if (!args) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `🏷 <b>Create a promo code</b>
+
+<b>Usage:</b>
+<code>/promo CODE VALUE[%] [MAX_USES]</code>
+
+📌 <b>Parameters:</b>
+- <b>CODE</b> — name customers will type (e.g. SUMMER25)
+- <b>VALUE</b> — discount: 25% (percent) or 10 (euros)
+- <b>MAX_USES</b> — optional, how many times the code can be used. Skip or put 0 for unlimited.
+
+<b>Examples:</b>
+<code>/promo SUMMER25 25%</code>
+   → 25% off, unlimited uses
+
+<code>/promo SUMMER25 25% 100</code>
+   → 25% off, first 100 customers only
+
+<code>/promo VIP10 10 50</code>
+   → €10 off, max 50 uses
+
+<code>/promo WELCOME 5%</code>
+   → 5% off, unlimited
+
+After 1st value comes the discount. After 2nd value (optional) — uses limit.`,
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    const parts = args.split(/\s+/);
+    if (parts.length < 2) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '❌ Not enough arguments. Use <code>/promo</code> for help.',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    const code = parts[0].toUpperCase();
+    const valueRaw = parts[1];
+    const maxUses = parts[2] ? parseInt(parts[2]) : 0;
+
+    let type, value;
+    if (valueRaw.endsWith('%')) {
+        type = 'percent';
+        value = parseInt(valueRaw.slice(0, -1));
+    } else {
+        type = 'fixed';
+        value = parseInt(valueRaw);
+    }
+
+    if (!code || !value || isNaN(value) || value <= 0) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '❌ Invalid arguments. Code and positive value required.',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    if (type === 'percent' && value > 100) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '❌ Percentage discount cannot exceed 100%.',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    try {
+        await sql`
+            INSERT INTO promo_codes (code, discount_type, discount_value, max_uses, used)
+            VALUES (${code}, ${type}, ${value}, ${maxUses}, 0)
+        `;
+
+        const discountStr = type === 'percent' ? value + '%' : '€' + value;
+        const usesStr = maxUses === 0 ? '∞ unlimited activations' : maxUses + ' activations';
+
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `✅ <b>Promo code created!</b>
+
+<b>Code:</b> <code>${code}</code>
+<b>Discount:</b> ${discountStr} off
+<b>Activations:</b> ${usesStr}
+
+Share it with customers — they enter it in the booking form on the website.`,
+            parse_mode: 'HTML'
+        });
+    } catch (e) {
+        if (String(e.message).includes('duplicate')) {
+            await tg('sendMessage', {
+                chat_id: chatId,
+                text: `❌ Code <code>${code}</code> already exists. Use a different one.`,
+                parse_mode: 'HTML'
+            });
+        } else {
+            await tg('sendMessage', { chat_id: chatId, text: '❌ Failed to create promo: ' + e.message });
+        }
+    }
+}
+
+async function blockSlot(chatId, args, isBlock) {
+    if (!args) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `🚫 <b>Block / Unblock a time slot</b>
+
+<b>Usage:</b>
+<code>/block YYYY-MM-DD HH:MM</code> — block a slot
+<code>/unblock YYYY-MM-DD HH:MM</code> — unblock
+
+<b>Examples:</b>
+<code>/block 2026-05-20 14:00</code>
+<code>/unblock 2026-05-20 14:00</code>
+
+Available times: 08:00 — 19:00 (hourly)`,
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    const parts = args.split(/\s+/);
+    if (parts.length < 2) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '❌ Need both date and time. Example: <code>/block 2026-05-20 14:00</code>',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    const date = parts[0];
+    const time = parts[1];
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '❌ Date must be in YYYY-MM-DD format. Example: 2026-05-20',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    if (!/^\d{2}:\d{2}$/.test(time)) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: '❌ Time must be in HH:MM format. Example: 14:00',
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    const existing = await sql`
+        SELECT id FROM bookings 
+        WHERE booking_date = ${date} AND booking_time = ${time} AND status != 'cancelled'
+        LIMIT 1
+    `;
+    if (existing.length > 0 && isBlock) {
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `⚠️ This slot already has a booking (#${existing[0].id}). Cancel or delete it first.`,
+            parse_mode: 'HTML'
+        });
+        return;
+    }
+
+    if (isBlock) {
+        await sql`
+            INSERT INTO blocked_slots (slot_date, slot_time)
+            VALUES (${date}, ${time})
+            ON CONFLICT (slot_date, slot_time) DO NOTHING
+        `;
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `🚫 Slot <b>${date} ${time}</b> blocked. Customers won't be able to book it.`,
+            parse_mode: 'HTML'
+        });
+    } else {
+        const result = await sql`DELETE FROM blocked_slots WHERE slot_date = ${date} AND slot_time = ${time}`;
+        await tg('sendMessage', {
+            chat_id: chatId,
+            text: `✅ Slot <b>${date} ${time}</b> unblocked. It's now available for booking.`,
+            parse_mode: 'HTML'
+        });
+    }
 }
 
 async function handleCallback(cb) {

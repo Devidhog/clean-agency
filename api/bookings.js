@@ -77,15 +77,41 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'PATCH') {
-        const { id, status } = req.body || {};
+        const { id, status, expectedStatus } = req.body || {};
         if (!id || !status) return res.status(400).json({ error: 'id and status required' });
+
+        if (expectedStatus) {
+            const current = await sql`SELECT status, name FROM bookings WHERE id = ${id} LIMIT 1`;
+            if (!current.length) return res.status(404).json({ error: 'Booking not found' });
+            if (current[0].status !== expectedStatus) {
+                return res.status(409).json({
+                    error: 'Status changed by another admin',
+                    currentStatus: current[0].status,
+                    bookingName: current[0].name
+                });
+            }
+        }
+
         await sql`UPDATE bookings SET status = ${status} WHERE id = ${id}`;
         return res.status(200).json({ ok: true });
     }
 
     if (req.method === 'DELETE') {
-        const { id } = req.body || {};
+        const { id, expectedStatus } = req.body || {};
         if (!id) return res.status(400).json({ error: 'id required' });
+
+        if (expectedStatus) {
+            const current = await sql`SELECT status, name FROM bookings WHERE id = ${id} LIMIT 1`;
+            if (!current.length) return res.status(404).json({ error: 'Already deleted' });
+            if (current[0].status !== expectedStatus) {
+                return res.status(409).json({
+                    error: 'Status changed by another admin',
+                    currentStatus: current[0].status,
+                    bookingName: current[0].name
+                });
+            }
+        }
+
         await sql`DELETE FROM bookings WHERE id = ${id}`;
         return res.status(200).json({ ok: true });
     }

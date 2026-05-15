@@ -87,7 +87,15 @@ function bookingKeyboard(b) {
     ]);
     return { inline_keyboard: rows };
 }
-
+const MAIN_MENU = {
+    keyboard: [
+        [{ text: '🆕 Pending' }, { text: '📅 Today' }],
+        [{ text: '📅 Tomorrow' }, { text: '📅 Week' }],
+        [{ text: '📊 Stats' }, { text: '❓ Help' }]
+    ],
+    resize_keyboard: true,
+    is_persistent: true
+};
 export default async function handler(req, res) {
     if (req.method !== 'POST') return res.status(405).end();
 
@@ -125,38 +133,49 @@ async function handleMessage(msg) {
         return;
     }
 
-    if (text === '/start' || text === '/help') {
+    if (text === '/start' || text === '/help' || text === '❓ Help') {
         await tg('sendMessage', {
             chat_id: chatId,
             text: `👋 <b>clean.agency admin bot</b>
 
-Commands:
-/today — bookings for today
-/tomorrow — bookings for tomorrow
-/week — bookings for the next 7 days
-/pending — all new bookings awaiting confirmation
-/stats — month statistics
-/help — this message
+Use the buttons below or type commands:
 
-You can also press buttons under any booking notification to manage it.`,
-            parse_mode: 'HTML'
+📅 <b>View bookings:</b>
+- <b>Today</b> / <b>Tomorrow</b> / <b>Week</b>
+- <b>Pending</b> — awaiting confirmation
+
+📊 <b>Stats</b> — month overview
+
+You can also press buttons under any booking notification to manage it directly.`,
+            parse_mode: 'HTML',
+            reply_markup: MAIN_MENU
         });
         return;
     }
 
-    if (text === '/today' || text === '/tomorrow' || text === '/week' || text === '/pending') {
-        await listBookings(chatId, text);
+    const buttonMap = {
+        '📅 Today': '/today',
+        '📅 Tomorrow': '/tomorrow',
+        '📅 Week': '/week',
+        '🆕 Pending': '/pending',
+        '📊 Stats': '/stats'
+    };
+    const normalized = buttonMap[text] || text;
+
+    if (normalized === '/today' || normalized === '/tomorrow' || normalized === '/week' || normalized === '/pending') {
+        await listBookings(chatId, normalized);
         return;
     }
 
-    if (text === '/stats') {
+    if (normalized === '/stats') {
         await sendStats(chatId);
         return;
     }
 
     await tg('sendMessage', {
         chat_id: chatId,
-        text: '❓ Unknown command. Send /help to see what I can do.'
+        text: '❓ Unknown command. Tap a button or send /help.',
+        reply_markup: MAIN_MENU
     });
 }
 

@@ -187,21 +187,21 @@ Tip: press buttons under any booking notification to manage it directly.`,
         return;
     }
 
-    if (text.startsWith('/find')) {
-        const query = text.slice(5).trim();
+    if (normalized.startsWith('/find')) {
+        const query = normalized.slice(5).trim();
         await findBookings(chatId, query);
         return;
     }
 
-    if (text.startsWith('/promo')) {
-        const args = text.slice(6).trim();
+    if (normalized.startsWith('/promo')) {
+        const args = normalized.slice(6).trim();
         await createPromo(chatId, args);
         return;
     }
 
-    if (text.startsWith('/block') || text.startsWith('/unblock')) {
-        const isBlock = text.startsWith('/block');
-        const args = text.slice(isBlock ? 6 : 8).trim();
+    if (normalized.startsWith('/block') || normalized.startsWith('/unblock')) {
+        const isBlock = normalized.startsWith('/block');
+        const args = normalized.slice(isBlock ? 6 : 8).trim();
         await blockSlot(chatId, args, isBlock);
         return;
     }

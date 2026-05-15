@@ -141,7 +141,7 @@
         <p data-i18n="book.subtitle">We'll confirm by phone within 30 minutes.</p>
     </div>
 
-    <form class="booking-form" id="bookForm">
+    <form class="booking-form" id="bookForm" novalidate>
         <div class="field"><label data-i18n="book.svcLabel">Service type</label><div class="svc-pick" id="svcPick"></div></div>
         <div class="field" id="sizeSectionField"><label data-i18n="book.sizeLabel">Property size</label><div class="svc-pick" id="sizePick"></div></div>
         <div class="field" id="uphField" style="display:none"><label data-i18n="book.uphLabel">Items to clean</label><div class="extras-form-grid" id="uphGrid"></div></div>
@@ -151,7 +151,7 @@
             <div class="field"><label data-i18n="book.phoneLabel">Phone number</label><input type="tel" id="fPhone" required placeholder="+357 99 123 456"/></div>
         </div>
         <div class="field"><label data-i18n="book.addrLabel">Address</label><input type="text" id="fAddr" required data-i18n-placeholder="book.addrPlaceholder"/><div class="field-hint" data-i18n="book.addrHint">Street, building, apartment, city</div></div>
-        <div class="field"><label data-i18n="book.mapLinkLabel">Google Maps link (optional)</label><input type="url" id="fMapLink" data-i18n-placeholder="book.mapLinkPlaceholder"/><div class="field-hint" data-i18n="book.mapLinkHint">Open Google Maps → find your place → Share → Copy link</div></div>
+        <div class="field"><label data-i18n="book.mapLinkLabel">Google Maps link (optional)</label><input type="text" id="fMapLink" data-i18n-placeholder="book.mapLinkPlaceholder"/><div class="field-hint" data-i18n="book.mapLinkHint">Open Google Maps → find your place → Share → Copy link</div></div>
         <div class="field-row">
             <div class="field"><label data-i18n="book.dateLabel">Date</label><input type="date" id="fDate" required/></div>
             <div class="field"><label data-i18n="book.timeLabel">Time slot</label><div class="time-grid" id="timeGrid"></div></div>
@@ -205,9 +205,12 @@
             'price.from':'from','price.each':'each',
             'summary.base':'Base price','summary.extras':'Add-ons','summary.discount':'Discount','summary.total':'Total',
             'modal.ok':'OK, got it',
-            'err.missingName.t':'Name missing','err.missingName.d':'Please enter your full name so we know how to greet you.',
-            'err.missingPhone.t':'Phone missing','err.missingPhone.d':'We need your phone number to confirm the booking within 30 minutes.',
-            'err.missingAddr.t':'Address missing','err.missingAddr.d':'Please tell us where to send our cleaners.',
+            'err.missingName.t':'Name is required','err.missingName.d':'Please enter your full name in the "Full name" field so we know how to greet you when we call.',
+            'err.shortName.t':'Name too short','err.shortName.d':'Your name looks too short. Please enter at least 2 characters in the "Full name" field.',
+            'err.missingPhone.t':'Phone number is required','err.missingPhone.d':'Please enter your phone number in the "Phone number" field. We\'ll call you within 30 minutes to confirm.',
+            'err.badPhone.t':'Invalid phone number','err.badPhone.d':'The phone number looks invalid. Please use the international format, e.g. +357 99 123 456 (digits, spaces, +, - and parentheses only).',
+            'err.missingAddr.t':'Address is required','err.missingAddr.d':'Please enter the cleaning address in the "Address" field — street, building, apartment, and city.',
+            'err.shortAddr.t':'Address too short','err.shortAddr.d':'The address looks incomplete. Please provide street name, building number, apartment, and city for accurate service.',
             'err.missingTime.t':'Pick a time slot','err.missingTime.d':'Please choose an available time slot for your cleaning.',
             'err.missingUph.t':'Select items','err.missingUph.d':'Please pick at least one item for upholstery cleaning.',
             'err.maplink.t':'Invalid map link','err.maplink.d':'For your safety, we only accept links from Google Maps (maps.google.com or maps.app.goo.gl). Please use the Share button in Google Maps to copy a proper link.',
@@ -237,9 +240,12 @@
             'price.from':'από','price.each':'τεμ.',
             'summary.base':'Βάση','summary.extras':'Πρόσθετα','summary.discount':'Έκπτωση','summary.total':'Σύνολο',
             'modal.ok':'Εντάξει',
-            'err.missingName.t':'Λείπει όνομα','err.missingName.d':'Συμπληρώστε το ονοματεπώνυμό σας.',
-            'err.missingPhone.t':'Λείπει τηλέφωνο','err.missingPhone.d':'Χρειαζόμαστε τηλέφωνο για επιβεβαίωση εντός 30\'.',
-            'err.missingAddr.t':'Λείπει διεύθυνση','err.missingAddr.d':'Πείτε μας πού να στείλουμε τους καθαριστές μας.',
+            'err.missingName.t':'Απαιτείται όνομα','err.missingName.d':'Συμπληρώστε το ονοματεπώνυμό σας στο πεδίο "Ονοματεπώνυμο" για να ξέρουμε πώς να σας προσφωνήσουμε.',
+            'err.shortName.t':'Πολύ σύντομο όνομα','err.shortName.d':'Το όνομα είναι πολύ σύντομο. Συμπληρώστε τουλάχιστον 2 χαρακτήρες.',
+            'err.missingPhone.t':'Απαιτείται τηλέφωνο','err.missingPhone.d':'Συμπληρώστε τον αριθμό τηλεφώνου σας. Θα σας καλέσουμε εντός 30\' για επιβεβαίωση.',
+            'err.badPhone.t':'Μη έγκυρο τηλέφωνο','err.badPhone.d':'Ο αριθμός φαίνεται μη έγκυρος. Χρησιμοποιήστε διεθνή μορφή, π.χ. +357 99 123 456.',
+            'err.missingAddr.t':'Απαιτείται διεύθυνση','err.missingAddr.d':'Εισάγετε διεύθυνση καθαρισμού — οδός, κτίριο, διαμέρισμα, πόλη.',
+            'err.shortAddr.t':'Σύντομη διεύθυνση','err.shortAddr.d':'Η διεύθυνση φαίνεται ελλιπής. Παρακαλώ δώστε οδό, αριθμό, διαμέρισμα και πόλη.',
             'err.missingTime.t':'Επιλέξτε ώρα','err.missingTime.d':'Επιλέξτε διαθέσιμη ώρα για τον καθαρισμό.',
             'err.missingUph.t':'Επιλέξτε αντικείμενα','err.missingUph.d':'Επιλέξτε τουλάχιστον ένα αντικείμενο.',
             'err.maplink.t':'Μη έγκυρος σύνδεσμος','err.maplink.d':'Για ασφάλεια, δεχόμαστε μόνο συνδέσμους από Google Maps. Χρησιμοποιήστε το κουμπί Κοινοποίηση στο Google Maps.',
@@ -269,9 +275,12 @@
             'price.from':'от','price.each':'шт.',
             'summary.base':'Базовая цена','summary.extras':'Допы','summary.discount':'Скидка','summary.total':'Итого',
             'modal.ok':'Понятно',
-            'err.missingName.t':'Не указано имя','err.missingName.d':'Заполните имя, чтобы мы знали как к вам обращаться.',
-            'err.missingPhone.t':'Не указан телефон','err.missingPhone.d':'Нужен телефон, чтобы мы могли перезвонить и подтвердить заявку.',
-            'err.missingAddr.t':'Не указан адрес','err.missingAddr.d':'Скажите, куда отправлять клинеров.',
+            'err.missingName.t':'Не указано имя','err.missingName.d':'Заполните поле "Имя" — нам нужно знать, как к вам обращаться при звонке.',
+            'err.shortName.t':'Имя слишком короткое','err.shortName.d':'Имя выглядит слишком коротким. Введите минимум 2 символа в поле "Имя".',
+            'err.missingPhone.t':'Не указан телефон','err.missingPhone.d':'Заполните поле "Телефон" — мы перезвоним в течение 30 минут для подтверждения заявки.',
+            'err.badPhone.t':'Неверный номер телефона','err.badPhone.d':'Номер выглядит некорректно. Используйте международный формат, например +357 99 123 456 (только цифры, пробелы, +, - и скобки).',
+            'err.missingAddr.t':'Не указан адрес','err.missingAddr.d':'Заполните поле "Адрес" — улица, дом, квартира и город куда приедут клинеры.',
+            'err.shortAddr.t':'Адрес неполный','err.shortAddr.d':'Адрес выглядит неполным. Укажите улицу, номер дома, квартиру и город для точной доставки услуги.',
             'err.missingTime.t':'Не выбрано время','err.missingTime.d':'Выберите свободный слот времени для уборки.',
             'err.missingUph.t':'Не выбраны предметы','err.missingUph.d':'Выберите хотя бы один предмет для химчистки.',
             'err.maplink.t':'Неверная ссылка','err.maplink.d':'В целях безопасности мы принимаем только ссылки из Google Maps (maps.google.com или maps.app.goo.gl). Откройте Google Maps, найдите место, нажмите «Поделиться» и скопируйте ссылку.',
@@ -454,11 +463,16 @@
 
         document.querySelectorAll('.invalid').forEach(el=>el.classList.remove('invalid'));
 
-        if(!nm){document.getElementById('fName').classList.add('invalid');showModal('err.missingName.t','err.missingName.d','error');return}
-        if(!ph){document.getElementById('fPhone').classList.add('invalid');showModal('err.missingPhone.t','err.missingPhone.d','error');return}
-        if(!ad){document.getElementById('fAddr').classList.add('invalid');showModal('err.missingAddr.t','err.missingAddr.d','error');return}
-        if(!selTime){showModal('err.missingTime.t','err.missingTime.d','warn');return}
+        if(!nm){document.getElementById('fName').classList.add('invalid');showModal('err.missingName.t','err.missingName.d','error');document.getElementById('fName').focus();return}
+        if(nm.length<2){document.getElementById('fName').classList.add('invalid');showModal('err.shortName.t','err.shortName.d','error');document.getElementById('fName').focus();return}
 
+        if(!ph){document.getElementById('fPhone').classList.add('invalid');showModal('err.missingPhone.t','err.missingPhone.d','error');document.getElementById('fPhone').focus();return}
+        if(!/^[\d\s+()-]{7,20}$/.test(ph)){document.getElementById('fPhone').classList.add('invalid');showModal('err.badPhone.t','err.badPhone.d','error');document.getElementById('fPhone').focus();return}
+
+        if(!ad){document.getElementById('fAddr').classList.add('invalid');showModal('err.missingAddr.t','err.missingAddr.d','error');document.getElementById('fAddr').focus();return}
+        if(ad.length<5){document.getElementById('fAddr').classList.add('invalid');showModal('err.shortAddr.t','err.shortAddr.d','error');document.getElementById('fAddr').focus();return}
+
+        if(!selTime){showModal('err.missingTime.t','err.missingTime.d','warn');return}
         if(selSvc==='upholstery'){
             const totalUph=UPH.reduce((sum,u)=>sum+(uphQ[u.id]||0),0);
             if(totalUph===0){showModal('err.missingUph.t','err.missingUph.d','warn');return}

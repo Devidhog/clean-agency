@@ -50,13 +50,18 @@
         .admin-tab:hover{color:var(--ink)}
         .admin-tab.active{color:var(--ink);border-bottom-color:var(--mint-500)}
         .admin-content{display:none}.admin-content.active{display:block}
-        .admin-content h2{font-family:'Fraunces',serif;font-size:32px;font-weight:600;margin:0 0 8px;letter-spacing:-.02em}
+        .admin-content h2{font-family:'Fraunces',serif;font-size:32px;font-weight:600;margin:0 0 8px;letter-spacing:-.02em;display:flex;align-items:center;flex-wrap:wrap}
         .admin-content>p{color:var(--ink-soft);margin:0 0 24px}
+
+        .live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);font-weight:600;margin-left:12px;text-transform:uppercase;letter-spacing:.08em}
+        .live-dot{width:8px;height:8px;border-radius:50%;background:var(--mint-500);animation:pulse-live 1.5s ease-in-out infinite}
+        @keyframes pulse-live{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
 
         .req-table{width:100%;border-collapse:collapse;background:white;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
         .req-table th,.req-table td{padding:14px;text-align:left;font-size:13px;border-bottom:1px solid var(--line);vertical-align:top}
         .req-table th{background:var(--paper-warm);font-weight:700;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
         .req-table tr:last-child td{border-bottom:none}
+        .req-table tr{transition:opacity .2s}
         .status{display:inline-block;padding:3px 9px;border-radius:100px;font-size:11px;font-weight:700;text-transform:uppercase}
         .status-new{background:#ffe9d6;color:#b04d10}
         .status-confirmed{background:var(--mint-100);color:var(--mint-800)}
@@ -68,24 +73,7 @@
         .btn-mini.confirm{background:var(--mint-500);color:white}
         .btn-mini.done{background:var(--ink);color:white}
         .btn-mini.del{background:#ffd5cd;color:#a02b15}
-        .toast-wrap{position:fixed;top:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:1000;max-width:380px}
-        .toast{background:white;border-radius:14px;padding:14px 18px;box-shadow:0 10px 30px -5px rgba(11,31,26,.25);border-left:4px solid var(--mint-500);font-size:14px;display:flex;align-items:flex-start;gap:10px;animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);opacity:0}
-        .toast.visible{opacity:1}
-        .toast.warning{border-left-color:#f0a020}
-        .toast.error{border-left-color:var(--red)}
-        .toast.info{border-left-color:var(--mint-500)}
-        .toast-icon{flex-shrink:0;font-size:18px;line-height:1.2}
-        .toast-body{flex:1;min-width:0}
-        .toast-title{font-weight:700;margin-bottom:2px}
-        .toast-msg{color:var(--ink-soft);font-size:13px}
-        .toast-close{background:none;border:none;cursor:pointer;color:var(--ink-soft);font-size:18px;padding:0;line-height:1;flex-shrink:0}
-        @keyframes toastIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
-        @keyframes toastOut{to{transform:translateX(20px);opacity:0}}
-        .toast.leaving{animation:toastOut .25s ease forwards}
-        .live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);font-weight:600;margin-left:12px}
-        .live-dot{width:8px;height:8px;border-radius:50%;background:var(--mint-500);animation:pulse-live 1.5s ease-in-out infinite}
-        @keyframes pulse-live{0%,100%{opacity:1}50%{opacity:.4}}
-        @media(max-width:560px){.toast-wrap{top:auto;bottom:16px;right:16px;left:16px;max-width:none}}
+
         .empty{padding:50px;text-align:center;color:var(--ink-soft);background:white;border-radius:14px;border:1px dashed var(--line);font-size:15px}
 
         .slot-controls{background:white;border-radius:14px;padding:24px;border:1px solid var(--line)}
@@ -116,6 +104,20 @@
         .promo-card .code{font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:.03em}
         .promo-card .info{font-size:13px;color:var(--ink-soft);margin-top:2px}
 
+        .toast-wrap{position:fixed;top:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:1000;max-width:380px;pointer-events:none}
+        .toast{background:white;border-radius:14px;padding:14px 18px;box-shadow:0 10px 30px -5px rgba(11,31,26,.25);border-left:4px solid var(--mint-500);font-size:14px;display:flex;align-items:flex-start;gap:10px;animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);pointer-events:auto}
+        .toast.warning{border-left-color:#f0a020}
+        .toast.error{border-left-color:var(--red)}
+        .toast.info{border-left-color:var(--mint-500)}
+        .toast-icon{flex-shrink:0;font-size:18px;line-height:1.2}
+        .toast-body{flex:1;min-width:0}
+        .toast-title{font-weight:700;margin-bottom:2px}
+        .toast-msg{color:var(--ink-soft);font-size:13px}
+        .toast-close{background:none;border:none;cursor:pointer;color:var(--ink-soft);font-size:18px;padding:0;line-height:1;flex-shrink:0}
+        @keyframes toastIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+        @keyframes toastOut{to{transform:translateX(20px);opacity:0}}
+        .toast.leaving{animation:toastOut .25s ease forwards}
+
         @media(max-width:760px){
             .admin-main{padding:20px 16px}
             .admin-header{padding:14px 16px}
@@ -128,6 +130,7 @@
             .promo-add-row input,.promo-add-row select{width:100%}
             .promo-card{flex-direction:column;align-items:flex-start}
             .login-card{padding:32px 24px}
+            .toast-wrap{top:auto;bottom:16px;right:16px;left:16px;max-width:none}
         }
         @media(max-width:480px){
             .slot-grid{grid-template-columns:repeat(3,1fr)}
@@ -155,7 +158,6 @@
 </div>
 
 <div class="admin-wrap" id="adminWrap">
-    <div class="toast-wrap" id="toastWrap"></div>
     <header class="admin-header">
         <div class="logo"><span class="dot"></span><span>clean<span style="color:var(--mint-500)">.</span>agency · admin</span></div>
         <div class="user">
@@ -163,6 +165,8 @@
             <button class="btn-logout" onclick="doLogout()">Sign out</button>
         </div>
     </header>
+
+    <div class="toast-wrap" id="toastWrap"></div>
 
     <main class="admin-main">
         <div class="admin-tabs">
@@ -214,34 +218,30 @@
     const SVC_NAMES = {standard:'Standard cleaning',deep:'Deep cleaning',reno:'After renovation',upholstery:'Upholstery'};
 
     function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+
     function showToast(type, title, msg) {
         const wrap = document.getElementById('toastWrap');
         if (!wrap) return;
         const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
+        toast.className = 'toast ' + type;
         const icon = type === 'warning' ? '⚠️' : type === 'error' ? '✕' : '✓';
-        toast.innerHTML = `
-    <span class="toast-icon">${icon}</span>
-    <div class="toast-body">
-      <div class="toast-title">${esc(title)}</div>
-      <div class="toast-msg">${esc(msg)}</div>
-    </div>
-    <button class="toast-close" onclick="this.parentElement.classList.add('leaving');setTimeout(()=>this.parentElement.remove(),250)">✕</button>
-  `;
+        toast.innerHTML = '<span class="toast-icon">' + icon + '</span>' +
+            '<div class="toast-body"><div class="toast-title">' + esc(title) + '</div>' +
+            '<div class="toast-msg">' + esc(msg) + '</div></div>' +
+            '<button class="toast-close" onclick="this.parentElement.classList.add(\'leaving\');setTimeout(()=>this.parentElement.remove(),250)">✕</button>';
         wrap.appendChild(toast);
-        requestAnimationFrame(() => toast.classList.add('visible'));
         setTimeout(() => {
             toast.classList.add('leaving');
             setTimeout(() => toast.remove(), 250);
         }, 5000);
     }
 
-    async function api(url, opts = {}) {
-        const res = await fetch(url, {
-            ...opts,
+    async function api(url, opts) {
+        opts = opts || {};
+        const res = await fetch(url, Object.assign({
             credentials: 'include',
-            headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) }
-        });
+            headers: Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {})
+        }, opts));
         if (res.status === 401) {
             showLogin();
             throw new Error('Unauthorized');
@@ -330,25 +330,51 @@
 
     let currentBookingsHash = '';
     let isPolling = false;
+    let lastSeenBookings = new Map();
 
     function hashBookings(bookings) {
-        return bookings.map(b => `${b.id}:${b.status}`).sort().join(',');
+        return bookings.map(b => b.id + ':' + b.status).sort().join(',');
     }
 
-    async function loadBookings(showLoader = true) {
+    function detectChanges(newBookings) {
+        const newMap = new Map(newBookings.map(b => [b.id, b]));
+        for (const b of newBookings) {
+            const prev = lastSeenBookings.get(b.id);
+            if (!prev) {
+                if (lastSeenBookings.size > 0) {
+                    showToast('info', '🆕 New booking', b.name + ' · €' + b.total + ' · ' + b.booking_date + ' ' + b.booking_time);
+                }
+            } else if (prev.status !== b.status) {
+                showToast('info', 'Status updated', b.name + ' → ' + b.status);
+            }
+        }
+        for (const [id, prev] of lastSeenBookings) {
+            if (!newMap.has(id)) {
+                showToast('warning', '🗑 Booking deleted', prev.name);
+            }
+        }
+        lastSeenBookings = newMap;
+    }
+
+    async function loadBookings(showLoader) {
+        if (showLoader === undefined) showLoader = true;
         const w = document.getElementById('bookingsList');
         if (showLoader) w.innerHTML = '<div class="empty">Loading…</div>';
         try {
             const res = await api('/api/bookings');
-            const { bookings } = await res.json();
+            const data = await res.json();
+            const bookings = data.bookings || [];
 
             const newHash = hashBookings(bookings);
             if (newHash === currentBookingsHash && !showLoader) {
+                lastSeenBookings = new Map(bookings.map(b => [b.id, b]));
                 return;
             }
 
             if (currentBookingsHash && newHash !== currentBookingsHash) {
                 detectChanges(bookings);
+            } else if (!currentBookingsHash) {
+                lastSeenBookings = new Map(bookings.map(b => [b.id, b]));
             }
 
             currentBookingsHash = newHash;
@@ -357,47 +383,33 @@
                 w.innerHTML = '<div class="empty">No bookings yet.</div>';
                 return;
             }
-            w.innerHTML = `<div style="overflow-x:auto"><table class="req-table"><thead><tr>
-      <th>When</th><th>Client</th><th>Service</th><th>Address</th><th>Total</th><th>Status</th><th>Actions</th>
-    </tr></thead><tbody>${bookings.map(b => `<tr data-id="${b.id}" data-status="${b.status}">
-      <td><strong>${b.booking_date}</strong><br/><span style="color:var(--ink-soft)">${b.booking_time}</span></td>
-      <td><strong>${esc(b.name)}</strong><br/><a href="tel:${b.phone}" style="color:var(--mint-700)">${esc(b.phone)}</a></td>
-      <td>${SVC_NAMES[b.service] || b.service}<br/><span style="color:var(--ink-soft);font-size:11px">${b.size || '—'}${b.promo_code ? ' · 🏷 ' + b.promo_code : ''}</span></td>
-      <td style="max-width:240px;font-size:12px">${esc(b.addr)}${b.map_link ? `<br/><a href="${esc(b.map_link)}" target="_blank" style="color:var(--mint-700);font-size:11px">📍 Maps</a>` : ''}${b.notes ? `<br/><span style="color:var(--ink-soft);font-size:11px;font-style:italic">${esc(b.notes)}</span>` : ''}</td>
-      <td style="font-family:'Fraunces',serif;font-weight:700;font-size:16px">€${b.total}</td>
-      <td><span class="status status-${b.status}">${b.status}</span></td>
-      <td><div class="req-actions">
-        ${b.status === 'new' ? `<button class="btn-mini confirm" onclick="updateStatus(${b.id},'confirmed','${b.status}')">✓ Confirm</button>` : ''}
-        ${b.status !== 'done' && b.status !== 'cancelled' ? `<button class="btn-mini done" onclick="updateStatus(${b.id},'done','${b.status}')">✓✓ Done</button>` : ''}
-        <button class="btn-mini del" onclick="deleteBooking(${b.id},'${b.status}')">✕</button>
-      </div></td>
-    </tr>`).join('')}</tbody></table></div>`;
+
+            let html = '<div style="overflow-x:auto"><table class="req-table"><thead><tr>';
+            html += '<th>When</th><th>Client</th><th>Service</th><th>Address</th><th>Total</th><th>Status</th><th>Actions</th>';
+            html += '</tr></thead><tbody>';
+            for (const b of bookings) {
+                html += '<tr data-id="' + b.id + '" data-status="' + b.status + '">';
+                html += '<td><strong>' + b.booking_date + '</strong><br/><span style="color:var(--ink-soft)">' + b.booking_time + '</span></td>';
+                html += '<td><strong>' + esc(b.name) + '</strong><br/><a href="tel:' + b.phone + '" style="color:var(--mint-700)">' + esc(b.phone) + '</a></td>';
+                html += '<td>' + (SVC_NAMES[b.service] || b.service) + '<br/><span style="color:var(--ink-soft);font-size:11px">' + (b.size || '—') + (b.promo_code ? ' · 🏷 ' + b.promo_code : '') + '</span></td>';
+                html += '<td style="max-width:240px;font-size:12px">' + esc(b.addr);
+                if (b.map_link) html += '<br/><a href="' + esc(b.map_link) + '" target="_blank" style="color:var(--mint-700);font-size:11px">📍 Maps</a>';
+                if (b.notes) html += '<br/><span style="color:var(--ink-soft);font-size:11px;font-style:italic">' + esc(b.notes) + '</span>';
+                html += '</td>';
+                html += '<td style="font-family:\'Fraunces\',serif;font-weight:700;font-size:16px">€' + b.total + '</td>';
+                html += '<td><span class="status status-' + b.status + '">' + b.status + '</span></td>';
+                html += '<td><div class="req-actions">';
+                if (b.status === 'new') html += '<button class="btn-mini confirm" onclick="updateStatus(' + b.id + ',\'confirmed\',\'' + b.status + '\')">✓ Confirm</button>';
+                if (b.status !== 'done' && b.status !== 'cancelled') html += '<button class="btn-mini done" onclick="updateStatus(' + b.id + ',\'done\',\'' + b.status + '\')">✓✓ Done</button>';
+                html += '<button class="btn-mini del" onclick="deleteBooking(' + b.id + ',\'' + b.status + '\')">✕</button>';
+                html += '</div></td>';
+                html += '</tr>';
+            }
+            html += '</tbody></table></div>';
+            w.innerHTML = html;
         } catch (e) {
             if (showLoader) w.innerHTML = '<div class="empty" style="color:var(--red)">Failed to load bookings</div>';
         }
-    }
-
-    let lastSeenBookings = new Map();
-
-    function detectChanges(newBookings) {
-        const newMap = new Map(newBookings.map(b => [b.id, b]));
-
-        for (const b of newBookings) {
-            const prev = lastSeenBookings.get(b.id);
-            if (!prev) {
-                showToast('info', '🆕 New booking', `${b.name} · €${b.total} · ${b.booking_date} ${b.booking_time}`);
-            } else if (prev.status !== b.status) {
-                showToast('info', `Status updated`, `${b.name} → ${b.status}`);
-            }
-        }
-
-        for (const [id, prev] of lastSeenBookings) {
-            if (!newMap.has(id)) {
-                showToast('warning', '🗑 Booking deleted', `${prev.name}`);
-            }
-        }
-
-        lastSeenBookings = newMap;
     }
 
     function startPolling() {
@@ -408,66 +420,49 @@
             }
         }, 3000);
     }
-            w.innerHTML = `<div style="overflow-x:auto"><table class="req-table"><thead><tr>
-      <th>When</th><th>Client</th><th>Service</th><th>Address</th><th>Total</th><th>Status</th><th>Actions</th>
-    </tr></thead><tbody>${bookings.map(b => `<tr>
-      <td><strong>${b.booking_date}</strong><br/><span style="color:var(--ink-soft)">${b.booking_time}</span></td>
-      <td><strong>${esc(b.name)}</strong><br/><a href="tel:${b.phone}" style="color:var(--mint-700)">${esc(b.phone)}</a></td>
-      <td>${SVC_NAMES[b.service] || b.service}<br/><span style="color:var(--ink-soft);font-size:11px">${b.size || '—'}${b.promo_code ? ' · 🏷 ' + b.promo_code : ''}</span></td>
-      <td style="max-width:240px;font-size:12px">${esc(b.addr)}${b.map_link ? `<br/><a href="${esc(b.map_link)}" target="_blank" style="color:var(--mint-700);font-size:11px">📍 Maps</a>` : ''}${b.notes ? `<br/><span style="color:var(--ink-soft);font-size:11px;font-style:italic">${esc(b.notes)}</span>` : ''}</td>
-      <td style="font-family:'Fraunces',serif;font-weight:700;font-size:16px">€${b.total}</td>
-      <td><span class="status status-${b.status}">${b.status}</span></td>
-      <td><div class="req-actions">
-        ${b.status === 'new' ? `<button class="btn-mini confirm" onclick="updateStatus(${b.id},'confirmed')">✓ Confirm</button>` : ''}
-        ${b.status !== 'done' && b.status !== 'cancelled' ? `<button class="btn-mini done" onclick="updateStatus(${b.id},'done')">✓✓ Done</button>` : ''}
-        <button class="btn-mini del" onclick="deleteBooking(${b.id})">✕</button>
-      </div></td>
-    </tr>`).join('')}</tbody></table></div>`;
-        } catch (e) {
-            w.innerHTML = '<div class="empty" style="color:var(--red)">Failed to load bookings</div>';
-        }
-    }
 
     async function updateStatus(id, status, expectedStatus) {
-        const row = document.querySelector(`tr[data-id="${id}"]`);
+        const row = document.querySelector('tr[data-id="' + id + '"]');
         if (row) row.style.opacity = '0.5';
         try {
             const res = await api('/api/bookings', {
                 method: 'PATCH',
-                body: JSON.stringify({ id, status, expectedStatus })
+                body: JSON.stringify({ id: id, status: status, expectedStatus: expectedStatus })
             });
             if (res.status === 409) {
                 const data = await res.json();
-                showToast('warning', '⚠️ Conflict', `${data.bookingName || 'Booking'} was already updated by another admin to "${data.currentStatus}". Refreshing…`);
+                showToast('warning', '⚠️ Conflict', (data.bookingName || 'Booking') + ' was already updated by another admin to "' + data.currentStatus + '". Refreshing…');
             } else if (!res.ok) {
-                const data = await res.json().catch(() => ({}));
-                showToast('error', 'Failed to update', data.error || 'Try again.');
+                let errData = {};
+                try { errData = await res.json(); } catch (_) {}
+                showToast('error', 'Failed to update', errData.error || 'Try again.');
             }
             currentBookingsHash = '';
             await loadBookings(false);
         } catch (e) {
-            showToast('error', 'Network error', 'Could not reach the server. Please try again.');
+            showToast('error', 'Network error', 'Could not reach the server.');
             if (row) row.style.opacity = '';
         }
     }
 
     async function deleteBooking(id, expectedStatus) {
         if (!confirm('Delete this booking?')) return;
-        const row = document.querySelector(`tr[data-id="${id}"]`);
+        const row = document.querySelector('tr[data-id="' + id + '"]');
         if (row) row.style.opacity = '0.5';
         try {
             const res = await api('/api/bookings', {
                 method: 'DELETE',
-                body: JSON.stringify({ id, expectedStatus })
+                body: JSON.stringify({ id: id, expectedStatus: expectedStatus })
             });
             if (res.status === 409) {
                 const data = await res.json();
-                showToast('warning', '⚠️ Conflict', `${data.bookingName || 'Booking'} was updated by another admin. Refreshing…`);
+                showToast('warning', '⚠️ Conflict', (data.bookingName || 'Booking') + ' was updated by another admin. Refreshing…');
             } else if (res.status === 404) {
                 showToast('info', 'Already deleted', 'This booking was already removed.');
             } else if (!res.ok) {
-                const data = await res.json().catch(() => ({}));
-                showToast('error', 'Failed to delete', data.error || 'Try again.');
+                let errData = {};
+                try { errData = await res.json(); } catch (_) {}
+                showToast('error', 'Failed to delete', errData.error || 'Try again.');
             }
             currentBookingsHash = '';
             await loadBookings(false);
@@ -483,19 +478,21 @@
         if (!date) return;
         const g = document.getElementById('slotGrid');
         try {
-            const res = await fetch(`/api/slots?date=${date}`, { credentials: 'include' });
-            const { booked, blocked } = await res.json();
+            const res = await fetch('/api/slots?date=' + date, { credentials: 'include' });
+            const data = await res.json();
+            const booked = data.booked || [];
+            const blocked = data.blocked || [];
             g.innerHTML = TIMES.map(t => {
                 let cls = '';
                 if (booked.includes(t)) cls = 'booked';
                 else if (blocked.includes(t)) cls = 'blocked';
-                return `<div class="slot-cell ${cls}" data-t="${t}">${t}</div>`;
+                return '<div class="slot-cell ' + cls + '" data-t="' + t + '">' + t + '</div>';
             }).join('');
             g.querySelectorAll('.slot-cell').forEach(el => el.addEventListener('click', async () => {
                 if (el.classList.contains('booked')) return;
                 const time = el.dataset.t;
                 const action = el.classList.contains('blocked') ? 'unblock' : 'block';
-                await api('/api/slots', { method: 'POST', body: JSON.stringify({ date, time, action }) });
+                await api('/api/slots', { method: 'POST', body: JSON.stringify({ date: date, time: time, action: action }) });
                 loadSlots();
             }));
         } catch (e) {
@@ -509,18 +506,22 @@
         const w = document.getElementById('promoList');
         try {
             const res = await api('/api/promos');
-            const { promos } = await res.json();
+            const data = await res.json();
+            const promos = data.promos || [];
             if (!promos.length) {
                 w.innerHTML = '<div class="empty">No promo codes yet.</div>';
                 return;
             }
-            w.innerHTML = promos.map(p => `<div class="promo-card">
-      <div>
-        <div class="code">${esc(p.code)}</div>
-        <div class="info">${p.discount_type === 'percent' ? p.discount_value + '%' : '€' + p.discount_value} off · max: ${p.max_uses === 0 ? '∞' : p.max_uses} · used: ${p.used}</div>
-      </div>
-      <button class="btn-mini del" onclick="deletePromo(${p.id})">Delete</button>
-    </div>`).join('');
+            let html = '';
+            for (const p of promos) {
+                html += '<div class="promo-card"><div>';
+                html += '<div class="code">' + esc(p.code) + '</div>';
+                html += '<div class="info">' + (p.discount_type === 'percent' ? p.discount_value + '%' : '€' + p.discount_value) + ' off · max: ' + (p.max_uses === 0 ? '∞' : p.max_uses) + ' · used: ' + p.used + '</div>';
+                html += '</div>';
+                html += '<button class="btn-mini del" onclick="deletePromo(' + p.id + ')">Delete</button>';
+                html += '</div>';
+            }
+            w.innerHTML = html;
         } catch (e) {
             w.innerHTML = '<div class="empty" style="color:var(--red)">Failed to load promos</div>';
         }
@@ -531,21 +532,22 @@
         const type = document.getElementById('newType').value;
         const value = parseInt(document.getElementById('newValue').value) || 0;
         const maxUses = parseInt(document.getElementById('newMax').value) || 0;
-        if (!code || !value) { alert('Code and value required'); return; }
-        const res = await api('/api/promos', { method: 'POST', body: JSON.stringify({ code, type, value, maxUses }) });
+        if (!code || !value) { showToast('error', 'Missing data', 'Code and value are required.'); return; }
+        const res = await api('/api/promos', { method: 'POST', body: JSON.stringify({ code: code, type: type, value: value, maxUses: maxUses }) });
         if (res.ok) {
             document.getElementById('newCode').value = '';
             document.getElementById('newValue').value = '';
+            showToast('info', 'Promo created', code + ' is ready to use.');
             loadPromos();
         } else {
-            const e = await res.json();
-            alert(e.error || 'Failed');
+            const e = await res.json().catch(() => ({}));
+            showToast('error', 'Failed', e.error || 'Could not create code.');
         }
     }
 
     async function deletePromo(id) {
         if (!confirm('Delete this promo code?')) return;
-        await api('/api/promos', { method: 'DELETE', body: JSON.stringify({ id }) });
+        await api('/api/promos', { method: 'DELETE', body: JSON.stringify({ id: id }) });
         loadPromos();
     }
 

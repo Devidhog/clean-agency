@@ -11,24 +11,24 @@
         :root {
             --mint-50:#ecfdf7;--mint-100:#d1f7e9;--mint-300:#6fdfb9;--mint-400:#3fc99c;
             --mint-500:#1fae82;--mint-600:#14916b;--mint-700:#117559;--mint-800:#0e5a47;
-            --ink:#0b1f1a;--ink-soft:#2a3f3a;
+            --primary-dark:#0b1f1a;--primary-dark-soft:#2a3f3a;
             --paper:#f8f9f5;--paper-warm:#f1f2e9;
             --line:#d9dbcf;--red:#d63031;
             --shadow:0 10px 30px -12px rgba(11,31,26,.18);
         }
         *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-        html,body{margin:0;padding:0;font-family:'Manrope',-apple-system,sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+        html,body{margin:0;padding:0;font-family:'Manrope',-apple-system,sans-serif;background:var(--paper);color:var(--primary-dark);line-height:1.55}
 
         .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}
         .login-card{background:white;border-radius:24px;padding:48px;max-width:420px;width:100%;box-shadow:var(--shadow);border:1px solid var(--line)}
         .login-card .logo{font-family:'Fraunces',serif;font-weight:700;font-size:28px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:8px}
         .login-card .logo .dot{width:12px;height:12px;border-radius:50%;background:var(--mint-500);box-shadow:0 0 0 4px rgba(31,174,130,.15)}
         .login-card h1{font-family:'Fraunces',serif;font-weight:600;font-size:24px;text-align:center;margin:0 0 4px}
-        .login-card .sub{text-align:center;color:var(--ink-soft);font-size:14px;margin-bottom:32px}
-        .login-card label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px}
+        .login-card .sub{text-align:center;color:var(--primary-dark-soft);font-size:14px;margin-bottom:32px}
+        .login-card label{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--primary-dark-soft);margin-bottom:8px}
         .login-card input{width:100%;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;font-family:inherit;font-size:16px;background:var(--paper);margin-bottom:16px;transition:all .2s;-webkit-appearance:none}
         .login-card input:focus{outline:none;border-color:var(--mint-500);background:white}
-        .login-card button{width:100%;padding:16px;background:var(--ink);color:white;border:none;border-radius:12px;font-family:'Fraunces',serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s;min-height:52px}
+        .login-card button{width:100%;padding:16px;background:var(--primary-dark);color:white;border:none;border-radius:12px;font-family:'Fraunces',serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s;min-height:52px}
         .login-card button:hover{background:var(--mint-700)}
         .login-card button:disabled{opacity:.5;cursor:not-allowed}
         .login-error{background:#ffe3dc;color:#a02b15;padding:12px;border-radius:10px;margin-bottom:16px;font-size:13px;display:none}
@@ -39,21 +39,21 @@
         .admin-header{background:white;border-bottom:1px solid var(--line);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
         .admin-header .logo{font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:-.03em;display:flex;align-items:center;gap:8px}
         .admin-header .logo .dot{width:10px;height:10px;border-radius:50%;background:var(--mint-500);box-shadow:0 0 0 4px rgba(31,174,130,.15)}
-        .admin-header .user{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--ink-soft)}
-        .admin-header .user-email{font-weight:600;color:var(--ink)}
-        .btn-logout{background:transparent;color:var(--ink);border:1px solid var(--line);padding:8px 16px;border-radius:100px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s}
-        .btn-logout:hover{background:var(--ink);color:white;border-color:var(--ink)}
+        .admin-header .user{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--primary-dark-soft)}
+        .admin-header .user-email{font-weight:600;color:var(--primary-dark)}
+        .btn-logout{background:transparent;color:var(--primary-dark);border:1px solid var(--line);padding:8px 16px;border-radius:100px;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s}
+        .btn-logout:hover{background:var(--primary-dark);color:white;border-color:var(--primary-dark)}
 
         .admin-main{max-width:1280px;margin:0 auto;padding:32px}
         .admin-tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-        .admin-tab{padding:12px 20px;background:none;border:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--ink-soft);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s}
-        .admin-tab:hover{color:var(--ink)}
-        .admin-tab.active{color:var(--ink);border-bottom-color:var(--mint-500)}
+        .admin-tab{padding:12px 20px;background:none;border:none;font-family:inherit;font-size:14px;font-weight:600;color:var(--primary-dark-soft);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s}
+        .admin-tab:hover{color:var(--primary-dark)}
+        .admin-tab.active{color:var(--primary-dark);border-bottom-color:var(--mint-500)}
         .admin-content{display:none}.admin-content.active{display:block}
         .admin-content h2{font-family:'Fraunces',serif;font-size:32px;font-weight:600;margin:0 0 8px;letter-spacing:-.02em;display:flex;align-items:center;flex-wrap:wrap}
-        .admin-content>p{color:var(--ink-soft);margin:0 0 24px}
+        .admin-content>p{color:var(--primary-dark-soft);margin:0 0 24px}
 
-        .live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-soft);font-weight:600;margin-left:12px;text-transform:uppercase;letter-spacing:.08em}
+        .live-indicator{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--primary-dark-soft);font-weight:600;margin-left:12px;text-transform:uppercase;letter-spacing:.08em}
         .live-dot{width:8px;height:8px;border-radius:50%;background:var(--mint-500);animation:pulse-live 1.5s ease-in-out infinite}
         @keyframes pulse-live{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
 
@@ -71,38 +71,38 @@
         .btn-mini{padding:6px 10px;font-size:11px;font-weight:700;border-radius:8px;cursor:pointer;border:none;font-family:inherit;min-height:32px;transition:opacity .2s}
         .btn-mini:hover{opacity:.85}
         .btn-mini.confirm{background:var(--mint-500);color:white}
-        .btn-mini.done{background:var(--ink);color:white}
+        .btn-mini.done{background:var(--primary-dark);color:white}
         .btn-mini.del{background:#ffd5cd;color:#a02b15}
 
-        .empty{padding:50px;text-align:center;color:var(--ink-soft);background:white;border-radius:14px;border:1px dashed var(--line);font-size:15px}
+        .empty{padding:50px;text-align:center;color:var(--primary-dark-soft);background:white;border-radius:14px;border:1px dashed var(--line);font-size:15px}
 
         .slot-controls{background:white;border-radius:14px;padding:24px;border:1px solid var(--line)}
         .slot-date-pick{display:flex;gap:14px;align-items:end;margin-bottom:24px;flex-wrap:wrap}
-        .slot-date-pick label{font-size:12px;font-weight:700;text-transform:uppercase;color:var(--ink-soft);display:block;margin-bottom:6px}
+        .slot-date-pick label{font-size:12px;font-weight:700;text-transform:uppercase;color:var(--primary-dark-soft);display:block;margin-bottom:6px}
         .slot-date-pick input{padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:16px}
-        .slot-date-pick button{padding:11px 22px;background:var(--ink);color:white;border:none;border-radius:10px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
+        .slot-date-pick button{padding:11px 22px;background:var(--primary-dark);color:white;border:none;border-radius:10px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer}
         .slot-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
         .slot-cell{padding:12px 6px;border-radius:8px;text-align:center;font-size:13px;font-weight:600;cursor:pointer;user-select:none;border:1.5px solid var(--mint-300);background:var(--mint-50);color:var(--mint-800);transition:all .15s}
         .slot-cell:hover{transform:scale(.97)}
         .slot-cell.blocked{background:#ffe3dc;border-color:#ffb4a0;color:#a02b15}
-        .slot-cell.booked{background:var(--ink);border-color:var(--ink);color:white;cursor:not-allowed}
+        .slot-cell.booked{background:var(--primary-dark);border-color:var(--primary-dark);color:white;cursor:not-allowed}
         .slot-cell.booked:hover{transform:none}
-        .slot-legend{margin-top:16px;display:flex;gap:18px;font-size:12px;color:var(--ink-soft);flex-wrap:wrap}
+        .slot-legend{margin-top:16px;display:flex;gap:18px;font-size:12px;color:var(--primary-dark-soft);flex-wrap:wrap}
         .slot-legend span{display:inline-flex;align-items:center;gap:6px}
         .slot-legend .swatch{width:14px;height:14px;border-radius:4px;border:1.5px solid}
         .slot-legend .sw-free{background:var(--mint-50);border-color:var(--mint-300)}
         .slot-legend .sw-blocked{background:#ffe3dc;border-color:#ffb4a0}
-        .slot-legend .sw-booked{background:var(--ink);border-color:var(--ink)}
+        .slot-legend .sw-booked{background:var(--primary-dark);border-color:var(--primary-dark)}
 
         .promo-add-row{display:flex;gap:10px;flex-wrap:wrap;align-items:end;background:white;border-radius:14px;padding:20px;border:1px solid var(--line);margin-bottom:20px}
         .promo-add-row>div{display:flex;flex-direction:column;gap:6px}
-        .promo-add-row label{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--ink-soft)}
+        .promo-add-row label{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--primary-dark-soft)}
         .promo-add-row input,.promo-add-row select{padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:14px;background:var(--paper)}
         .promo-add-row button{padding:11px 22px;background:var(--mint-600);color:white;border:none;border-radius:10px;font-family:inherit;font-weight:600;font-size:14px;cursor:pointer;align-self:end;min-height:42px}
         .promo-add-row button:hover{background:var(--mint-700)}
         .promo-card{background:white;border:1px solid var(--line);border-radius:14px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
         .promo-card .code{font-family:'Fraunces',serif;font-weight:700;font-size:22px;letter-spacing:.03em}
-        .promo-card .info{font-size:13px;color:var(--ink-soft);margin-top:2px}
+        .promo-card .info{font-size:13px;color:var(--primary-dark-soft);margin-top:2px}
 
         .toast-wrap{position:fixed;top:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:1000;max-width:380px;pointer-events:none}
         .toast{background:white;border-radius:14px;padding:14px 18px;box-shadow:0 10px 30px -5px rgba(11,31,26,.25);border-left:4px solid var(--mint-500);font-size:14px;display:flex;align-items:flex-start;gap:10px;animation:toastIn .3s cubic-bezier(.34,1.56,.64,1);pointer-events:auto}
@@ -112,8 +112,8 @@
         .toast-icon{flex-shrink:0;font-size:18px;line-height:1.2}
         .toast-body{flex:1;min-width:0}
         .toast-title{font-weight:700;margin-bottom:2px}
-        .toast-msg{color:var(--ink-soft);font-size:13px}
-        .toast-close{background:none;border:none;cursor:pointer;color:var(--ink-soft);font-size:18px;padding:0;line-height:1;flex-shrink:0}
+        .toast-msg{color:var(--primary-dark-soft);font-size:13px}
+        .toast-close{background:none;border:none;cursor:pointer;color:var(--primary-dark-soft);font-size:18px;padding:0;line-height:1;flex-shrink:0}
         @keyframes toastIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
         @keyframes toastOut{to{transform:translateX(20px);opacity:0}}
         .toast.leaving{animation:toastOut .25s ease forwards}
@@ -389,12 +389,12 @@
             html += '</tr></thead><tbody>';
             for (const b of bookings) {
                 html += '<tr data-id="' + b.id + '" data-status="' + b.status + '">';
-                html += '<td><strong>' + b.booking_date + '</strong><br/><span style="color:var(--ink-soft)">' + b.booking_time + '</span></td>';
+                html += '<td><strong>' + b.booking_date + '</strong><br/><span style="color:var(--primary-dark-soft)">' + b.booking_time + '</span></td>';
                 html += '<td><strong>' + esc(b.name) + '</strong><br/><a href="tel:' + b.phone + '" style="color:var(--mint-700)">' + esc(b.phone) + '</a></td>';
-                html += '<td>' + (SVC_NAMES[b.service] || b.service) + '<br/><span style="color:var(--ink-soft);font-size:11px">' + (b.size || '—') + (b.promo_code ? ' · 🏷 ' + b.promo_code : '') + '</span></td>';
+                html += '<td>' + (SVC_NAMES[b.service] || b.service) + '<br/><span style="color:var(--primary-dark-soft);font-size:11px">' + (b.size || '—') + (b.promo_code ? ' · 🏷 ' + b.promo_code : '') + '</span></td>';
                 html += '<td style="max-width:240px;font-size:12px">' + esc(b.addr);
                 if (b.map_link) html += '<br/><a href="' + esc(b.map_link) + '" target="_blank" style="color:var(--mint-700);font-size:11px">📍 Maps</a>';
-                if (b.notes) html += '<br/><span style="color:var(--ink-soft);font-size:11px;font-style:italic">' + esc(b.notes) + '</span>';
+                if (b.notes) html += '<br/><span style="color:var(--primary-dark-soft);font-size:11px;font-style:italic">' + esc(b.notes) + '</span>';
                 html += '</td>';
                 html += '<td style="font-family:\'Fraunces\',serif;font-weight:700;font-size:16px">€' + b.total + '</td>';
                 html += '<td><span class="status status-' + b.status + '">' + b.status + '</span></td>';

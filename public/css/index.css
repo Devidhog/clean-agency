@@ -29,6 +29,7 @@
 /* =========================
    GLOBAL
 ========================= */
+
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
@@ -121,6 +122,7 @@ body{
 /* =========================
    LANGUAGE SWITCH
 ========================= */
+
 .lang-switch{
     display:flex;
     background:white;
@@ -151,6 +153,7 @@ body{
 /* =========================
    BUTTONS
 ========================= */
+
 .btn-primary{
     background:var(--primary-dark);
     color:var(--paper);
@@ -198,6 +201,7 @@ body{
 /* =========================
    BURGER MENU
 ========================= */
+
 .burger{
     display:none;
     width:40px;
@@ -234,6 +238,7 @@ body{
 /* =========================
    MOBILE MENU
 ========================= */
+
 .mobile-menu{
     display:none;
     position:fixed;
@@ -271,6 +276,7 @@ body{
 /* =========================
    HERO SECTION
 ========================= */
+
 .hero{
     position:relative;
     max-width:1280px;
@@ -370,6 +376,7 @@ body{
 /* =========================
    HERO SLIDER
 ========================= */
+
 .hero-slider{
     position:relative;
     width:100%;
@@ -428,6 +435,7 @@ body{
 /* =========================
    TRUST SECTION
 ========================= */
+
 .trust{
     background:var(--primary-dark);
     color:var(--paper);
@@ -502,6 +510,7 @@ body{
 /* =========================
    SERVICES SECTION
 ========================= */
+
 .services{
     max-width:1280px;
     margin:0 auto;

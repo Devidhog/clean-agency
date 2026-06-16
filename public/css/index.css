@@ -471,6 +471,12 @@ body{
     color:var(--mint-300);
     font-weight:600;
 }
+.trust-icon{
+    width:20px;
+    height:20px;
+    object-fit:contain;
+    flex-shrink:0;
+}
 
 @keyframes scroll-trust{
     0%{
@@ -908,6 +914,11 @@ footer a:hover{
         font-size:14px;
         gap:36px;
         padding-right:36px;
+    }
+    
+    .trust-icon{
+        width:16px;
+        height:16px;
     }
 
     .services,

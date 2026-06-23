@@ -27,6 +27,7 @@ LANGUAGE SYSTEM
 ========================= */
 
 let currentLang = localStorage.getItem('cleanLang') || 'en';
+window.currentLang = currentLang;
 
 function t(key) {
     return (
@@ -35,6 +36,7 @@ function t(key) {
         key
     );
 }
+window.t = t;
 
 function applyLang() {
 document.documentElement.lang = currentLang;
@@ -92,6 +94,7 @@ if (typeof updatePrice === 'function') {
     updatePrice();
     }
 }
+window.applyLang = applyLang;
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -102,6 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', () => {
 
                 currentLang = button.dataset.lang;
+                window.currentLang = currentLang;
 
                 localStorage.setItem(
                     'cleanLang',

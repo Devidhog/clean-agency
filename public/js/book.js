@@ -1504,6 +1504,12 @@ document
         }
     );
 
+renderServiceSelection();
+renderPropertySizeSelection();
+renderExtraOptions();
+renderTimeSlots();
+updatePriceSummary();
+
 applyLang();
 
 loadAvailableSlots();

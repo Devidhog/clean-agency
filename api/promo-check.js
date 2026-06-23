@@ -8,26 +8,26 @@ export default async function handler(req, res) {
     const { code } = req.body || {};
     if (!code) return res.status(400).json({ error: 'code required' });
 
-    const rows = await sql`
+    const promoRows = await sql`
     SELECT code, discount_type, discount_value, max_uses, used 
     FROM promo_codes 
     WHERE code = ${code.toUpperCase()} AND active = TRUE
     LIMIT 1
   `;
 
-    const p = rows[0];
-    if (!p) return res.status(404).json({ error: 'Invalid code' });
+    const promoCode = promoRows[0];
+    if (!promoCode) return res.status(404).json({ error: 'Invalid code' });
 
-    if (p.max_uses > 0 && p.used >= p.max_uses) {
+    if (promoCode.max_uses > 0 && promoCode.used >= promoCode.max_uses) {
         return res.status(410).json({ error: 'Code expired' });
     }
 
     return res.status(200).json({
         ok: true,
         promo: {
-            code: p.code,
-            type: p.discount_type,
-            value: p.discount_value
+            code: promoCode.code,
+            type: promoCode.discount_type,
+            value: promoCode.discount_value
         }
     });
 }

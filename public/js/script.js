@@ -66,22 +66,30 @@ document
         );
     });
 
+    if (typeof renderPricingPage === 'function') {
+    renderPricingPage();
+    }
+
+    if (typeof loadHeroSliderImages === 'function') {
+        loadHeroSliderImages();
+    }
+
     if (typeof renderServiceSelection === 'function') {
         renderServiceSelection();
     }
-    
+
     if (typeof renderPropertySizeSelection === 'function') {
         renderPropertySizeSelection();
     }
-    
+
     if (typeof renderExtraOptions === 'function') {
         renderExtraOptions();
     }
-    
+
     if (typeof renderTimeSlots === 'function') {
         renderTimeSlots();
     }
-    
+
     if (typeof updatePriceSummary === 'function') {
         updatePriceSummary();
     }

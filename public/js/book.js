@@ -168,11 +168,11 @@ function showModal(
 ) {
     document.getElementById(
         'modalTitle'
-    ).textContent = t(titleKey);
+    ).textContent = translate(titleKey);
 
     document.getElementById(
         'modalText'
-    ).textContent = t(textKey);
+    ).textContent = translate(textKey);
 
     const modalIcon =
         document.getElementById(
@@ -242,7 +242,7 @@ function renderServiceSelection() {
                 data-service="${service.id}"
             >
                 ${service.emoji}
-                ${t(
+                ${translate(
                     'service.' +
                     service.id +
                     '.n'
@@ -339,7 +339,7 @@ function renderPropertySizeSelection() {
                 }"
                 data-size="${propertySize}"
             >
-                ${t(
+                ${translate(
                     'size.' +
                     propertySize
                 )}
@@ -455,7 +455,7 @@ function renderExtraOptions() {
                     <div class="left">
 
                         <span>
-                            ${t(
+                            ${translate(
                                 'upholstery.' +
                                 upholsteryItem.id
                             )}
@@ -468,7 +468,7 @@ function renderExtraOptions() {
                                 margin-left:4px
                             "
                         >
-                            ${t('price.from')}
+                            ${translate('price.from')}
                             €${upholsteryItem.price}
                         </span>
 
@@ -503,13 +503,13 @@ function renderExtraOptions() {
 
         {
             id: 'balcony',
-            label: t('extra.balcony'),
+            label: translate('extra.balcony'),
             price: serviceExtraPrices.balcony
         },
 
         {
             id: 'extraBathroom',
-            label: t(
+            label: translate(
                 'extra.extra-bathroom'
             ),
             price:
@@ -518,13 +518,13 @@ function renderExtraOptions() {
 
         {
             id: 'window',
-            label: t('extra.window'),
+            label: translate('extra.window'),
             price: windowCleaningPrices.window
         },
 
         {
             id: 'balconyDoor',
-            label: t(
+            label: translate(
                 'extra.balcony-door'
             ),
             price:
@@ -534,7 +534,7 @@ function renderExtraOptions() {
         ...HOUSEHOLD_EXTRA_PRICES.map(
             householdExtra => ({
                 id: householdExtra.id,
-                label: t(
+                label: translate(
                     'extra.' +
                     householdExtra.id
                 ),
@@ -708,7 +708,7 @@ function updatePriceSummary() {
     let summaryHtml = `
         <div class="price-line">
             <span>
-                ${t('summary.base')}
+                ${translate('summary.base')}
             </span>
             <span>
                 €${priceBreakdown.basePrice}
@@ -723,7 +723,7 @@ function updatePriceSummary() {
         summaryHtml += `
             <div class="price-line">
                 <span>
-                    ${t('summary.extras')}
+                    ${translate('summary.extras')}
                 </span>
                 <span>
                     +€${priceBreakdown.extrasPrice}
@@ -739,7 +739,7 @@ function updatePriceSummary() {
         summaryHtml += `
             <div class="price-line discount">
                 <span>
-                    ${t('summary.discount')}
+                    ${translate('summary.discount')}
                     ${
                         appliedPromo
                             ? `(${appliedPromo.code})`
@@ -758,7 +758,7 @@ function updatePriceSummary() {
         <div class="price-line total">
 
             <span>
-                ${t('summary.total')}
+                ${translate('summary.total')}
             </span>
 
             <span>
@@ -827,7 +827,7 @@ window.applyPromoCode = async function () {
 
             promoFeedbackElement.textContent =
                 '✓ ' +
-                t('promo.applied') +
+                translate('promo.applied') +
                 ' (' +
                 (
                     promoDetails.type ===
@@ -849,7 +849,7 @@ window.applyPromoCode = async function () {
 
             promoFeedbackElement.textContent =
                 '✗ ' +
-                t('promo.invalid');
+                translate('promo.invalid');
 
             promoFeedbackElement.className =
                 'promo-feedback err';
@@ -1499,11 +1499,16 @@ document
                     false;
 
                 submitButton.textContent =
-                    t('book.submit');
+                    translate('book.submit');
             }
         }
     );
 
+window.renderServiceSelection = renderServiceSelection;
+window.renderPropertySizeSelection = renderPropertySizeSelection;
+window.renderExtraOptions = renderExtraOptions;
+window.renderTimeSlots = renderTimeSlots;
+window.updatePriceSummary = updatePriceSummary;
 renderServiceSelection();
 renderPropertySizeSelection();
 renderExtraOptions();

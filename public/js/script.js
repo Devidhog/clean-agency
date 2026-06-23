@@ -29,14 +29,14 @@ LANGUAGE SYSTEM
 let currentLang = localStorage.getItem('cleanLang') || 'en';
 window.currentLang = currentLang;
 
-function t(key) {
+function translate(key) {
     return (
         (I18N[currentLang] || {})[key] ||
         I18N.en[key] ||
         key
     );
 }
-window.t = t;
+window.translate = translate;
 
 function applyLang() {
 document.documentElement.lang = currentLang;
@@ -44,7 +44,7 @@ document.documentElement.lang = currentLang;
 document
     .querySelectorAll('[data-i18n]')
     .forEach(element => {
-        element.textContent = t(
+        element.textContent = translate(
             element.dataset.i18n
         );
     });
@@ -52,7 +52,7 @@ document
 document
     .querySelectorAll('[data-i18n-placeholder]')
     .forEach(element => {
-        element.placeholder = t(
+        element.placeholder = translate(
             element.dataset.i18nPlaceholder
         );
     });
@@ -66,34 +66,27 @@ document
         );
     });
 
-if (typeof renderPricingPage === 'function') {
-    renderPricingPage();
+    if (typeof renderServiceSelection === 'function') {
+        renderServiceSelection();
     }
-
-if (typeof loadHeroSliderImages === 'function') {
-    loadHeroSliderImages();
-}
-
-if (typeof renderFormSvc === 'function') {
-    renderFormSvc();
+    
+    if (typeof renderPropertySizeSelection === 'function') {
+        renderPropertySizeSelection();
     }
-
-if (typeof renderSizePick === 'function') {
-    renderSizePick();
+    
+    if (typeof renderExtraOptions === 'function') {
+        renderExtraOptions();
     }
-
-if (typeof renderExtras === 'function') {
-    renderExtras();
+    
+    if (typeof renderTimeSlots === 'function') {
+        renderTimeSlots();
     }
-
-if (typeof renderTimeSlots === 'function') {
-    renderTimeSlots();
-    }
-
-if (typeof updatePrice === 'function') {
-    updatePrice();
+    
+    if (typeof updatePriceSummary === 'function') {
+        updatePriceSummary();
     }
 }
+
 window.applyLang = applyLang;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -246,7 +239,7 @@ pricingTabsContainer.innerHTML =
                 ${service.emoji}
             </span>
 
-            ${t(
+            ${translate(
                 'service.' +
                 service.id +
                 '.n'
@@ -283,13 +276,13 @@ if (
             <div class="pricing-row header">
 
                 <div class="desc">
-                    ${t(
+                    ${translate(
                         'pricing.uphItems'
                     )}
                 </div>
 
                 <div class="price-val">
-                    ${t(
+                    ${translate(
                         'price.from'
                     )}
                 </div>
@@ -302,7 +295,7 @@ if (
                 <div class="pricing-row">
 
                     <div class="desc">
-                        ${t(
+                        ${translate(
                             'upholstery.' +
                             item.id
                         )}
@@ -316,7 +309,7 @@ if (
                         class="book-row-btn"
                         href="/book?service=upholstery&item=${item.id}"
                     >
-                        ${t(
+                        ${translate(
                             'services.book'
                         )} →
                     </a>
@@ -351,7 +344,7 @@ if (
             <div class="pricing-row header">
 
                 <div class="desc">
-                    ${t(
+                    ${translate(
                         'pricing.base'
                     )}
                 </div>
@@ -368,7 +361,7 @@ if (
                 <div class="pricing-row">
 
                     <div class="desc">
-                        ${t(
+                        ${translate(
                             'size.' +
                             size
                         )}
@@ -382,7 +375,7 @@ if (
                         class="book-row-btn"
                         href="/book?service=${activePricingService}&size=${size}"
                     >
-                        ${t(
+                        ${translate(
                             'services.book'
                         )} →
                     </a>
@@ -398,7 +391,7 @@ if (
         <div class="pricing-extras">
 
             <div class="pricing-extras-title">
-                ${t(
+                ${translate(
                     'pricing.extras'
                 )}
             </div>
@@ -408,7 +401,7 @@ if (
                 <div class="extra-chip">
 
                     <span>
-                        ${t(
+                        ${translate(
                             'extra.balcony'
                         )}
                     </span>
@@ -422,7 +415,7 @@ if (
                 <div class="extra-chip">
 
                     <span>
-                        ${t(
+                        ${translate(
                             'extra.extra-bathroom'
                         )}
                     </span>
@@ -445,7 +438,7 @@ if (
         >
 
             <div class="pricing-extras-title">
-                ${t(
+                ${translate(
                     'pricing.windows'
                 )}
             </div>
@@ -455,7 +448,7 @@ if (
                 <div class="extra-chip">
 
                     <span>
-                        ${t(
+                        ${translate(
                             'extra.window'
                         )}
                     </span>
@@ -463,7 +456,7 @@ if (
                     <span class="ep">
                         €${windowCleaningPrices.window}
                         /
-                        ${t(
+                        ${translate(
                             'price.each'
                         )}
                     </span>
@@ -473,7 +466,7 @@ if (
                 <div class="extra-chip">
 
                     <span>
-                        ${t(
+                        ${translate(
                             'extra.balcony-door'
                         )}
                     </span>
@@ -481,7 +474,7 @@ if (
                     <span class="ep">
                         €${windowCleaningPrices.balconyDoor}
                         /
-                        ${t(
+                        ${translate(
                             'price.each'
                         )}
                     </span>
@@ -500,7 +493,7 @@ if (
         >
 
             <div class="pricing-extras-title">
-                ${t(
+                ${translate(
                     'pricing.household'
                 )}
             </div>
@@ -513,7 +506,7 @@ if (
                     <div class="extra-chip">
 
                         <span>
-                            ${t(
+                            ${translate(
                                 'extra.' +
                                 extra.id
                             )}

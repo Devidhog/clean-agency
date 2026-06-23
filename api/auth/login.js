@@ -12,8 +12,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Email and password required' });
     }
 
-    const rows = await sql`SELECT * FROM admins WHERE email = ${email.toLowerCase()} LIMIT 1`;
-    const admin = rows[0];
+    const adminRows = await sql`SELECT * FROM admins WHERE email = ${email.toLowerCase()} LIMIT 1`;
+    const admin = adminRows[0];
 
     if (!admin) {
         return res.status(401).json({ error: 'Invalid credentials' });

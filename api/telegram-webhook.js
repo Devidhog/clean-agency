@@ -172,12 +172,14 @@ function bookingText(booking) {
 
     return `🧹 <b>Booking #${booking.id}</b> · ${STATUS_NAMES[booking.status] || booking.status}
 
-<b>Name:</b> ${booking.name}
-<b>Phone:</b> <a href="tel:${booking.phone}">${booking.phone}</a>
-<b>Address:</b> ${address}
-<b>Service:</b> ${serviceName}${propertySize}${extrasString}
-<b>Date:</b> ${dateString}
-${booking.notes ? `<b>Notes:</b> ${booking.notes}\n` : ''}${booking.promo_code ? `<b>Promo:</b> ${booking.promo_code}\n` : ''}<b>Price:</b> €${booking.total}`;
+    <b>Name:</b> ${booking.name}
+    <b>Phone:</b> <a href="tel:${booking.phone}">${booking.phone}</a>
+    <b>Address:</b> ${address}
+    <b>Service:</b> ${serviceName}${propertySize}${extrasString}
+    <b>Date:</b> ${dateString}
+    ${booking.notes ? `<b>Notes:</b> ${booking.notes}\n` : ''}
+    ${booking.promo_code ? `<b>Promo:</b> ${booking.promo_code}\n` : ''}
+    <b>Price:</b> €${booking.total}`;
 }
 
 function bookingKeyboard(

@@ -23,7 +23,7 @@ window.toggleMenu = toggleMenu;
 window.closeMenu = closeMenu;
 
 /* =========================
-   LANGUAGE SYSTEM
+LANGUAGE SYSTEM
 ========================= */
 
 let currentLang = localStorage.getItem('cleanLang') || 'en';
@@ -37,447 +37,624 @@ function t(key) {
 }
 
 function applyLang() {
+document.documentElement.lang = currentLang;
 
-    document.documentElement.lang = currentLang;
+document
+    .querySelectorAll('[data-i18n]')
+    .forEach(element => {
+        element.textContent = t(
+            element.dataset.i18n
+        );
+    });
 
-    document
-        .querySelectorAll('[data-i18n]')
-        .forEach(el => {
-            el.textContent = t(el.dataset.i18n);
-        });
-
-    document
-        .querySelectorAll('#langSwitch button')
-        .forEach(button => {
-            button.classList.toggle(
-                'active',
-                button.dataset.lang === currentLang
-            );
-        });
-
-    renderPricingPage();
-    loadHeroImages();
-}
+document
+    .querySelectorAll('[data-i18n-placeholder]')
+    .forEach(element => {
+        element.placeholder = t(
+            element.dataset.i18nPlaceholder
+        );
+    });
 
 document
     .querySelectorAll('#langSwitch button')
     .forEach(button => {
-
-        button.addEventListener('click', () => {
-
-            currentLang = button.dataset.lang;
-
-            localStorage.setItem(
-                'cleanLang',
-                currentLang
-            );
-
-            applyLang();
-        });
+        button.classList.toggle(
+            'active',
+            button.dataset.lang === currentLang
+        );
     });
+
+if (typeof renderPricingPage === 'function') {
+    renderPricingPage();
+    }
+
+if (typeof loadHeroSliderImages === 'function') {
+    loadHeroSliderImages();
+}
+
+if (typeof renderFormSvc === 'function') {
+    renderFormSvc();
+    }
+
+if (typeof renderSizePick === 'function') {
+    renderSizePick();
+    }
+
+if (typeof renderExtras === 'function') {
+    renderExtras();
+    }
+
+if (typeof renderTimeSlots === 'function') {
+    renderTimeSlots();
+    }
+
+if (typeof updatePrice === 'function') {
+    updatePrice();
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    document
+        .querySelectorAll('#langSwitch button')
+        .forEach(button => {
+
+            button.addEventListener('click', () => {
+
+                currentLang = button.dataset.lang;
+
+                localStorage.setItem(
+                    'cleanLang',
+                    currentLang
+                );
+
+                applyLang();
+            });
+        });
+
+    applyLang();
+});
+
 
 /* =========================
    PRICING
 ========================= */
 
-const SVCS = [
-    { id:'standard', emoji:'🧽' },
-    { id:'deep', emoji:'✨' },
-    { id:'reno', emoji:'🛠️' },
-    { id:'upholstery', emoji:'🛋️' }
+const CLEANING_SERVICES = [
+    { id: 'standard', emoji: '🧽' },
+    { id: 'deep-cleaning', emoji: '✨' },
+    { id: 'renovation', emoji: '🛠️' },
+    { id: 'upholstery', emoji: '🛋️' }
 ];
 
-const SIZES = [
+const PROPERTY_SIZES = [
     'studio',
-    '1br',
-    '2br',
-    '3br',
-    '4br'
+    '1-bedroom',
+    '2-bedroom',
+    '3-bedroom',
+    '4-bedroom'
 ];
 
-const BASE = {
-
-    standard:{
-        studio:40,
-        '1br':60,
-        '2br':80,
-        '3br':100,
-        '4br':120
+const SERVICE_BASE_PRICES = {
+    standard: {
+        studio: 40,
+        '1-bedroom': 60,
+        '2-bedroom': 80,
+        '3-bedroom': 100,
+        '4-bedroom': 120
     },
 
-    deep:{
-        studio:100,
-        '1br':120,
-        '2br':150,
-        '3br':170,
-        '4br':210
+    'deep-cleaning': {
+        studio: 100,
+        '1-bedroom': 120,
+        '2-bedroom': 150,
+        '3-bedroom': 170,
+        '4-bedroom': 210
     },
 
-    reno:{
-        studio:160,
-        '1br':185,
-        '2br':215,
-        '3br':245,
-        '4br':275
+    renovation: {
+        studio: 160,
+        '1-bedroom': 185,
+        '2-bedroom': 215,
+        '3-bedroom': 245,
+        '4-bedroom': 275
     }
 };
 
-const SZ_EX = {
-
-    standard:{
-        balcony:5,
-        extrabath:10
+const SERVICE_SIZE_EXTRAS = {
+    standard: {
+        balcony: 5,
+        extraBathroom: 10
     },
 
-    deep:{
-        balcony:10,
-        extrabath:20
+    'deep-cleaning': {
+        balcony: 10,
+        extraBathroom: 20
     },
 
-    reno:{
-        balcony:30,
-        extrabath:30
+    renovation: {
+        balcony: 30,
+        extraBathroom: 30
     }
 };
 
-const WIN = {
-
-    standard:{
-        window:5,
-        balcondoor:7
+const WINDOW_CLEANING_PRICES = {
+    standard: {
+        window: 5,
+        balconyDoor: 7
     },
 
-    deep:{
-        window:5,
-        balcondoor:7
+    'deep-cleaning': {
+        window: 5,
+        balconyDoor: 7
     },
 
-    reno:{
-        window:10,
-        balcondoor:11
+    renovation: {
+        window: 10,
+        balconyDoor: 11
     }
 };
 
-const HOUSE = [
-    { id:'tray', p:10 },
-    { id:'oven', p:20 },
-    { id:'fridge', p:15 },
-    { id:'microwave', p:10 },
-    { id:'bedlinen', p:5 }
+const HOUSEHOLD_EXTRA_PRICES = [
+    { id: 'tray', p: 10 },
+    { id: 'oven', p: 20 },
+    { id: 'fridge', p: 15 },
+    { id: 'microwave', p: 10 },
+    { id: 'bed-linen-change', p: 5 }
 ];
 
-const UPH = [
-    { id:'sofa', p:50 },
-    { id:'mattress', p:35 },
-    { id:'armchair', p:20 },
-    { id:'chair', p:10 }
+const UPHOLSTERY_CLEANING_PRICES = [
+    { id: 'sofa', p: 50 },
+    { id: 'mattress', p: 35 },
+    { id: 'armchair', p: 20 },
+    { id: 'chair', p: 10 }
 ];
 
-let pTab = 'standard';
+let activePricingService = 'standard';
+
 
 function renderPricingPage() {
 
-    const tabs = document.getElementById('pricingTabs');
-    const content = document.getElementById('pricingContent');
+const pricingTabsContainer =
+    document.getElementById('pricingTabs');
 
-    if (!tabs || !content) return;
+const pricingContentContainer =
+    document.getElementById('pricingContent');
 
-    tabs.innerHTML = SVCS.map(service => `
-        <button 
-            class="pricing-tab ${pTab === service.id ? 'active' : ''}" 
-            data-s="${service.id}"
+if (
+    !pricingTabsContainer ||
+    !pricingContentContainer
+) {
+    return;
+}
+
+pricingTabsContainer.innerHTML =
+    CLEANING_SERVICES.map(service => `
+        <button
+            class="pricing-tab ${
+                activePricingService === service.id
+                    ? 'active'
+                    : ''
+            }"
+            data-service="${service.id}"
         >
-            <span class="emoji">${service.emoji}</span>
-            ${t('svc.' + service.id + '.n')}
+            <span class="emoji">
+                ${service.emoji}
+            </span>
+
+            ${t(
+                'service.' +
+                service.id +
+                '.n'
+            )}
         </button>
     `).join('');
 
-    tabs
-        .querySelectorAll('.pricing-tab')
-        .forEach(button => {
+pricingTabsContainer
+    .querySelectorAll('.pricing-tab')
+    .forEach(button => {
 
-            button.addEventListener('click', () => {
-                pTab = button.dataset.s;
+        button.addEventListener(
+            'click',
+            () => {
+
+                activePricingService =
+                    button.dataset.service;
+
                 renderPricingPage();
-            });
-        });
+            }
+        );
+    });
 
-    let html = '';
+let html = '';
 
-    if (pTab === 'upholstery') {
+if (
+    activePricingService ===
+    'upholstery'
+) {
 
-        html += `
-            <div class="pricing-table">
+    html += `
+        <div class="pricing-table">
 
-                <div class="pricing-row header">
+            <div class="pricing-row header">
+
+                <div class="desc">
+                    ${t(
+                        'pricing.uphItems'
+                    )}
+                </div>
+
+                <div class="price-val">
+                    ${t(
+                        'price.from'
+                    )}
+                </div>
+
+            </div>
+
+            ${UPHOLSTERY_CLEANING_PRICES
+                .map(item => `
+
+                <div class="pricing-row">
+
                     <div class="desc">
-                        ${t('pricing.uphItems')}
+                        ${t(
+                            'upholstery.' +
+                            item.id
+                        )}
                     </div>
 
                     <div class="price-val">
-                        ${t('price.from')}
+                        €${item.p}
                     </div>
+
+                    <a
+                        class="book-row-btn"
+                        href="/book?svc=upholstery&item=${item.id}"
+                    >
+                        ${t(
+                            'services.book'
+                        )} →
+                    </a>
+
                 </div>
 
-                ${UPH.map(item => `
-                    <div class="pricing-row">
+            `).join('')}
 
-                        <div class="desc">
-                            ${t('uph.' + item.id)}
-                        </div>
+        </div>
+    `;
 
-                        <div class="price-val">
-                            €${item.p}
-                        </div>
+} else {
 
-                        <a 
-                            class="book-row-btn"
-                            href="/book?svc=upholstery&item=${item.id}"
-                        >
-                            ${t('services.book')} →
-                        </a>
+    const serviceBasePrices =
+        SERVICE_BASE_PRICES[
+            activePricingService
+        ];
 
-                    </div>
-                `).join('')}
+    const serviceSizeExtras =
+        SERVICE_SIZE_EXTRAS[
+            activePricingService
+        ];
+
+    const windowCleaningPrices =
+        WINDOW_CLEANING_PRICES[
+            activePricingService
+        ];
+
+    html += `
+        <div class="pricing-table">
+
+            <div class="pricing-row header">
+
+                <div class="desc">
+                    ${t(
+                        'pricing.base'
+                    )}
+                </div>
+
+                <div class="price-val">
+                    €
+                </div>
 
             </div>
-        `;
 
-    } else {
+            ${PROPERTY_SIZES
+                .map(size => `
 
-        const bp = BASE[pTab];
-        const ex = SZ_EX[pTab];
-        const w = WIN[pTab];
+                <div class="pricing-row">
 
-        html += `
-            <div class="pricing-table">
-
-                <div class="pricing-row header">
                     <div class="desc">
-                        ${t('pricing.base')}
+                        ${t(
+                            'size.' +
+                            size
+                        )}
                     </div>
 
-                    <div class="price-val">€</div>
+                    <div class="price-val">
+                        €${serviceBasePrices[size]}
+                    </div>
+
+                    <a
+                        class="book-row-btn"
+                        href="/book?svc=${activePricingService}&size=${size}"
+                    >
+                        ${t(
+                            'services.book'
+                        )} →
+                    </a>
+
                 </div>
 
-                ${SIZES.map(size => `
-                    <div class="pricing-row">
+            `).join('')}
 
-                        <div class="desc">
-                            ${t('size.' + size)}
-                        </div>
+        </div>
+    `;
 
-                        <div class="price-val">
-                            €${bp[size]}
-                        </div>
+    html += `
+        <div class="pricing-extras">
 
-                        <a 
-                            class="book-row-btn"
-                            href="/book?svc=${pTab}&size=${size}"
-                        >
-                            ${t('services.book')} →
-                        </a>
+            <div class="pricing-extras-title">
+                ${t(
+                    'pricing.extras'
+                )}
+            </div>
+
+            <div class="extras-grid">
+
+                <div class="extra-chip">
+
+                    <span>
+                        ${t(
+                            'extra.balcony'
+                        )}
+                    </span>
+
+                    <span class="ep">
+                        €${serviceSizeExtras.balcony}
+                    </span>
+
+                </div>
+
+                <div class="extra-chip">
+
+                    <span>
+                        ${t(
+                            'extra.extra-bathroom'
+                        )}
+                    </span>
+
+                    <span class="ep">
+                        €${serviceSizeExtras.extraBathroom}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    html += `
+        <div
+            class="pricing-extras"
+            style="margin-top:20px"
+        >
+
+            <div class="pricing-extras-title">
+                ${t(
+                    'pricing.windows'
+                )}
+            </div>
+
+            <div class="extras-grid">
+
+                <div class="extra-chip">
+
+                    <span>
+                        ${t(
+                            'extra.window'
+                        )}
+                    </span>
+
+                    <span class="ep">
+                        €${windowCleaningPrices.window}
+                        /
+                        ${t(
+                            'price.each'
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="extra-chip">
+
+                    <span>
+                        ${t(
+                            'extra.balcony-door'
+                        )}
+                    </span>
+
+                    <span class="ep">
+                        €${windowCleaningPrices.balconyDoor}
+                        /
+                        ${t(
+                            'price.each'
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    html += `
+        <div
+            class="pricing-extras"
+            style="margin-top:20px"
+        >
+
+            <div class="pricing-extras-title">
+                ${t(
+                    'pricing.household'
+                )}
+            </div>
+
+            <div class="extras-grid">
+
+                ${HOUSEHOLD_EXTRA_PRICES
+                    .map(extra => `
+
+                    <div class="extra-chip">
+
+                        <span>
+                            ${t(
+                                'extra.' +
+                                extra.id
+                            )}
+                        </span>
+
+                        <span class="ep">
+                            €${extra.p}
+                        </span>
 
                     </div>
+
                 `).join('')}
 
             </div>
-        `;
 
-        html += `
-            <div class="pricing-extras">
+        </div>
+    `;
+}
 
-                <div class="pricing-extras-title">
-                    ${t('pricing.extras')}
-                </div>
+pricingContentContainer.innerHTML =
+    html;
 
-                <div class="extras-grid">
-
-                    <div class="extra-chip">
-                        <span>${t('extra.balcony')}</span>
-
-                        <span class="ep">
-                            €${ex.balcony}
-                        </span>
-                    </div>
-
-                    <div class="extra-chip">
-                        <span>${t('extra.extrabath')}</span>
-
-                        <span class="ep">
-                            €${ex.extrabath}
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-        `;
-
-        html += `
-            <div class="pricing-extras" style="margin-top:20px">
-
-                <div class="pricing-extras-title">
-                    ${t('pricing.windows')}
-                </div>
-
-                <div class="extras-grid">
-
-                    <div class="extra-chip">
-                        <span>${t('extra.window')}</span>
-
-                        <span class="ep">
-                            €${w.window} / ${t('price.each')}
-                        </span>
-                    </div>
-
-                    <div class="extra-chip">
-                        <span>${t('extra.balcondoor')}</span>
-
-                        <span class="ep">
-                            €${w.balcondoor} / ${t('price.each')}
-                        </span>
-                    </div>
-
-                </div>
-
-            </div>
-        `;
-
-        html += `
-            <div class="pricing-extras" style="margin-top:20px">
-
-                <div class="pricing-extras-title">
-                    ${t('pricing.household')}
-                </div>
-
-                <div class="extras-grid">
-
-                    ${HOUSE.map(extra => `
-                        <div class="extra-chip">
-
-                            <span>
-                                ${t('extra.' + extra.id)}
-                            </span>
-
-                            <span class="ep">
-                                €${extra.p}
-                            </span>
-
-                        </div>
-                    `).join('')}
-
-                </div>
-
-            </div>
-        `;
-    }
-
-    content.innerHTML = html;
 }
 
 /* =========================
    HERO SLIDER
 ========================= */
 
-const HERO_IMAGES = {
+const HERO_SLIDER_IMAGES = {
 
-    en: [
-        'assets/images/en/hero-1.PNG',
-        'assets/images/en/hero-2.PNG',
-        'assets/images/en/hero-3.PNG',
-        'assets/images/en/hero-4.PNG'
-    ],
+en: [
+    'assets/images/en/hero-1.PNG',
+    'assets/images/en/hero-2.PNG',
+    'assets/images/en/hero-3.PNG',
+    'assets/images/en/hero-4.PNG'
+],
 
-    el: [
-        'assets/images/el/hero-1.PNG',
-        'assets/images/el/hero-2.PNG',
-        'assets/images/el/hero-3.PNG',
-        'assets/images/el/hero-4.PNG'
-    ],
+el: [
+    'assets/images/el/hero-1.PNG',
+    'assets/images/el/hero-2.PNG',
+    'assets/images/el/hero-3.PNG',
+    'assets/images/el/hero-4.PNG'
+],
 
-    ru: [
-        'assets/images/ru/hero-1.PNG',
-        'assets/images/ru/hero-2.PNG',
-        'assets/images/ru/hero-3.PNG',
-        'assets/images/ru/hero-4.PNG'
-    ]
+ru: [
+    'assets/images/ru/hero-1.PNG',
+    'assets/images/ru/hero-2.PNG',
+    'assets/images/ru/hero-3.PNG',
+    'assets/images/ru/hero-4.PNG'
+]
+
 };
 
-let heroIdx = 0;
-let heroTimer = null;
+let activeHeroSlideIndex = 0;
 
-function loadHeroImages() {
+let heroSliderInterval = null;
 
-    const images =
-        HERO_IMAGES[currentLang] ||
-        HERO_IMAGES.en;
+function loadHeroSliderImages() {
 
-    document
-        .querySelectorAll('.hero-slide')
-        .forEach((element, index) => {
+const languageImages =
+    HERO_SLIDER_IMAGES[currentLang] ||
+    HERO_SLIDER_IMAGES.en;
 
-            element.src = images[index];
-        });
+document
+    .querySelectorAll('.hero-slide')
+    .forEach((slideImage, index) => {
+
+        slideImage.src =
+            languageImages[index];
+    });
+
 }
 
-function showHero(index) {
+function showHeroSlide(slideIndex) {
+activeHeroSlideIndex =
+    slideIndex;
 
-    heroIdx = index;
+document
+    .querySelectorAll('.hero-slide')
+    .forEach((slide, index) => {
 
-    document
-        .querySelectorAll('.hero-slide')
-        .forEach((element, i) => {
-
-            element.classList.toggle(
-                'active',
-                i === index
-            );
-        });
-
-    document
-        .querySelectorAll('.hero-dot')
-        .forEach((element, i) => {
-
-            element.classList.toggle(
-                'active',
-                i === index
-            );
-        });
-}
-
-function nextHero() {
-    showHero((heroIdx + 1) % 4);
-}
-
-function startHeroAuto() {
-
-    clearInterval(heroTimer);
-
-    heroTimer = setInterval(
-        nextHero,
-        3000
-    );
-}
+        slide.classList.toggle(
+            'active',
+            index === slideIndex
+        );
+    });
 
 document
     .querySelectorAll('.hero-dot')
-    .forEach(dot => {
+    .forEach((dot, index) => {
 
-        dot.addEventListener('click', () => {
-
-            showHero(
-                parseInt(dot.dataset.d)
-            );
-
-            startHeroAuto();
-        });
+        dot.classList.toggle(
+            'active',
+            index === slideIndex
+        );
     });
 
-/* =========================
-   INIT
-========================= */
+}
 
-applyLang();
-loadHeroImages();
-startHeroAuto();
+function showNextHeroSlide() {
+showHeroSlide(
+    (
+        activeHeroSlideIndex + 1
+    ) % 4
+);
+
+}
+
+function startHeroSliderAutoPlay() {
+
+clearInterval(
+    heroSliderInterval
+);
+
+heroSliderInterval =
+    setInterval(
+        showNextHeroSlide,
+        3000
+    );
+
+}
+
+document.addEventListener(
+    'DOMContentLoaded',
+    () => {
+
+        document
+            .querySelectorAll('.hero-dot')
+            .forEach(dot => {
+
+                dot.addEventListener(
+                    'click',
+                    () => {
+
+                        showHeroSlide(
+                            parseInt(dot.dataset.d)
+                        );
+
+                        startHeroSliderAutoPlay();
+                    }
+                );
+            });
+
+        loadHeroSliderImages();
+        showHeroSlide(0);
+        startHeroSliderAutoPlay();
+    }
+);

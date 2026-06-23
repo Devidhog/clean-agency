@@ -107,7 +107,7 @@ const urlParams =
     new URLSearchParams(window.location.search);
 
 const presetService =
-    urlParams.get('svc');
+    urlParams.get('service');
 
 const presetPropertySize =
     urlParams.get('size');

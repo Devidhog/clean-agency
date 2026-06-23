@@ -310,7 +310,7 @@ if (
 
                     <a
                         class="book-row-btn"
-                        href="/book?svc=upholstery&item=${item.id}"
+                        href="/book?service=upholstery&item=${item.id}"
                     >
                         ${t(
                             'services.book'
@@ -376,7 +376,7 @@ if (
 
                     <a
                         class="book-row-btn"
-                        href="/book?svc=${activePricingService}&size=${size}"
+                        href="/book?service=${activePricingService}&size=${size}"
                     >
                         ${t(
                             'services.book'
